@@ -1,17 +1,15 @@
 @import "tailwindcss";
-*{
-      font-family: Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+* {
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
 }
-@theme{
-      --color-black-fig: #000000;
-      --color-white-fig: #FFFFFF;
-      --color-green-fig: #52B788;
-      --color-green-mid-light: #74C69D;
-      --color-blue-fig:#00B4D8;
-      --color-blue-mid-light-fig: #48CAE4;
-      --color-red-fig:#DA344D;
-      --color-gray-fig: #D9D9D9;
+@theme {
+  --color-black-fig: #000000;
+  --color-white-fig: #ffffff;
+  --color-green-fig: #52b788;
+  --color-green-mid-light: #74c69d;
+  --color-blue-fig: #00b4d8;
+  --color-blue-mid-light-fig: #48cae4;
+  --color-red-fig: #da344d;
+  --color-gray-fig: #d9d9d9;
 }

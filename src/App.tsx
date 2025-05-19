@@ -1,11 +1,13 @@
 import { Route , Routes } from "react-router-dom"
+import Footer from "./layouts/user_layout/Footer"
 
 function App() {
 
   return (
-    <Routes>
-      <Route></Route>
-    </Routes>
+    <Footer />
+    // <Routes>
+    //   <Route></Route>
+    // </Routes>
   )
 }
 
