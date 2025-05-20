@@ -1,4 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
+import LoginPage from './pages/user/Auth/Login'
+import SignupPage from './pages/user/Auth/Signup'
 
 function App() {
 
@@ -6,8 +8,8 @@ function App() {
 
     <Routes>
       <Route>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/Signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Route>
     </Routes>
   )
