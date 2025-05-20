@@ -1,11 +1,10 @@
-import MailIcon from '@mui/icons-material/Mail';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import Logo from "../../assets/Logo/logo_smoking.png";
-
+import MailIcon from '@mui/icons-material/Mail'
+import TwitterIcon from '@mui/icons-material/Twitter'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import Logo from '../../assets/Logo/logo_smoking.png'
 function Footer() {
   return (
-    <div className="bg-black-fig p-5 ">
+    <div className="absolute bottom-0 bg-black-fig p-5 w-full ">
 
       <div className="text-white-fig flex justify-between items-center gap-0">
         <div className='flex justify-between items-center gap-10 ml-35'>
