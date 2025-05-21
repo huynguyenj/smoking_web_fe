@@ -4,8 +4,7 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import Logo from '../../assets/Logo/logo_smoking.png'
 function Footer() {
   return (
-    <div className="absolute bottom-0 bg-black-fig p-5 w-full ">
-
+    <div className="bottom-0 bg-black-fig p-5 w-full ">
       <div className="text-white-fig flex justify-between items-center gap-0">
         <div className='flex justify-between items-center gap-10 ml-35'>
           <div className='w-20'><img src={Logo} alt="logo" /></div>
