@@ -1,4 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import MenuIcon from '@mui/icons-material/Menu'
+import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 import HomeIcon from '@mui/icons-material/Home'
 import GradeIcon from '@mui/icons-material/Grade'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
@@ -10,6 +12,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import type React from 'react'
 
 export const MuiIcon = {
+  MenuOpenIcon: MenuOpenIcon,
+  MenuIcon: MenuIcon,
   KeyboardArrowDown: KeyboardArrowDownIcon,
   HomeIcon: HomeIcon,
   GradeStartIcon: GradeIcon,
