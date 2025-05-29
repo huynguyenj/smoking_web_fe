@@ -1,6 +1,6 @@
-import { BarChart } from '@mui/x-charts/BarChart';
+import { BarChart } from '@mui/x-charts/BarChart'
 import { axisClasses } from '@mui/x-charts/ChartsAxis'
-import { dataset, valueFormatter } from './DataSet'
+import { valueFormatter } from './DataSet'
 
 const chartSetting = {
   yAxis: [
@@ -38,5 +38,5 @@ export default function BarsDataset({ labels, dataset }: ChartProp) {
       series={series}
       {...chartSetting}
     />
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import BoxDashboard from '../../components/box/BoxDashboard'
-import BarsDataset from '../../components/chart/chart'
+import BarsDataset from '../../components/chart/Chart'
 import { MuiIcon } from '../../components/muiIcon/MuiIcon'
 
 export default function AdminDashboard() {
