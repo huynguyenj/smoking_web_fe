@@ -7,7 +7,7 @@ import PriceChangeIcon from '@mui/icons-material/PriceChange'
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
 import FeedIcon from '@mui/icons-material/Feed'
-import Diversity2Icon from '@mui/icons-material/Diversity2';
+import Diversity2Icon from '@mui/icons-material/Diversity2'
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center mb-10">
@@ -16,7 +16,7 @@ export default function HomePage() {
           <div className="w-full h-full flex flex-col items-center">
             <h1 className="text-[5rem] font-bold text-black-fig mt-20">Smoking Prevent</h1>
             <p className="text-[1.8rem] font-light text-gray-400 text-center mt-10 mx-30">
-              We’re here to help you quit smoking with trusted advice, helpful tools, and real support—because a healthier, smoke-free life starts with one small step.
+              We're here to help you quit smoking with trusted advice, helpful tools, and real support—because a healthier, smoke-free life starts with one small step.
             </p>
           </div>
         </div>
