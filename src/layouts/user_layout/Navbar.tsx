@@ -9,7 +9,7 @@ function Navbar() {
     <div className="fixed top-0 bg-black-fig w-full rounded-4xl px-5 py-3 flex items-center justify-between mt-3">
       <Link to={'/user'}><img src={Logo} alt="logo_img" className='w-15 aspect-square' /></Link>
       <div className='ml-50'>
-          <ul className='text-white-fig flex gap-10 font-bold'>
+        <ul className='text-white-fig flex gap-10 font-bold'>
           {NavItems.map((item) => (
             <Link to={item.path} key={item.name}>
               <li className='hover:text-green-fig cursor-pointer'>{item.name}</li>
