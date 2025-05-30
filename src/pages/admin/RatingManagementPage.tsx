@@ -48,7 +48,7 @@ export default function RatingManagementPage() {
   const [page, setPage] = useState<number>(1)
   const totalPages = Math.ceil(feedbackListAPI.length / itemsPerPage)
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value)
   }
 
