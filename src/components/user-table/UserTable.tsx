@@ -20,7 +20,7 @@ function UserTable({ users }: UserTableProps) {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage)
   }
 
@@ -85,7 +85,7 @@ function UserTable({ users }: UserTableProps) {
         <TablePagination
           sx={{
             '& .MuiTablePagination-toolbar': {
-              fontSize: '20px' // chỉnh toàn bộ dòng
+              fontSize: '20px'
             },
             '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
               fontSize: '20px'
