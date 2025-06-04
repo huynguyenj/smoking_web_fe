@@ -4,18 +4,19 @@ import { MuiIcon } from '../components/muiIcon/MuiIcon'
 import { AdminRoute, UserRoute } from './listRoutes'
 type NavbarType = {
   name: string,
-  path: string
+  path: string,
+  role: string[]
 }
 
 export const NavItems:NavbarType[] = [
-  { name: 'Home', path:UserRoute.HOME_PATH },
-  { name: 'Blogs', path:UserRoute.BLOGS_PATH },
-  { name: 'Contact', path:UserRoute.CONTACT_PATH },
-  { name: 'Member', path:UserRoute.MEMBER_PACKAGE_PATH }
+  { name: 'Home', path:UserRoute.HOME_PATH, role: ['user', 'member', 'coach'] },
+  { name: 'Blogs', path:UserRoute.BLOGS_PATH, role: ['user', 'member', 'coach'] },
+  { name: 'Contact', path:UserRoute.CONTACT_PATH, role: ['user', 'member', 'coach'] },
+  { name: 'Member', path:UserRoute.MEMBER_PACKAGE_PATH, role: ['user', 'member', 'coach'] }
 ]
 export const SubItems:NavbarType[] = [
-  { name: 'Ranking', path:UserRoute.RANKING_PATH },
-  { name: 'Planning', path:UserRoute.PLAN_PATH }
+  { name: 'Ranking', path:UserRoute.RANKING_PATH, role: ['user', 'member', 'coach'] },
+  { name: 'Planning', path:UserRoute.PLAN_PATH, role: ['user', 'member', 'coach'] }
 ]
 type SidebarType = {
   name: string,

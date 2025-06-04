@@ -1,7 +1,31 @@
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+import publicApiService from '../../services/ApiPublic'
+import { useTokenInfoStorage } from '../../store/authStore'
+import { useNavigate } from 'react-router-dom'
+import { UserRoute } from '../../const/listRoutes'
 
 export default function useLoginHook() {
-
-  return (
-    <div>useLoginHook</div>
-  )
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const addLocal = useTokenInfoStorage()
+  const navigate = useNavigate()
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      setIsLoading(true)
+      const result = await publicApiService.login({ email, password })
+      addLocal.setLogin(result.data)
+      addLocal.setToken(result.data?.accessToken)
+      toast.success('Login successfully!')
+      navigate(UserRoute.HOME_PATH)
+    } catch (error) {
+      console.log(error)
+      toast.error('Login fail')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  return {
+    handleLogin,
+    isLoading
+  }
 }
