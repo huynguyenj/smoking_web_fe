@@ -13,7 +13,7 @@ export default function ChatSection({ friend }: {friend: Friend}) {
   const [messages, setMessages] = useState<MessageHistoryInfo[]>([])
   const { setRoomId, socket } = useMessage()
   const user = useTokenInfoStorage.getState()
-
+  const bottomRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     setRoomId(generateRoomId(user.userInfo?._id, friend._id))
     const getMessage = async () => {
@@ -50,8 +50,14 @@ export default function ChatSection({ friend }: {friend: Friend}) {
     }
   }, [socket])
 
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages])
+
   return (
-    <Box sx={{ width:'100%', position:'relative', height:'90vh', display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
+    <Box sx={{ width:'100%', position:'relative', height:'100%', display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
       <div className="border-b-1">
         <div className="flex items-center gap-5">
           {/* <img src={friend.image} alt="avatar" className="w-[5%] aspect-square rounded-full " /> */}
@@ -76,6 +82,7 @@ export default function ChatSection({ friend }: {friend: Friend}) {
             </div>
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
       <div className=" bottom-0 w-full h-20 flex rounded-2xl">
         <input ref={inputRef} type="text" placeholder="Message" className="w-full rounded-l-2xl bg-gray-fig px-5"/>

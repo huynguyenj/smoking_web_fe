@@ -8,3 +8,8 @@ export interface ApiErrorResponse {
   status: number,
   message: string
 }
+
+export type ApiError = {
+    status: number,
+    message: string
+  }

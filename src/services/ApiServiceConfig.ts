@@ -2,11 +2,11 @@ import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from '
 import { useTokenInfoStorage } from '../store/authStore'
 import publicApiService from './ApiPublic'
 import { PublicRoute } from '../const/listRoutes'
+import type { ApiError } from '../model/apiType/apiType'
 
-const BASE_API_URL = import.meta.env.VITE_BASE_API_URL
-const VITE_BASE_SERVER_URL = import.meta.env.VITE_BASE_SERVER_URL
+const API_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_BASE_API_URL : import.meta.env.VITE_BASE_SERVER_URL
 const privateApiClient: AxiosInstance = axios.create({
-  baseURL:VITE_BASE_SERVER_URL,
+  baseURL:API_URL,
   headers:{
     'Content-Type': 'application/json'
   },
@@ -14,7 +14,7 @@ const privateApiClient: AxiosInstance = axios.create({
 })
 
 const publicApiClient: AxiosInstance = axios.create({
-  baseURL:VITE_BASE_SERVER_URL || BASE_API_URL,
+  baseURL:API_URL,
   headers:{
     'Content-Type': 'application/json'
   },
@@ -63,7 +63,8 @@ privateApiClient.interceptors.response.use((response) => {
       return Promise.reject(refreshError)
     }
   }
-  return Promise.reject(error)
+  const errorResMessage = error.response?.data as ApiError
+  return Promise.reject(errorResMessage.message)
 })
 
 publicApiClient.interceptors.response.use((response) => {

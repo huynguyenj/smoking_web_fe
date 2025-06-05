@@ -8,6 +8,19 @@ export type MessageHistoryInfo = {
   message_date: Date
 }
 
+type Profile = {
+  address: string,
+  brirthdate: Date,
+  age: number,
+  experience: string
+}
+export interface SearchUserType {
+   _id: string,
+   full_name: string,
+   user_name: string,
+   profile: Profile
+}
+
 export type Friend = {
   _id: string,
   full_name: string,
