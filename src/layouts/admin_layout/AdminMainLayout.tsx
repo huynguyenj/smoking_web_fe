@@ -20,10 +20,10 @@ export default function AdminMainLayout() {
 
   return (
     <div className='flex'>
-      <aside className='flex-[0.15]'>
+      <aside className='w-[20%]'>
         <AdminSidebar/>
       </aside>
-      <main className='flex-[0.85]'>
+      <main className='w-[80%]'>
         <nav className='flex font-bold mb-5 p-5 justify-between'>
           <h1 className='text-[1.8rem]'>
             {title}
