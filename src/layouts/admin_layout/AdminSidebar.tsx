@@ -6,7 +6,7 @@ import { MuiIcon } from '../../components/muiIcon/MuiIcon'
 export default function AdminSidebar() {
   const currentRoute = useLocation()
   return (
-    <div className="flex flex-col gap-20 items-center bg-black-fig h-[100vh] py-5">
+    <div className="flex flex-col gap-20 items-center bg-black-fig min-h-[100vh] py-5">
       <div className='text-white-fig font-bold flex items-center gap-5'>
         <div>
           <img src={Logo} alt="logo_website" className='w-15 aspect-square'/>
