@@ -10,4 +10,5 @@ const publicApiService = {
     apiService.publicApiClient.post(BASE_API_URL+'/register', registerInfo)
 }
 
+
 export default publicApiService
