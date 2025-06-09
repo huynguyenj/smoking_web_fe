@@ -27,7 +27,6 @@ const LoginPage = () => {
     e.preventDefault()
     if (validate()) {
       handleLogin(email, password)
-      // call your login API or hook here
     }
   }
 

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import publicApiService from '../../services/ApiPublic'
 import { useTokenInfoStorage } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
-import { UserRoute } from '../../const/listRoutes'
+import { AdminRoute, UserRoute } from '../../const/listRoutes'
 
 export default function useLoginHook() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -16,6 +16,9 @@ export default function useLoginHook() {
       addLocal.setLogin(result.data)
       addLocal.setToken(result.data?.accessToken)
       toast.success('Login successfully!')
+      if ( result.data.role === 'admin' ) {
+        navigate(AdminRoute.ADMIN_DASHBOARD_PATH)
+      }
       navigate(UserRoute.HOME_PATH)
     } catch (error) {
       console.log(error)
