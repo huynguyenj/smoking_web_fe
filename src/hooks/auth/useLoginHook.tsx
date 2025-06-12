@@ -18,8 +18,9 @@ export default function useLoginHook() {
       toast.success('Login successfully!')
       if ( result.data.role === 'admin' ) {
         navigate(AdminRoute.ADMIN_DASHBOARD_PATH)
+      } else {
+        navigate(UserRoute.HOME_PATH)
       }
-      navigate(UserRoute.HOME_PATH)
     } catch (error) {
       console.log(error)
       toast.error('Login fail')

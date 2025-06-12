@@ -1,7 +1,7 @@
 import type { SvgIconProps } from '@mui/material'
 import type React from 'react'
 import { MuiIcon } from '../components/muiIcon/MuiIcon'
-import { AdminRoute, UserRoute } from './listRoutes'
+import { AdminRoute, UserRoute } from './pathList'
 type NavbarType = {
   name: string,
   path: string,

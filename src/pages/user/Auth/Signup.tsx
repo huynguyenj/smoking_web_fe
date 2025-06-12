@@ -1,7 +1,7 @@
 import Background1 from '../../../assets/Background/ChatGPT Image May 20, 2025, 08_03_44 PM.png'
 import Logo from '../../../assets/Logo/logo_smoking.png'
 import { Link } from 'react-router-dom'
-import { UserRoute } from '../../../const/listRoutes'
+import { UserRoute } from '../../../const/pathList'
 
 const SignupPage = () => {
   return (

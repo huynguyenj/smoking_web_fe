@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Background1 from '../../../assets/Background/ChatGPT Image May 20, 2025, 04_13_43 PM.png'
 import Logo from '../../../assets/Logo/logo_smoking.png'
-import { UserRoute } from '../../../const/listRoutes'
 import type { LoginType } from '../../../model/authModel/authDataType'
 import useLoginHook from '../../../hooks/auth/useLoginHook'
 import CircularProgress from '@mui/material/CircularProgress'
+import { UserRoute } from '../../../const/pathList'
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
