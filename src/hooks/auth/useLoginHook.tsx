@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import publicApiService from '../../services/ApiPublic'
 import { useTokenInfoStorage } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
-import { AdminRoute, UserRoute } from '../../const/listRoutes'
+import { AdminRoute, UserRoute } from '../../const/pathList'
 
 export default function useLoginHook() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
