@@ -1,12 +1,13 @@
-import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material'
 import { Delete, Visibility } from '@mui/icons-material'
 import React, { useState } from 'react'
+import dayjs from 'dayjs'
 
 export interface User {
-  id: number;
-  name: string;
-  createDate: string;
-  updateDate: string;
+  _id: number;
+  user_name: string;
+  created_date: string;
+  updated_date: string;
   email: string;
   role: string;
   isActive: boolean;
@@ -14,56 +15,67 @@ export interface User {
 
 export interface UserTableProps {
   users: User[];
+  totalPage: number
+  rowsPerPage: number
+  page: number
+  onPageChange: (newPage: number, newRowsPerPage: number) => void // eslint-disable-line no-unused-vars
 }
 
-function UserTable({ users }: UserTableProps) {
-  const [page, setPage] = useState<number>(0)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(5)
+function UserTable({ users, page, totalPage, rowsPerPage, onPageChange }: UserTableProps) {
+  const [openConfirm, setOpenConfirm] = useState(false)
+
+  const handleOpenConfirm = () => setOpenConfirm(true)
+  const handleCloseConfirm = () => setOpenConfirm(false)
+
+  const handleConfirmChange = async (id: string) => {
+    handleChangeStatus(id)
+    handleCloseConfirm
+  }
 
   const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage)
+    onPageChange(newPage, rowsPerPage)
   }
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
+    const newRowsPerPage = parseInt(event.target.value, 10)
+    onPageChange(0, newRowsPerPage)
   }
 
   return (
-    <div className='p-5 mt-6'>
+    <div className=' mt-6'>
       <div className='flex justify-center ml-10 mt-5'>
         <TableContainer
           component={Paper}
           sx={{
             boxShadow: 'none',
             borderBottom: '1px solid #ddd',
-            width: '95%',
-            height: '650px'
+            maxWidth: '100%',
+            height: '380px'
           }}>
-          <Table>
+          <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontSize: '22px' }}><b>ID</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>User Name</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Create date</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Update date</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Email</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Role</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Active</b></TableCell>
-                <TableCell sx={{ fontSize: '22px' }}><b>Action</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>ID</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>User Name</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Create date</b></TableCell>
+                {/* <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Update date</b></TableCell> */}
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Email</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Role</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Active</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Action</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
-                <TableRow key={user.id} sx={{ '& td': { border: 'none', fontWeight: 'bold', fontSize: '19px' } }}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.createDate}</TableCell>
-                  <TableCell>{user.updateDate}</TableCell>
+              {users.map((user) => (
+                <TableRow key={user._id} sx={{ '& td': { border: 'none', fontSize: '15px' } }}>
+                  <TableCell>{user._id}</TableCell>
+                  <TableCell>{user.user_name}</TableCell>
+                  <TableCell>{dayjs(user.created_date).format('DD-MM-YYYY')}</TableCell>
+                  {/* <TableCell>{user.updated_date}</TableCell> */}
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>
                   <TableCell>
-                    <div className={`${user.isActive ? 'bg-green-fig' : 'bg-red-fig'} p-[10px] rounded-[50px] text-white text-center`}>
+                    <div onClick={handleOpenConfirm} className={`${user.isActive ? 'bg-green-fig' : 'bg-red-fig'} p-[10px] rounded-[50px] text-white text-center, cursor-pointer`}>
                       {user.isActive ? 'Active' : 'Banned'}
                     </div>
                   </TableCell>
@@ -74,6 +86,18 @@ function UserTable({ users }: UserTableProps) {
                     <IconButton color="error">
                       <Delete />
                     </IconButton>
+                    <Dialog open={openConfirm} onClose={handleCloseConfirm}>
+                      <DialogTitle>Confirm</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Do you want to change status to {!user.isActive ? 'active' : 'banned'}?
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleCloseConfirm}>Cancel</Button>
+                        <Button onClick={() => handleConfirmChange} color="error">Yes</Button>
+                      </DialogActions>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}
@@ -99,9 +123,9 @@ function UserTable({ users }: UserTableProps) {
           }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          count={rowsPerPage * totalPage} //total page
+          rowsPerPage={rowsPerPage} // limit
+          page={page} // page
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
