@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import LoadingLayout from '../layouts/LoadingLayout'
 import { rootLoader } from './rootLoader'
-import { adminRoutes, userRoutes } from './roleBasedRoutes'
+import { adminRoutes, standardRoute, userRoutes } from './roleBasedRoutes'
 import { publicRouteList } from '../const/listRoutes'
 
 export const router = createBrowserRouter([
@@ -11,7 +11,8 @@ export const router = createBrowserRouter([
     loader:rootLoader,
     children:[
       adminRoutes,
-      userRoutes
+      userRoutes,
+      standardRoute
     ]
   },
   ...publicRouteList

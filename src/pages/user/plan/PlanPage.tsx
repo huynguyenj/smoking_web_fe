@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { UserRoute } from '../../../const/listRoutes'
-
+import { UserRoute } from '../../../const/pathList'
 interface Plan {
   _id: string
   user_ID: string
