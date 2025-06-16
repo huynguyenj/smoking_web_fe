@@ -17,7 +17,8 @@ export const AdminRoute = {
   ADMIN_DASHBOARD_PATH: '/admin/dashboard',
   RANTING_PATH: '/admin/rating',
   USER_MANAGEMENT_PATH: '/admin/user-management',
-  MEMBER_MANAGEMENT_PATH: '/admin/member-management'
+  MEMBER_MANAGEMENT_PATH: '/admin/member-management',
+  RANK_MANAGEMENT_PATH: '/admin/rank-management'
 }
 
 
