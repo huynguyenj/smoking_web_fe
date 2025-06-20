@@ -1,7 +1,7 @@
 import type { SvgIconProps } from '@mui/material'
 import type React from 'react'
 import { MuiIcon } from '../components/muiIcon/MuiIcon'
-import StarsIcon from '@mui/icons-material/Stars';
+import StarsIcon from '@mui/icons-material/Stars'
 import { AdminRoute, UserRoute } from './pathList'
 type NavbarType = {
   name: string,
@@ -30,5 +30,5 @@ export const sideBarItems:SidebarType[] = [
   { name: 'User Management', icon:MuiIcon.PermIdentityIcon, path:AdminRoute.USER_MANAGEMENT_PATH },
   { name: 'Rating-Feedback', icon:MuiIcon.GradeStartIcon, path:AdminRoute.RANTING_PATH },
   { name: 'Member Package', icon:MuiIcon.DiamondIcon, path:AdminRoute.MEMBER_MANAGEMENT_PATH },
-  { name: 'Rank Management', icon:StarsIcon, path:AdminRoute.RANTING_PATH }
+  { name: 'Rank Management', icon:StarsIcon, path:AdminRoute.RANK_MANAGEMENT_PATH }
 ]
