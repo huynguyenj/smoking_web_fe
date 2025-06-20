@@ -1,4 +1,6 @@
 import type { LoginResponse } from '../authModel/authDataType'
+import type { Feedback } from '../feedback/feedbackType'
+import type { MemeberShip } from './memberShipType'
 
 export type UserInfo = LoginResponse
 export type MessageHistoryInfo = {
@@ -27,9 +29,21 @@ export type Friend = {
   user_name: string
 }
 
-export interface UserPaginationInfo extends SearchUserType {
-  isActive: boolean,
-  isDelete: boolean,
-  role: boolean,
-  gender: boolean | null,
+export interface UserPaginationInfo {
+    _id: string,
+   full_name: string,
+   user_name: string,
+   email: string,
+   created_date: Date,
+   update_date: Date,
+   isActive: boolean,
+   isDeleted: boolean,
+   role: boolean,
+   gender: boolean | null,
+}
+
+export interface UserDetail extends UserPaginationInfo{
+  feedback: Feedback,
+  membership: MemeberShip
+  profile: Profile
 }

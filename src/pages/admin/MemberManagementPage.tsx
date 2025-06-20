@@ -1,27 +1,99 @@
+import { useEffect, useState } from 'react'
 import MemberShipBox from '../../components/memberShip-box/MemberShipBox'
+import ApiAdminPrivate from '../../services/ApiAdminPrivate'
+import type { MemberShipInfo } from '../../model/user/memberShipType'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 
 export default function MemberManagementPage() {
-  const memberShips = [
-    { id: 1, memberShipTitle: 'Normal', profit: 9999 },
-    { id: 2, memberShipTitle: 'Vip', profit: 9900 },
-    { id: 3, memberShipTitle: 'Premium', profit: 199000 }
-  ]
-  return (
-    <div className='flex justify-around p-5 flex-wrap'>
-      {memberShips.map((m) => (
-        <div key={m.id}>
-          <MemberShipBox
-            backgroundColor={
-              m.memberShipTitle === 'Premium' ? 'bg-yellow-memberPackage' :
-                m.memberShipTitle === 'Vip' ? 'bg-red-fig' :
-                  'bg-blue-fig' // mặc định cho Normal hoặc các giá trị khác
-            }
-            memberShipTitle={m.memberShipTitle}
-            profit={m.profit}
-          />
-        </div>
-      ))}
-    </div>
+  const [memberPackages, setMemberPackages] = useState<MemberShipInfo[]>([])
+  const [open, setOpen] = useState<boolean>(false)
+  const [featureInput, setFeatureInput] = useState('')
+  const [membership_title, setMembership_title] = useState<string>('')
+  const [price, setPrice] = useState<number>(0)
 
+  useEffect(() => {
+    getMemberPackage()
+  }, [])
+
+  const getMemberPackage = async () => {
+    try {
+      const response = await ApiAdminPrivate.getMemberPackage()
+      setMemberPackages(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSubmit = async () => {
+    const featuresArray = featureInput
+      .split(',')
+      .map(f => f.trim()) // loại khoảng trắng
+      .filter(f => f !== '') // loại chuỗi rỗng
+    try {
+      await ApiAdminPrivate.createMemberPackage({ membership_title, price, feature: featuresArray })
+      setOpen(false)
+      getMemberPackage()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  return (
+    <div >
+      <div className='flex justify-end mb-[0.8rem] mr-[2.1rem]'>
+        <Button variant='contained' onClick={() => setOpen(true)}>Create</Button>
+      </div>
+      <div className='flex justify-around gap-2 flex-wrap'>
+        <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
+          <DialogTitle>Create package</DialogTitle>
+          <DialogContent>
+            <TextField
+              label="Title"
+              value={membership_title}
+              onChange={e => setMembership_title(e.target.value)}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Price(Vnd)"
+              type="number"
+              value={price}
+              onChange={e => setPrice(Number(e.target.value))}
+              fullWidth
+              margin="normal"
+            />
+
+            <TextField
+              label="Feature"
+              value={featureInput}
+              onChange={e => setFeatureInput(e.target.value)}
+              fullWidth
+              margin="normal"
+            />
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Hủy</Button>
+            <Button variant="contained" onClick={handleSubmit}>Gửi</Button>
+          </DialogActions>
+        </Dialog>
+        {memberPackages.map((m) => (
+          <div key={m._id}>
+            <MemberShipBox
+              backgroundColor={
+                m.membership_title === 'Premium' ? 'bg-yellow-memberPackage/80' :
+                  m.membership_title === 'Standard' ? 'bg-red-fig/80' :
+                    'bg-blue-fig/80' // mặc định cho Normal hoặc các giá trị khác
+              }
+              getMemberPackage={getMemberPackage}
+              _id={m._id}
+              feature={m.feature}
+              memberShipTitle={m.membership_title}
+              profit={m.price}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }

@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom'
 import Logo from '../../assets/Logo/logo_smoking.png'
 import { MuiIcon } from '../../components/muiIcon/MuiIcon.ts'
 import { NavItems, SubItems } from '../../const/navbarItems.ts'
-import { PublicRoute } from '../../const/listRoutes.tsx'
 import { useTokenInfoStorage } from '../../store/authStore.ts'
 import avatar from '../../assets/avatar.jpg'
+import { PublicRoute } from '../../const/pathList.ts'
 function Navbar() {
   const userInfo = useTokenInfoStorage(( state ) => state.userInfo)
   return (

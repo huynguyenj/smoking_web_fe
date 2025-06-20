@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import publicApiService from '../../services/ApiPublic'
 import { useTokenInfoStorage } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
-import { AdminRoute, UserRoute } from '../../const/listRoutes'
+import { AdminRoute, UserRoute } from '../../const/pathList'
 
 export default function useLoginHook() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -18,8 +18,9 @@ export default function useLoginHook() {
       toast.success('Login successfully!')
       if ( result.data.role === 'admin' ) {
         navigate(AdminRoute.ADMIN_DASHBOARD_PATH)
+      } else {
+        navigate(UserRoute.HOME_PATH)
       }
-      navigate(UserRoute.HOME_PATH)
     } catch (error) {
       console.log(error)
       toast.error('Login fail')

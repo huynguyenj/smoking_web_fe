@@ -6,21 +6,26 @@ import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import dayjs from 'dayjs'
 import type { FeedbackPaginationInfo } from '../../model/feedback/feedbackType'
 import { toast } from 'react-toastify'
+import { CircularProgress } from '@mui/material'
 
 export default function RatingManagementPage() {
   const [fbList, setFbList] = useState<FeedbackPaginationInfo[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     getAllFeedbacks()
   }, [])
 
   const getAllFeedbacks = async () => {
+    setIsLoading(true)
     try {
       const response = await ApiAdminPrivate.getFeedbackPagination({ page: 1, limit: 4, sort: -1 })
       setFbList(response.data.listData)
       console.log(response.data)
     } catch (error) {
-      console.log("Error:", error)
+      console.log('Error:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -54,22 +59,27 @@ export default function RatingManagementPage() {
   }
   return (
     <div className='p-5'>
-      <div className='bg-gray-fig/20 shadow-md rounded-[20px] p-5  max-h-[450px]'>
-        {feedbackRows.map((row, rowIndex) => (
-          <div className='flex gap-5 mb-5' key={rowIndex}>
-            {row.map((fb, i) => (
-              <RatingFbBox
-                _id={fb._id}
-                handleDelete={() => handleDelete(fb._id)}
-                key={i}
-                user_name={fb.user_name}
-                star={fb.feedback.star}
-                create_feedback_date={dayjs(fb.feedback.create_feedback_date).format('DD-MM-YYYY')}
-                feedback={fb.feedback.content}
-              />
-            ))}
+      <div className='bg-gray-fig/20 shadow-md rounded-[20px] p-5 mb-5 max-h-[450px]'>
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <CircularProgress />
           </div>
-        ))}
+        ) : (
+          feedbackRows.map((row, rowIndex) => (
+            <div className='flex gap-5 mb-5' key={rowIndex}>
+              {row.map((fb, i) => (
+                <RatingFbBox
+                  _id={fb._id}
+                  handleDelete={() => handleDelete(fb._id)}
+                  key={i}
+                  user_name={fb.user_name}
+                  star={fb.feedback.star}
+                  create_feedback_date={dayjs(fb.feedback.create_feedback_date).format('DD-MM-YYYY')}
+                  feedback={fb.feedback.content}
+                />
+              ))}
+            </div>
+          )))}
       </div>
       <div className='flex justify-end mt-auto'>
         <Stack spacing={2}>

@@ -10,8 +10,10 @@ export default function UserManagementPage() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
   const [totalPage, setTotalPage] = useState<number>(0)
   const [sortOrder, setSortOrder] = useState<number>(-1)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const fetchUsers = async (pageNumber: number, limit: number, sort: number) => {
+    setIsLoading(true)
     try {
       const response = await ApiAdminPrivate.getUserPagiantion({
         page: pageNumber + 1, // API uses 1-based index
@@ -22,6 +24,8 @@ export default function UserManagementPage() {
       setTotalPage(response.data.pageInfo.totalPage)
     } catch (err) {
       console.error('error:', err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -48,7 +52,7 @@ export default function UserManagementPage() {
         </Select>
       </FormControl>
 
-      <UserTable users={userList} page={page} rowsPerPage={rowsPerPage} totalPage={totalPage} onPageChange={handlePageChange} />
+      <UserTable isLoading={isLoading} sortOrder={sortOrder} fetchUser={fetchUsers} users={userList} page={page} rowsPerPage={rowsPerPage} totalPage={totalPage} onPageChange={handlePageChange} />
     </div>
 
   )

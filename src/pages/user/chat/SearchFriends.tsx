@@ -55,7 +55,8 @@ export default function SearchFriends() {
       <InputBase onFocus={() => setFocus(true)} ref={inputRef} value={inputValue} onChange={handleChange} fullWidth placeholder='Search friends...' sx={{ color:'white' }}></InputBase>
       <IconButton><SearchIcon sx={{ color:'white' }}/></IconButton>
       <Box sx={{ position:'absolute', top: 50, left: 0, backgroundColor:'#ececec', paddingX: 10, paddingY: 5, zIndex:1, width: '100%', borderRadius: 5, border:2, opacity: focus? 1 : 0, transition: 'opacity 200ms linear', overflowY:'auto', overflow:'hidden', pointerEvents: focus ? 'auto' : 'none' }}>
-        <button onClick={() => setFocus(false)} className='absolute top-5 right-5 bg-black-fig p-1 rounded-full cursor-pointer active:opacity-70'><CloseIcon sx={{ color:'white' }}/>{''}</button>
+        <button onClick={() => setFocus(false)} className='absolute top-5 right-5 bg-black-fig p-1 rounded-full cursor-pointer active:opacity-70'>
+          <CloseIcon sx={{ color:'white' }}/>{''}</button>
         {friends.length > 0 ? <Box>{friends.map((friend) => (
           <div key={friend._id} className='flex gap-5 w-[100%] justify-between mb-5'>
             <button className='p-5 bg-blue-mid-light-fig w-full rounded-2xl cursor-pointer text-[1.2rem]' onClick={() => handleOpenDialog(friend)}>{friend.user_name}</button>

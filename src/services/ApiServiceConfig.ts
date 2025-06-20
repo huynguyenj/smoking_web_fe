@@ -1,8 +1,8 @@
 import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useTokenInfoStorage } from '../store/authStore'
 import publicApiService from './ApiPublic'
-import { PublicRoute } from '../const/listRoutes'
 import type { ApiError } from '../model/apiType/apiType'
+import { PublicRoute } from '../const/pathList'
 
 const API_URL = import.meta.env.VITE_BASE_API_URL
 const privateApiClient: AxiosInstance = axios.create({
