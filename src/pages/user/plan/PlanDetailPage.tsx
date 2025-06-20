@@ -1,58 +1,33 @@
 import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import StatusPieChart from '../../../components/chart/StatusPieChart'
-
-interface Plan {
-  _id: string
-  user_ID: string
-  process_stage: string
-  health_status: string
-  content: string
-  start_date: string
-  expected_result_date: string
-  create_by: string
-  isDelete: boolean
-}
-
-const mockPlanData: Record<string, Plan> = {
-  '1': {
-    _id: '1',
-    user_ID: 'u001',
-    process_stage: 'in_progress',
-    health_status: 'Ổn định',
-    content: 'Bỏ thuốc trong 30 ngày',
-    start_date: '2025-05-01T00:00:00Z',
-    expected_result_date: '2025-05-30T00:00:00Z',
-    create_by: 'u001',
-    isDelete: false
-  },
-  '2': {
-    _id: '2',
-    user_ID: 'u002',
-    process_stage: 'completed',
-    health_status: 'Tốt',
-    content: 'Giảm hút thuốc còn 1 điếu/ngày',
-    start_date: '2025-04-01T00:00:00Z',
-    expected_result_date: '2025-04-30T00:00:00Z',
-    create_by: 'u002',
-    isDelete: false
-  },
-  '3': {
-    _id: '3',
-    user_ID: 'u003',
-    process_stage: 'not_started',
-    health_status: 'Trung bình',
-    content: 'Tập thể dục sáng 10 ngày',
-    start_date: '2025-03-01T00:00:00Z',
-    expected_result_date: '2025-03-30T00:00:00Z',
-    create_by: 'u003',
-    isDelete: false
-  }
-}
+import UpdatePlan from '../../../components/popup/UpdatePlan'
+import ApiPrivate from '../../../services/ApiPrivate'
+import type { Plan } from '../../../model/user/planType'
 
 const PlanDetail = () => {
   const { id } = useParams<{ id: string }>()
-  const plan = mockPlanData[id || '']
+  const [plan, setPlan] = useState<Plan | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false)
 
+  useEffect(() => {
+    const fetchPlan = async () => {
+      try {
+        const res = await ApiPrivate.getPlanDetail(id!)
+        setPlan(res.data)
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error('Lỗi khi tải chi tiết kế hoạch:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) fetchPlan()
+  }, [id])
+
+  if (loading) return <div className="p-6">Đang tải chi tiết kế hoạch...</div>
   if (!plan) return <div className="p-6">Không tìm thấy kế hoạch</div>
 
   return (
@@ -62,6 +37,7 @@ const PlanDetail = () => {
           <h1 className="text-3xl font-bold text-white tracking-wide">📋 Chi tiết kế hoạch</h1>
           <p className="text-sm text-blue-100 mt-1">Tổng quan và tiến trình thực hiện kế hoạch</p>
         </div>
+
         <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 text-gray-800">
             <div>
@@ -82,8 +58,8 @@ const PlanDetail = () => {
             </div>
             <div>
               <p className="text-sm text-gray-500 font-medium">🗑️ Trạng thái xóa</p>
-              <p className={`font-semibold mt-1 ${plan.isDelete ? 'text-red-600' : 'text-green-600'}`}>
-                {plan.isDelete ? 'Đã xóa' : 'Chưa xóa'}
+              <p className={`font-semibold mt-1 ${plan.isDeleted ? 'text-red-600' : 'text-green-600'}`}>
+                {plan.isDeleted ? 'Đã xóa' : 'Chưa xóa'}
               </p>
             </div>
             <div className="sm:col-span-2">
@@ -93,13 +69,46 @@ const PlanDetail = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center flex-col">
             <div className="w-full max-w-[160px]">
-              <StatusPieChart status={plan.process_stage as 'not_started' | 'in_progress' | 'completed'} />
+              <StatusPieChart status={plan.process_stage} />
             </div>
+            {/* 👇 Nút Cập nhật kế hoạch */}
+            <button
+              onClick={() => setIsUpdateOpen(true)}
+              className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow mt-20"
+            >
+              ✏️ Cập nhật kế hoạch
+            </button>
           </div>
         </div>
       </div>
+
+      {/* 👇 Popup UpdatePlan */}
+      {isUpdateOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Nền mờ + tối */}
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+          {/* Nội dung popup */}
+          <div className="relative z-10 bg-white rounded-xl shadow-lg p-6 w-full max-w-xl">
+            <button
+              onClick={() => setIsUpdateOpen(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+            >
+              &times;
+            </button>
+            <UpdatePlan
+              plan={plan}
+              onSuccessUpdate={() => {
+                setIsUpdateOpen(false)
+                setLoading(true)
+                ApiPrivate.getPlanDetail(id!).then(res => setPlan(res.data)).finally(() => setLoading(false))
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,71 +1,136 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import BlogCard from '../../components/blog/BlogCard'
+import CreateBlogPopup from '../../components/popup/CreateBlog'
+import type { Blog, PageInfo } from '../../model/user/blogType'
+import privateApiService from '../../services/ApiPrivate'
 
-interface BlogPost {
-  id: number
-  title: string
-  summary: string
-  imageUrl: string
-}
-
-const blogPosts: BlogPost[] = [
-  { id: 1, title: 'Blog 1', summary: 'Summary 1', imageUrl: 'https://source.unsplash.com/random/300x200?sig=1' },
-  { id: 2, title: 'Blog 2', summary: 'Summary 2', imageUrl: 'https://source.unsplash.com/random/300x200?sig=2' },
-  { id: 3, title: 'Blog 3', summary: 'Summary 3', imageUrl: 'https://source.unsplash.com/random/300x200?sig=3' },
-  { id: 4, title: 'Blog 4', summary: 'Summary 4', imageUrl: 'https://source.unsplash.com/random/300x200?sig=4' },
-  { id: 5, title: 'Blog 5', summary: 'Summary 5', imageUrl: 'https://source.unsplash.com/random/300x200?sig=5' },
-  { id: 6, title: 'Blog 6', summary: 'Summary 6', imageUrl: 'https://source.unsplash.com/random/300x200?sig=6' },
-  { id: 7, title: 'Blog 7', summary: 'Summary 7', imageUrl: 'https://source.unsplash.com/random/300x200?sig=7' },
-  { id: 8, title: 'Blog 8', summary: 'Summary 8', imageUrl: 'https://source.unsplash.com/random/300x200?sig=8' },
-  { id: 9, title: 'Blog 9', summary: 'Summary 9', imageUrl: 'https://source.unsplash.com/random/300x200?sig=9' },
-  { id: 10, title: 'Blog 10', summary: 'Summary 10', imageUrl: 'https://source.unsplash.com/random/300x200?sig=10' }
-]
+const postsPerPage = 6
 
 const BlogList = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const postsPerPage = 6
+  const [blogs, setBlogs] = useState<Blog[]>([])
+  const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 1, limit: postsPerPage, totalPage: 1 })
+  const [searchTerm, setSearchTerm] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [showCreatePopup, setShowCreatePopup] = useState(false)
 
-  const totalPages = Math.ceil(blogPosts.length / postsPerPage)
-  const indexOfLastPost = currentPage * postsPerPage
-  const indexOfFirstPost = indexOfLastPost - postsPerPage
-  const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost)
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    window.scrollTo({ top: 0, behavior: 'smooth' }) // Scroll lên khi chuyển trang
+  const fetchBlogs = async (page = 1, limit = postsPerPage) => {
+    setLoading(true)
+    try {
+      const res = await privateApiService.getAllBlogs(page, limit)
+      setBlogs(res.data.listData)
+      setPageInfo(res.data.pageInfo)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('❌ Lỗi khi tải blogs:', error)
+      toast.error('Không thể tải danh sách blog.')
+    } finally {
+      setLoading(false)
+    }
   }
 
+  useEffect(() => {
+    fetchBlogs(pageInfo.page, pageInfo.limit)
+  }, [pageInfo.page, pageInfo.limit])
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage !== pageInfo.page && newPage >= 1 && newPage <= pageInfo.totalPage) {
+      setPageInfo(prev => ({ ...prev, page: newPage }))
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const handleCreateSuccess = () => {
+    setShowCreatePopup(false)
+    fetchBlogs(1)
+    setPageInfo(prev => ({ ...prev, page: 1 }))
+  }
+
+  const filteredBlogs = blogs.filter(blog =>
+    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-8">Blog List</h1>
-      <div className="flex justify-center mb-6">
-        <input
-          type="text"
-          placeholder="Search"
-          className="border border-gray-300 rounded-md px-4 py-2 w-1/3"
-        />
+    <div className="min-h-screen">
+      <div className="flex justify-between items-center max-w-5xl mx-auto px-6 pt-6">
+        <h1 className="text-3xl font-bold">Danh sách blog</h1>
+        <button
+          onClick={() => setShowCreatePopup(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          + Tạo blog
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentPosts.map((post) => (
-          <BlogCard key={post.id} post={post} />
-        ))}
-      </div>
+      {showCreatePopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 backdrop-blur-sm"></div>
+          <div className="relative z-10 bg-white rounded-xl shadow-lg p-6 w-full max-w-xl">
+            <button
+              onClick={() => setShowCreatePopup(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+            >
+              &times;
+            </button>
+            <CreateBlogPopup onClose={() => setShowCreatePopup(false)} onSuccess={handleCreateSuccess} />
+          </div>
+        </div>
+      )}
 
-      <div className="flex justify-center mt-10">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={`px-3 py-1 mx-1 rounded border text-sm font-medium ${
-              page === currentPage
-                ? 'bg-blue-500 text-white'
-                : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-100'
-            }`}
-          >
-            {page}
-          </button>
-        ))}
+      <div className="p-6 max-w-5xl mx-auto">
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Tìm kiếm blog..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 rounded-md px-4 py-2 w-full sm:w-1/2"
+          />
+        </div>
+
+        {loading ? (
+          <div className="text-center text-gray-500 py-10 text-lg animate-pulse">
+            Đang tải danh sách blog...
+          </div>
+        ) : filteredBlogs.length === 0 ? (
+          <div className="text-center text-gray-400 py-10 text-base">
+            Không tìm thấy blog nào.
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredBlogs.map((post) => (
+                <BlogCard
+                  key={post._id}
+                  post={{
+                    id: post._id,
+                    title: post.title,
+                    summary: post.content.slice(0, 100) + '...',
+                    imageUrl: post.image_url[0] || ''
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="flex justify-center mt-10 gap-2">
+              <button
+                disabled={pageInfo.page === 1}
+                onClick={() => handlePageChange(pageInfo.page - 1)}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Trước
+              </button>
+              <span className="px-3 py-1">Trang {pageInfo.page} / {pageInfo.totalPage}</span>
+              <button
+                disabled={pageInfo.page === pageInfo.totalPage}
+                onClick={() => handlePageChange(pageInfo.page + 1)}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Sau
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

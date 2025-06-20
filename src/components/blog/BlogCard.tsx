@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserRoute } from '../../const/pathList'
 
 interface BlogPost {
-  id: number
+  id: string
   title: string
   summary: string
   imageUrl: string

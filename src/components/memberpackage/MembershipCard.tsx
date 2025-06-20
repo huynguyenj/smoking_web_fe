@@ -1,4 +1,3 @@
-import React from 'react'
 
 interface MembershipCardProps {
   name: string
@@ -7,7 +6,7 @@ interface MembershipCardProps {
   highlight?: boolean
 }
 
-const MembershipCard: React.FC<MembershipCardProps> = ({ name, price, features, highlight }) => {
+function MembershipCard({ name, price, features, highlight }: MembershipCardProps) {
   return (
     <div
       className={`flex flex-col justify-between h-full min-h-[460px] w-full max-w-md mx-auto rounded-2xl shadow-xl p-8 bg-white transition-transform hover:scale-105 ${
@@ -29,9 +28,7 @@ const MembershipCard: React.FC<MembershipCardProps> = ({ name, price, features, 
       <div className="flex justify-center mt-6">
         <button
           className={`px-8 py-3 rounded-xl text-lg font-bold text-white transition-colors ${
-            highlight
-              ? 'bg-blue-600 hover:bg-blue-700'
-              : 'bg-gray-600 hover:bg-gray-700'
+            highlight ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-600 hover:bg-gray-700'
           }`}
         >
           Choose Plan
