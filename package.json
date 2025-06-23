@@ -20,6 +20,7 @@
     "@tailwindcss/vite": "^4.1.6",
     "@types/lodash": "^4.17.17",
     "axios": "^1.9.0",
+    "bcrypt": "^6.0.0",
     "dayjs": "^1.11.13",
     "firebase": "^11.7.3",
     "formik": "^2.4.6",
