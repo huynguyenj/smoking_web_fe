@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import type { RouteType } from '../model/routeType/routeType'
 
+
 const AdminDashboard = lazy(() => import('../pages/admin/AdminHome'))
 const MemberManagementPage = lazy(() => import('../pages/admin/MemberManagementPage'))
 const RatingManagementPage = lazy(() => import('../pages/admin/RatingManagementPage'))
@@ -23,13 +24,14 @@ const PaymentStatusPage = lazy(() => import('../pages/payment/PaymentStatusPage'
 const UserDashboardPage = lazy(() => import('../pages/user/UserDashboardPage'))
 const ContactPage = lazy(() => import('../pages/user/ContactPage'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
-
+const RankPage = lazy(() => import('../pages/admin/RankPage'))
 
 export const listAdminRoute: RouteType[] = [
   { path: 'dashboard', element:<AdminDashboard/> },
   { path: 'rating', element:<RatingManagementPage/> },
   { path: 'user-management', element:<UserManagementPage/> },
-  { path: 'member-management', element:<MemberManagementPage/> }
+  { path: 'member-management', element:<MemberManagementPage/> },
+  { path: 'rank-management', element: <RankPage/> }
 ]
 
 export const listUserRoute: RouteType[] = [

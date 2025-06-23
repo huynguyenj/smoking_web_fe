@@ -7,6 +7,7 @@ import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { toast } from 'react-toastify'
 import { MuiIcon } from '../muiIcon/MuiIcon'
 import type { MemberShipInfo } from '../../model/user/memberShipType'
+import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
 
 export interface UserTableProps {
   users: UserPaginationInfo[];
@@ -170,7 +171,16 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
           </DialogActions>
         </Dialog>
 
-        <Dialog open={openDetail} onClose={() => setOpenDetail(false)}>
+        <UserDetailDialog
+          openDetail={openDetail}
+          setOpenDetail={() => setOpenDetail(false)}
+          setOpenMemberBox={() => setOpenMemberBox(false)}
+          userDetails={userDetails}
+          memberShipInfo={memberShipInfo}
+          openMemberBox={openMemberBox}
+          handleExpandMember={handleExpandMember} />
+
+        {/* <Dialog open={openDetail} onClose={() => setOpenDetail(false)}>
           <DialogTitle sx={{ textAlign: 'center' }}>User Detail</DialogTitle>
           <DialogContent sx={{ width: 600 }}>
             <DialogContentText>
@@ -208,7 +218,7 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
           <DialogActions>
             <Button onClick={() => setOpenDetail(false)} color="success">Yes</Button>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
       </div>
       <div className='mt-10 mr-10'>
         <TablePagination

@@ -123,7 +123,7 @@ function MemberShipBox({ _id, memberShipTitle, profit, backgroundColor, feature,
 
       {/* Form update */}
       <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Chỉnh sửa gói thành viên</DialogTitle>
+        <DialogTitle>Edit member package</DialogTitle>
         <DialogContent>
           <div className="flex flex-col gap-4 mt-2">
             <input

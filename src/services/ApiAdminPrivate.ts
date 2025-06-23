@@ -4,6 +4,7 @@ import type { UserDetail, UserPaginationInfo } from '../model/user/userType'
 import { apiService } from './ApiServiceConfig'
 import type { FeedbackPaginationInfo } from '../model/feedback/feedbackType'
 import type { MemberShipInfo } from '../model/user/memberShipType'
+import type { RankPaginationInfo } from '../model/rank/rankType'
 
 const ApiAdminPrivate = {
   getTotalUsers: (): Promise<ApiResponse<number>> => apiService.privateApiClient.get('v1/admin/user'),
@@ -19,7 +20,9 @@ const ApiAdminPrivate = {
   getMemberPackage: (): Promise<ApiResponse<MemberShipInfo[]>> => apiService.privateApiClient.get('v1/admin/membership'),
   createMemberPackage: ( { membership_title, price, feature } : { membership_title: string, price: number, feature: string[] }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/membership', { membership_title, price, feature }),
   deleteMemberPackage: ( { id } : { id: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/membership/edit/${id}`),
-  updateMemberPackage: ( { id, membership_title, price, feature } : { id: string, membership_title: string, price: number, feature: string[] }): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`v1/admin/membership/edit/${id}`, { membership_title, price, feature })
+  updateMemberPackage: ( { id, membership_title, price, feature } : { id: string, membership_title: string, price: number, feature: string[] }): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`v1/admin/membership/edit/${id}`, { membership_title, price, feature }),
+  getRankData: ({ page, limit, sort }: { page: number, limit: number, sort: number }): Promise<ApiResponse<Pagination<RankPaginationInfo>>> => apiService.privateApiClient.post('v1/admin/rank', { page, limit, sort }),
+  getUserByRankId: ( { id } : { id: string } ): Promise<ApiResponse<UserDetail>> => apiService.privateApiClient.get(`v1/admin/rank/${id}`)
 }
 
 export default ApiAdminPrivate

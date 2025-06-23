@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import MemberShipBox from '../../components/memberShip-box/MemberShipBox'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import type { MemberShipInfo } from '../../model/user/memberShipType'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 
 export default function MemberManagementPage() {
   const [memberPackages, setMemberPackages] = useState<MemberShipInfo[]>([])
@@ -10,17 +10,21 @@ export default function MemberManagementPage() {
   const [featureInput, setFeatureInput] = useState('')
   const [membership_title, setMembership_title] = useState<string>('')
   const [price, setPrice] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     getMemberPackage()
   }, [])
 
   const getMemberPackage = async () => {
+    setIsLoading(true)
     try {
       const response = await ApiAdminPrivate.getMemberPackage()
       setMemberPackages(response.data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -38,45 +42,13 @@ export default function MemberManagementPage() {
     }
   }
   return (
-    <div >
+    <div>
       <div className='flex justify-end mb-[0.8rem] mr-[2.1rem]'>
         <Button variant='contained' onClick={() => setOpen(true)}>Create</Button>
       </div>
-      <div className='flex justify-around gap-2 flex-wrap'>
-        <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
-          <DialogTitle>Create package</DialogTitle>
-          <DialogContent>
-            <TextField
-              label="Title"
-              value={membership_title}
-              onChange={e => setMembership_title(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-
-            <TextField
-              label="Price(Vnd)"
-              type="number"
-              value={price}
-              onChange={e => setPrice(Number(e.target.value))}
-              fullWidth
-              margin="normal"
-            />
-
-            <TextField
-              label="Feature"
-              value={featureInput}
-              onChange={e => setFeatureInput(e.target.value)}
-              fullWidth
-              margin="normal"
-            />
-
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpen(false)}>Hủy</Button>
-            <Button variant="contained" onClick={handleSubmit}>Gửi</Button>
-          </DialogActions>
-        </Dialog>
+      {isLoading ? (<div className="flex items-center justify-center">
+        <CircularProgress />
+      </div>) : (<div className='flex justify-around gap-2 flex-wrap'>
         {memberPackages.map((m) => (
           <div key={m._id}>
             <MemberShipBox
@@ -93,7 +65,41 @@ export default function MemberManagementPage() {
             />
           </div>
         ))}
-      </div>
+      </div>)}
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Create package</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Title"
+            value={membership_title}
+            onChange={e => setMembership_title(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Price(Vnd)"
+            type="number"
+            value={price}
+            onChange={e => setPrice(Number(e.target.value))}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Feature"
+            value={featureInput}
+            onChange={e => setFeatureInput(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Hủy</Button>
+          <Button variant="contained" onClick={handleSubmit}>Gửi</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
