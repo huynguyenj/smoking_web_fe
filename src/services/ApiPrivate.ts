@@ -3,6 +3,7 @@ import type { Friend, MessageHistoryInfo, SearchUserType, UserInfo } from '../mo
 import { apiService } from './ApiServiceConfig'
 
 const privateApiService = {
+  logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
   getUserInfo: (): Promise<ApiResponse<UserInfo>> => apiService.privateApiClient.get('/v1/users/info'),
   getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo[]>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
   getFriendsList: (): Promise<ApiResponse<Friend[]>> => apiService.privateApiClient.get('/v1/users/friend'),
