@@ -1,6 +1,6 @@
 import type { LoginResponse } from '../authModel/authDataType'
 import type { Feedback } from '../feedback/feedbackType'
-import type { MemeberShip } from './memberShipType'
+import type { MemberShip } from './memberShipType'
 
 export type UserInfo = LoginResponse
 export type MessageHistoryInfo = {
@@ -44,6 +44,6 @@ export interface UserPaginationInfo {
 
 export interface UserDetail extends UserPaginationInfo{
   feedback: Feedback,
-  membership: MemeberShip
+  membership: MemberShip
   profile: Profile
 }

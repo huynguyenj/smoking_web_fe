@@ -5,14 +5,14 @@ import { MuiIcon } from '../../components/muiIcon/MuiIcon'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 export default function AdminDashboard() {
   const [users, setUsers] = useState<number>(0)
   const [payments, setPayments] = useState<number>(0)
   const [revenue, setRevenue] = useState<number>(0)
-  const [selectedDate, setSelectedDate] = useState(dayjs())
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs())
   const [chartData, setChartData] = useState<number>(0)
 
 
@@ -49,23 +49,24 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleDateChange = async (newValue) => {
+  const handleDateChange = async (newValue: Dayjs | null) => {
     setSelectedDate(newValue)
 
-    const month = newValue.month() + 1 // dayjs month: 0-11
-    const year = newValue.year()
-
-    try {
-      const response = await ApiAdminPrivate.getUserChart({ month, year })
-      setChartData(response.data)
-      console.log('API called with:', { month, year })
-    } catch (error) {
-      console.error('Failed to fetch chart data:', error)
+    if (newValue) {
+      const month = newValue?.month() + 1 // dayjs month: 0-11
+      const year = newValue.year()
+      try {
+        const response = await ApiAdminPrivate.getUserChart({ month, year })
+        setChartData(response.data)
+        console.log('API called with:', { month, year })
+      } catch (error) {
+        console.error('Failed to fetch chart data:', error)
+      }
     }
-  };
+  }
 
   const dataApi = [
-    { month: selectedDate.format('MMMM'), user: chartData }
+    { month: selectedDate?.format('MMMM') || '', user: chartData }
   ]
 
   const titleApi = ['user']

@@ -1,4 +1,4 @@
-export type MemeberShip = {
+export type MemberShip = {
     membership_id: string,
     create_date: Date,
     expired_date: Date

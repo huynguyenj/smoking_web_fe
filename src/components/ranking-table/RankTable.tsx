@@ -13,12 +13,12 @@ export interface RankTableProp {
   rowsPerPage: number,
   totalPage: number,
   page: number,
-  onPageChange: (newPage: number, newRowsPerPage: number) => void,
+  onPageChange: (newPage: number, newRowsPerPage: number) => void, // eslint-disable-line no-unused-vars
   isLoading: boolean
 }
 
 function RankTable({ rank, rowsPerPage, totalPage, page, onPageChange, isLoading }: RankTableProp) {
-  const [userDetails, setUserDetails] = useState<UserDetail>([])
+  const [userDetails, setUserDetails] = useState<UserDetail>()
   const [open, setOpen] = useState<boolean>(false)
   const [memberShipInfo, setMemberShipInfo] = useState<MemberShipInfo>()
   const [openMemberBox, setOpenMemberBox] = useState<boolean>(false)
