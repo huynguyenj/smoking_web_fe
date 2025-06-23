@@ -2,9 +2,11 @@ import { Link, useLocation } from 'react-router-dom'
 import Logo from '../../assets/Logo/logo_smoking.png'
 import { sideBarItems } from '../../const/navbarItems'
 import { MuiIcon } from '../../components/muiIcon/MuiIcon'
+import useLogout from '../../hooks/auth/useLogout'
 
 export default function AdminSidebar() {
   const currentRoute = useLocation()
+  const { handleLogout } = useLogout()
   return (
     <div className="flex flex-col gap-20 items-center bg-black-fig min-h-[100vh] py-5">
       <div className='text-white-fig font-bold flex items-center gap-5'>
@@ -21,7 +23,7 @@ export default function AdminSidebar() {
           </Link>
         ))}
         <div>
-          <button className='flex items-center gap-3 absolute bottom-10 text-[1.2rem] font-bold cursor-pointer hover:opacity-70' type='submit'>
+          <button className='flex items-center gap-3 absolute bottom-10 text-[1.2rem] font-bold cursor-pointer hover:opacity-70 p-5' type='button' onClick={handleLogout}>
             <MuiIcon.ExitToAppIcon />Logout
           </button>
         </div>
