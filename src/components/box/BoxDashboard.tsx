@@ -4,7 +4,7 @@ import type React from 'react'
 interface SquareBox {
   icon: React.ElementType<SvgIconProps>;
   title: string;
-  data: string;
+  data: string | number;
 }
 
 

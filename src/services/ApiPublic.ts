@@ -10,4 +10,5 @@ const publicApiService = {
   getNewToken: (): Promise<ApiResponse<TokenResponse>> => apiService.publicApiClient.get('/v1/users/token')
 }
 
+
 export default publicApiService

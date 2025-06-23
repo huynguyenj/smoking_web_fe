@@ -5,11 +5,11 @@ import { valueFormatter } from './DataSet'
 const chartSetting = {
   yAxis: [
     {
-      label: 'rainfall (mm)'
+      label: 'Total users'
     }
   ],
-  width: 1550,
-  height: 525,
+  width: 300,
+  height: 205,
   sx: {
     [`.${axisClasses.left} .${axisClasses.label}`]: {
       transform: 'translate(-20px, 0)'
