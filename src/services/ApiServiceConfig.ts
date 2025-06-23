@@ -70,7 +70,8 @@ privateApiClient.interceptors.response.use((response) => {
 publicApiClient.interceptors.response.use((response) => {
   return response.data
 }, (error) => {
-  return Promise.reject(error)
+  const errorResMessage = error.response?.data as ApiError
+  return Promise.reject(errorResMessage.message)
 })
 
 export const apiService = { privateApiClient, publicApiClient }

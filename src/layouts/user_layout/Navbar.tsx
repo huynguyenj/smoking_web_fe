@@ -1,12 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../../assets/Logo/logo_smoking.png'
 import { MuiIcon } from '../../components/muiIcon/MuiIcon.ts'
 import { NavItems, SubItems } from '../../const/navbarItems.ts'
 import { useTokenInfoStorage } from '../../store/authStore.ts'
 import avatar from '../../assets/avatar.jpg'
-import { PublicRoute } from '../../const/pathList.ts'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import { PublicRoute, UserRoute } from '../../const/pathList.ts'
+import useLogout from '../../hooks/auth/useLogout.tsx'
+import useOpen from '../../hooks/openState/useOpen.tsx'
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 function Navbar() {
   const userInfo = useTokenInfoStorage(( state ) => state.userInfo)
+  const { isOpen, toggle } = useOpen()
+  const { handleLogout } = useLogout()
+  const navigate = useNavigate()
   return (
     <div className="fixed top-0 bg-black-fig w-full rounded-4xl px-5 py-3 flex items-center justify-between mt-3">
       <Link to={'/user'}><img src={Logo} alt="logo_img" className='w-15 aspect-square' /></Link>
@@ -34,9 +42,28 @@ function Navbar() {
       </div>
       <div className='flex gap-5 items-end'>
         {userInfo ?
-          <>
-            <img src={avatar} alt="avatar" className='w-12 aspect-square rounded-full' />
-          </>
+          <div className='relative'>
+            <img src={avatar} alt="avatar" className='w-12 aspect-square rounded-full cursor-pointer' onClick={toggle} />
+            {isOpen &&
+            <div className='absolute w-50 top-15 right-5 bg-gray-fig p-5 rounded-2xl'>
+              <ul className='flex flex-col justify-center items-center '>
+                <li className='flex gap-2 hover:bg-black-fig hover:text-white-fig p-2 w-full rounded-2xl cursor-pointer' onClick={() => navigate(UserRoute.PROFILE_PATH)}>
+                  <AccountBoxIcon/>
+                  Profile
+                </li>
+                <li className='flex gap-2 hover:bg-black-fig hover:text-white-fig p-2 w-full rounded-2xl cursor-pointer' onClick={handleLogout}>
+                  <ExitToAppIcon/>
+                  Logout
+                </li>
+                <li className='flex gap-2 hover:bg-black-fig hover:text-white-fig p-2 w-full rounded-2xl cursor-pointer' onClick={handleLogout}>
+                  <ChatBubbleIcon/>
+                  Chat
+                </li>
+                <li></li>
+              </ul>
+            </div>
+            }
+          </div>
           :
           <>
             <Link to={PublicRoute.LOGIN_PATH} className='bg-blue-fig px-8 py-3 rounded-2xl text-white-fig hover:bg-blue-mid-light-fig cursor-pointer'>Login</Link>

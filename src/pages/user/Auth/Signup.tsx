@@ -7,29 +7,29 @@ const SignupPage = () => {
   return (
     <div>
       <div>
-        <div className='w-[100px] h-[100px] mt-10 ml-20'>
+        <div className='w-20 h-[100px] ml-5'>
           <Link to={UserRoute.HOME_PATH}><img src={Logo} alt="logo" /></Link>
         </div>
         <div
-          className='w-[70%] h-[70vh] bg-cover bg-center ml-[15%] border-2 border-black'
+          className='w-[70%] bg-cover bg-center m-auto px-10 py-10 border-2 border-black'
           style={{ backgroundImage: `url(${Background1})` }}
         >
-          <div className='flex flex-col pt-16'>
-            <h2 className='text-[3rem] font-bold pt-10 pl-220'>Sign up</h2>
+          <div className='flex flex-col '>
+            <h2 className='text-[2.5rem] font-bold w-50 ml-170'>Sign up</h2>
             <form className='flex flex-col'>
               <input
                 type="text"
                 placeholder='Email'
-                className='bg-gray-200 w-[30%] h-[40px] rounded-[10px] mt-10 ml-190 pl-3'
+                className='bg-gray-200 w-[30%] h-[40px] rounded-[10px] mt-10 ml-140 pl-3'
               />
               <input
                 type="password"
                 placeholder='Password'
-                className='bg-gray-200 w-[30%] h-[40px] rounded-[10px] mt-5 ml-190 pl-3'
+                className='bg-gray-200 w-[30%] h-[40px] rounded-[10px] mt-5 ml-140 pl-3'
               />
 
               {/* Giới tính */}
-              <div className='flex items-center mt-5 ml-190'>
+              <div className='flex items-center mt-5 ml-140'>
                 <label className='mr-6 text-black'>
                   <input type="radio" name="gender" value="male" className="mr-1" />
                   Male
@@ -42,10 +42,10 @@ const SignupPage = () => {
             </form>
 
             <div className='flex ml-10'>
-              <h2 className='text-[1rem] font-bold pt-3 ml-195'>Already have an account?</h2>
+              <h2 className='text-[1rem] font-bold pt-3 ml-140'>Already have an account?</h2>
               <Link to='/login' className='text-[1rem] font-bold pt-3 pl-2 text-cyan-500'>Sign in</Link>
             </div>
-            <button className='bg-black w-[30%] h-[40px] rounded-[10px] mt-5 ml-190 text-white'>
+            <button className='bg-black w-[30%] h-[40px] rounded-[10px] mt-5 ml-140 text-white'>
               Sign up
             </button>
           </div>
