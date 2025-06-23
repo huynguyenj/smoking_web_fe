@@ -8,7 +8,7 @@ export default function RankPage() {
   const [page, setPage] = useState<number>(0) // zero-based index
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
   const [totalPage, setTotalPage] = useState<number>(0)
-  const [sortOrder, setSortOrder] = useState<number>(-1)
+  const [sortOrder] = useState<number>(-1)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const fetchRankData = async (pageNumber: number, limit: number, sort: number) => {

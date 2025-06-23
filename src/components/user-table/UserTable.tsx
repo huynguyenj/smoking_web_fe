@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 import type { UserDetail, UserPaginationInfo } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { toast } from 'react-toastify'
-import { MuiIcon } from '../muiIcon/MuiIcon'
 import type { MemberShipInfo } from '../../model/user/memberShipType'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
 
@@ -24,7 +23,7 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
   const [openConfirm, setOpenConfirm] = useState(false)
   const [selectedUser, setSelectedUser] = useState<UserPaginationInfo>()
   const [openDetail, setOpenDetail] = useState(false)
-  const [userDetails, setUserDetails] = useState<UserDetail>([])
+  const [userDetails, setUserDetails] = useState<UserDetail>()
   const [openMemberBox, setOpenMemberBox] = useState<boolean>(false)
   const [memberShipInfo, setMemeberShipInfo] = useState<MemberShipInfo>()
 
