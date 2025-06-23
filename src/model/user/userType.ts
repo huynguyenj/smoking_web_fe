@@ -12,7 +12,7 @@ export type MessageHistoryInfo = {
 
 type Profile = {
   address: string,
-  brirthdate: Date,
+  brzirthdate: Date,
   age: number,
   experience: string
 }
