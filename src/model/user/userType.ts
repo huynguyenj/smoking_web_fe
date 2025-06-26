@@ -1,8 +1,27 @@
-import type { LoginResponse } from '../authModel/authDataType'
+import type { ProfileType } from '../authModel/authDataType'
 import type { Feedback } from '../feedback/feedbackType'
-import type { MemberShip } from './memberShipType'
 
-export type UserInfo = LoginResponse
+type Membership = {
+  membership_id: string,
+  create_date: string,
+  expired_date: string
+}
+export type UserInfo = {
+      _id: string,
+      full_name: string,
+      user_name: string,
+      email: string,
+      created_date: Date,
+      update_date: Date,
+      isActive: boolean,
+      isDeleted: boolean,
+      role: string,
+      gender: boolean | null,
+      profile: ProfileType,
+      accessToken: string,
+      friends?: string[],
+      membership?: Membership
+}
 export type MessageHistoryInfo = {
   sender_id: string,
   receiver_id: string,
@@ -12,7 +31,7 @@ export type MessageHistoryInfo = {
 
 type Profile = {
   address: string,
-  brzirthdate: Date,
+  birthdate: Date,
   age: number,
   experience: string
 }
@@ -44,6 +63,6 @@ export interface UserPaginationInfo {
 
 export interface UserDetail extends UserPaginationInfo{
   feedback: Feedback,
-  membership: MemberShip
+  membership: Membership
   profile: Profile
 }
