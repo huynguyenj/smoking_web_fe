@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 import privateApiService from '../../services/ApiPrivate'
 import { toast } from 'react-toastify'
-import type { MemberShipInfo } from '../../model/user/membershipType'
+import type { MembershipInfo } from '../../model/user/membershipType'
 
 export default function useMembership() {
-  const [membershipInfo, setMembershipInfo] = useState<MemberShipInfo>()
+  const [membershipInfo, setMembershipInfo] = useState<MembershipInfo>()
   const getMembershipInfo = useCallback(async (membershipId: string) => {
     try {
       const response = await privateApiService.getMemberShipInfo(membershipId)

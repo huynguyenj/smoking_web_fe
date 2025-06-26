@@ -6,7 +6,7 @@ import type { BlogListResponse, Blog } from '../model/user/blogType'
 import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentResponse } from '../model/user/commentType'
 import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
 import type { RankingResponse } from '../model/user/rankingType'
-import type { Membership, MemberShipInfo } from '../model/user/membershipType'
+import type { Membership, MembershipInfo } from '../model/user/membershipType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -61,7 +61,7 @@ const privateApiService = {
       limit
     }),
 
-  getMemberShipInfo: (membershipId: string): Promise<ApiResponse<MemberShipInfo>> => apiService.privateApiClient.get(`/v1/users/membership/detail/${membershipId}`)
+  getMemberShipInfo: (membershipId: string): Promise<ApiResponse<MembershipInfo>> => apiService.privateApiClient.get(`/v1/users/membership/detail/${membershipId}`)
 }
 
 
