@@ -1,4 +1,3 @@
-
 export interface Membership {
   _id: string
   membership_title: string
