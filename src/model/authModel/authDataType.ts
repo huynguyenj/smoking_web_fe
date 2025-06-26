@@ -2,7 +2,7 @@ export interface LoginType {
       email?: string,
       password?: string
 }
-interface ProfileType {
+export interface ProfileType {
       address: string,
       birthdate: Date,
       age: number

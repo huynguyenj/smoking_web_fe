@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import MemberShipBox from '../../components/memberShip-box/MemberShipBox'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
-import type { MemberShipInfo } from '../../model/user/memberShipType'
+import type { MemberShipInfo } from '../../model/user/membershipType'
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 
 export default function MemberManagementPage() {

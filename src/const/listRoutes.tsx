@@ -25,13 +25,15 @@ const UserDashboardPage = lazy(() => import('../pages/user/UserDashboardPage'))
 const ContactPage = lazy(() => import('../pages/user/ContactPage'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const RankPage = lazy(() => import('../pages/admin/RankPage'))
-
+const AnnouncementPage = lazy(() => import('../pages/admin/AnnouncementPage'))
+const FeedbackPage = lazy(() => import('../pages/user/FeedbackPage'))
 export const listAdminRoute: RouteType[] = [
   { path: 'dashboard', element:<AdminDashboard/> },
   { path: 'rating', element:<RatingManagementPage/> },
   { path: 'user-management', element:<UserManagementPage/> },
   { path: 'member-management', element:<MemberManagementPage/> },
-  { path: 'rank-management', element: <RankPage/> }
+  { path: 'rank-management', element: <RankPage/> },
+  { path: 'announcement-management', element: <AnnouncementPage/> }
 ]
 
 export const listUserRoute: RouteType[] = [
@@ -46,7 +48,8 @@ export const listUserRoute: RouteType[] = [
   { path: 'profile', element:<ProfilePage/> },
   { path: 'member-package', element: <MemberPackage/> },
   { path: 'home', element: <HomePage/> },
-  { path: 'contact', element: <ContactPage/> }
+  { path: 'contact', element: <ContactPage/> },
+  { path: 'feedback', element: <FeedbackPage/> }
 ]
 
 // export const listUserPremiumRoute: RouteType[] =[

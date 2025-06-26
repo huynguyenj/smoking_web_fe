@@ -3,7 +3,7 @@ import type { Pagination } from '../model/searchType/SearchType'
 import type { UserDetail, UserPaginationInfo } from '../model/user/userType'
 import { apiService } from './ApiServiceConfig'
 import type { FeedbackPaginationInfo } from '../model/feedback/feedbackType'
-import type { MemberShipInfo } from '../model/user/memberShipType'
+import type { MemberShipInfo } from '../model/user/membershipType'
 import type { RankPaginationInfo } from '../model/rank/rankType'
 
 const ApiAdminPrivate = {

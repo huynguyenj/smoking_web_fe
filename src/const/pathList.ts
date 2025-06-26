@@ -10,7 +10,12 @@ export const UserRoute = {
   RANKING_PATH: '/user/ranking',
   PROFILE_PATH: '/user/profile',
   MEMBER_PACKAGE_PATH: '/user/member-package',
-  CONTACT_PATH: '/user/contact'
+  CONTACT_PATH: '/user/contact',
+  FEEDBACK_PATH: '/user/feedback'
+}
+
+export const MemberRoute = {
+  CHAT_PATH: '/standard/chat'
 }
 
 export const AdminRoute = {
@@ -18,7 +23,8 @@ export const AdminRoute = {
   RANTING_PATH: '/admin/rating',
   USER_MANAGEMENT_PATH: '/admin/user-management',
   MEMBER_MANAGEMENT_PATH: '/admin/member-management',
-  RANK_MANAGEMENT_PATH: '/admin/rank-management'
+  RANK_MANAGEMENT_PATH: '/admin/rank-management',
+  ANNOUNCEMENT_MANAGEMENT_PATH: '/admin/announcement-management'
 }
 
 

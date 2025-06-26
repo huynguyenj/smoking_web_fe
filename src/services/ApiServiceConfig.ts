@@ -7,17 +7,11 @@ import { PublicRoute } from '../const/pathList'
 const API_URL = import.meta.env.VITE_BASE_API_URL
 const privateApiClient: AxiosInstance = axios.create({
   baseURL:API_URL,
-  headers:{
-    'Content-Type': 'application/json'
-  },
   withCredentials: true
 })
 
 const publicApiClient: AxiosInstance = axios.create({
   baseURL:API_URL,
-  headers:{
-    'Content-Type': 'application/json'
-  },
   withCredentials: true
 })
 
