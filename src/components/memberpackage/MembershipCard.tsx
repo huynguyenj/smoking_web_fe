@@ -1,39 +1,52 @@
+import { useNavigate } from 'react-router-dom'
+import { PublicRoute } from '../../const/pathList'
 
 interface MembershipCardProps {
+  id: string
   name: string
   price: string
   features: string[]
   highlight?: boolean
+  buttonLabel?: string
+  onSelect?: () => void
 }
 
-function MembershipCard({ name, price, features, highlight }: MembershipCardProps) {
-  return (
-    <div
-      className={`flex flex-col justify-between h-full min-h-[460px] w-full max-w-md mx-auto rounded-2xl shadow-xl p-8 bg-white transition-transform hover:scale-105 ${
-        highlight ? 'border-4 border-blue-500' : 'border border-gray-200'
-      }`}
-    >
-      <div>
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">{name}</h2>
-        <p className="text-center text-3xl font-extrabold text-blue-600 mb-8">{price}</p>
-        <ul className="space-y-3 px-4 text-lg mb-6">
-          {features.map((feature, i) => (
-            <li key={i} className="text-gray-700">
-              ✅ {feature}
-            </li>
-          ))}
-        </ul>
-      </div>
+const MembershipCard = ({
+  id,
+  name,
+  price,
+  features,
+  highlight,
+  buttonLabel = 'Chọn gói này',
+  onSelect
+}: MembershipCardProps) => {
+  const navigate = useNavigate()
 
-      <div className="flex justify-center mt-6">
-        <button
-          className={`px-8 py-3 rounded-xl text-lg font-bold text-white transition-colors ${
-            highlight ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-600 hover:bg-gray-700'
-          }`}
-        >
-          Choose Plan
-        </button>
-      </div>
+  const handleClick = () => {
+    if (onSelect) {
+      onSelect()
+    } else {
+      navigate(PublicRoute.PAYMENT_PATH, {
+        state: { membershipId: id }
+      })
+    }
+  }
+
+  return (
+    <div className={`rounded-xl shadow-md p-6 bg-white border ${highlight ? 'border-blue-600' : ''}`}>
+      <h2 className="text-xl font-bold mb-2">{name}</h2>
+      <p className="text-gray-700 mb-4">{price}</p>
+      <ul className="mb-4 list-disc list-inside">
+        {features.map((f, i) => (
+          <li key={i}>{f}</li>
+        ))}
+      </ul>
+      <button
+        onClick={handleClick}
+        className="mt-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        {buttonLabel}
+      </button>
     </div>
   )
 }

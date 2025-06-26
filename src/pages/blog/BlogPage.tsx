@@ -105,7 +105,6 @@ const BlogList = () => {
                   post={{
                     id: post._id,
                     title: post.title,
-                    summary: post.content.slice(0, 100) + '...',
                     imageUrl: post.image_url[0] || ''
                   }}
                 />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import MembershipCard from '../components/memberpackage/MembershipCard'
 import type { Membership } from '../model/user/membershipType'
-import membershipService from '../services/ApiPrivate' // ✅ import đúng nếu default export
+import privateApiService from '../services/ApiPrivate'
 
 function MembershipList() {
   const [memberships, setMemberships] = useState<Membership[]>([])
@@ -10,7 +10,7 @@ function MembershipList() {
   useEffect(() => {
     const fetchMemberships = async () => {
       try {
-        const res = await membershipService.getMemberships()
+        const res = await privateApiService.getMemberships()
         const rawData = res.data
 
         const dataWithHighlight = rawData.map((pkg: Membership) => ({
@@ -41,10 +41,9 @@ function MembershipList() {
           {memberships.map((pkg) => (
             <MembershipCard
               key={pkg._id}
+              id={pkg._id}
               name={pkg.membership_title}
-              price={
-                pkg.price === 0 ? '0₫' : `${pkg.price.toLocaleString()}₫ / month`
-              }
+              price={pkg.price === 0 ? '0₫' : `${pkg.price.toLocaleString()}₫ / month`}
               features={pkg.feature}
               highlight={pkg.highlight}
             />

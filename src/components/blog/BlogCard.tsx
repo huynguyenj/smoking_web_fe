@@ -4,7 +4,6 @@ import { UserRoute } from '../../const/pathList'
 interface BlogPost {
   id: string
   title: string
-  summary: string
   imageUrl: string
 }
 
@@ -29,9 +28,9 @@ function BlogCard({ post }: Props) {
         alt={post.title}
         className="w-full h-40 object-cover"
       />
+      <hr className='mt-10'/>
       <div className="p-4">
-        <h2 className="text-lg font-semibold mb-2">{post.title}</h2>
-        <p className="text-sm text-gray-600">{post.summary}</p>
+        <h2 className="text-lg font-semibold mb-2 text-center">{post.title}</h2>
       </div>
     </button>
   )

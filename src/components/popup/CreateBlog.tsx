@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import privateApiService from '../../services/ApiPrivate'
 import { useTokenInfoStorage } from '../../store/authStore'
-import { createBlogFormData } from '../../model/user/blogType' // ✅ dùng đúng hàm tạo FormData
+import { createBlogFormData } from '../../model/user/blogType'
 import type { CreateBlogFormInput } from '../../model/user/blogType'
 
 interface CreateBlogPopupProps {
@@ -17,7 +19,8 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImages(Array.from(e.target.files))
+      const selected = Array.from(e.target.files)
+      setImages(prev => [...prev, ...selected])
     }
   }
 
@@ -36,7 +39,6 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
     try {
       setLoading(true)
 
-      // ✅ Gộp tất cả vào FormData và gửi 1 lần
       const input: CreateBlogFormInput = {
         title,
         content,
@@ -70,20 +72,70 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
         className="w-full border p-2 rounded mb-3"
       />
 
-      <textarea
-        placeholder="Nội dung"
+      {/* Rich text editor */}
+      <ReactQuill
         value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className="w-full border p-2 rounded mb-3 min-h-[120px]"
+        onChange={setContent}
+        theme="snow"
+        placeholder="Nhập nội dung blog..."
+        className="bg-white mb-3"
+        modules={{
+          toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['clean']
+          ]
+        }}
       />
 
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleFileChange}
-        className="w-full border p-2 rounded mb-4"
-      />
+      {/* File Upload */}
+      <div>
+        <label
+          htmlFor="imageUpload"
+          className="inline-flex items-center gap-2 cursor-pointer px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded shadow hover:from-blue-600 hover:to-blue-700 transition-all duration-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M7.5 10.5L12 6m0 0l4.5 4.5M12 6v12"
+            />
+          </svg>
+          <span>Tải ảnh lên</span>
+        </label>
+
+        <input
+          id="imageUpload"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          className="hidden"
+        />
+
+        {/* Small Preview Thumbnails */}
+        {image.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-3">
+            {image.map((file, index) => (
+              <div key={index} className="w-24 h-24 border rounded overflow-hidden">
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`preview-${index}`}
+                  className="w-[100px] h-[100px] object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <div className="flex justify-end gap-2">
         <button

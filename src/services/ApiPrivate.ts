@@ -4,6 +4,10 @@ import { apiService } from './ApiServiceConfig'
 import type { CreatePlanPayload, PlanListResponse, Plan } from '../model/user/planType'
 import type { Membership } from '../model/user/membershipType'
 import type { BlogListResponse, Blog } from '../model/user/blogType'
+import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentResponse } from '../model/user/commentType'
+import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
+import type { RankingResponse } from '../model/user/rankingType'
+
 const privateApiService = {
   getUserInfo: (): Promise<ApiResponse<UserInfo>> => apiService.privateApiClient.get('/v1/users/info'),
   getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo[]>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
@@ -26,7 +30,36 @@ const privateApiService = {
     page,
     limit
   }),
-  getBlogDetail: (id: string): Promise<ApiResponse<Blog>> => apiService.privateApiClient.get(`/v1/users/blog/public/${id}`)
+  getBlogDetail: (id: string): Promise<ApiResponse<Blog>> => apiService.privateApiClient.get(`/v1/users/blog/public/${id}`),
+
+  createComment: (blogId: string, payload: CreateCommentInput): Promise<ApiResponse<Comment>> =>
+    apiService.privateApiClient.post(`/v1/users/comment/${blogId}`, payload),
+
+  getCommentsByBlogId: (
+    blogId: string,
+    page = 1,
+    limit = 5,
+    sort: 'newest' | 'oldest' = 'newest'
+  ): Promise<ApiResponse<CommentListResponse>> =>
+    apiService.privateApiClient.post(`/v1/users/blog/public/${blogId}`, {
+      page,
+      limit,
+      sort: sort === 'oldest' ? 1 : -1
+    }),
+  deleteComment: (
+    blogId: string,
+    commentId: string
+  ): Promise<ApiResponse<DeleteCommentResponse>> =>
+    apiService.privateApiClient.delete(`/v1/users/comment/${blogId}/${commentId}`),
+
+  getPaymentUrl: (data: PaymentRequestPayload): Promise<ApiResponse<PaymentURLResponse>> => apiService.privateApiClient.post('/v1/users/payment', data),
+
+  getRankingList: (page = 1, limit = 5): Promise<RankingResponse> =>
+    apiService.privateApiClient.post('/v1/users/rank', {
+      page,
+      limit
+    })
 }
+
 
 export default privateApiService
