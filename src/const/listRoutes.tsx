@@ -47,8 +47,7 @@ export const listUserRoute: RouteType[] = [
   { path: 'ranking', element:<RankingPage/> },
   { path: 'profile', element:<ProfilePage/> },
   { path: 'member-package', element: <MemberPackage/> },
-  { path: 'home', element: <HomePage/> },
-  { path: 'contact', element: <ContactPage/> },
+  // { path: 'home', element: <HomePage/> },
   { path: 'feedback', element: <FeedbackPage/> }
 ]
 
@@ -62,9 +61,15 @@ export const listUserStandardRoute: RouteType[] =[
   { path: 'chat', element:<ChatPage/> }
 ]
 export const publicRouteList:RouteType[] = [
-  { path:'/login', element: <LoginPage/> },
-  { path:'/register', element: <SignupPage/> },
   { path: '/payment', element: <PaymentPage/> },
   { path: '/payment-status', element: <PaymentStatusPage/> },
-  { path: '/error', element: <ErrorPage/> }
+  { path: '/error', element: <ErrorPage/> },
+  { path: '/user/home', element: <HomePage/> },
+  { path: '/user/contact', element: <ContactPage/> }
+
+]
+
+export const authRouteList: RouteType[] =[
+  { path:'/login', element: <LoginPage/> },
+  { path:'/register', element: <SignupPage/> }
 ]

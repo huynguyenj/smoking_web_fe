@@ -29,6 +29,7 @@ export const AdminRoute = {
 
 
 export const PublicRoute = {
+  HOME_PATH: '/user/home',
   LOGIN_PATH: '/login',
   REGISTER_PATH: '/register',
   PAYMENT_PATH: '/payment',
