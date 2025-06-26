@@ -6,7 +6,7 @@ import { useState } from 'react'
 import type { UserDetail } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
-import type { MemberShipInfo } from '../../model/user/membershipType'
+import type { MembershipInfo } from '../../model/user/membershipType'
 
 export interface RankTableProp {
   rank: RankPaginationInfo[],
@@ -20,7 +20,7 @@ export interface RankTableProp {
 function RankTable({ rank, rowsPerPage, totalPage, page, onPageChange, isLoading }: RankTableProp) {
   const [userDetails, setUserDetails] = useState<UserDetail>()
   const [open, setOpen] = useState<boolean>(false)
-  const [memberShipInfo, setMemberShipInfo] = useState<MemberShipInfo>()
+  const [memberShipInfo, setMemberShipInfo] = useState<MembershipInfo>()
   const [openMemberBox, setOpenMemberBox] = useState<boolean>(false)
 
   const getUserDetail = async (id: string) => {

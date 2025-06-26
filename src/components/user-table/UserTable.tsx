@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import type { UserDetail, UserPaginationInfo } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { toast } from 'react-toastify'
-import type { MemberShipInfo } from '../../model/user/membershipType'
+import type { MembershipInfo } from '../../model/user/membershipType'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
 
 export interface UserTableProps {
@@ -25,7 +25,7 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
   const [openDetail, setOpenDetail] = useState(false)
   const [userDetails, setUserDetails] = useState<UserDetail>()
   const [openMemberBox, setOpenMemberBox] = useState<boolean>(false)
-  const [memberShipInfo, setMemeberShipInfo] = useState<MemberShipInfo>()
+  const [memberShipInfo, setMemeberShipInfo] = useState<MembershipInfo>()
 
   const getUserDetail = async (id: string) => {
     try {

@@ -16,7 +16,7 @@ export interface MembershipResponse {
   data: Membership[]
 }
 
-export type MemberShipInfo = {
+export type MembershipInfo = {
     _id: string,
     membership_title: string,
     price: number,

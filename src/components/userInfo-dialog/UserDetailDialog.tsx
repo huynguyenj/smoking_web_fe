@@ -2,12 +2,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import type { UserDetail } from '../../model/user/userType'
 import dayjs from 'dayjs'
 import { KeyboardArrowDown } from '@mui/icons-material'
-import type { MemberShipInfo } from '../../model/user/membershipType'
+import type { MembershipInfo } from '../../model/user/membershipType'
 
 export interface UserDetailDialogProps {
     openDetail: boolean,
     setOpenDetail: (open: boolean) => void, // eslint-disable-line no-unused-vars
-    memberShipInfo: MemberShipInfo | undefined
+    memberShipInfo: MembershipInfo | undefined
     openMemberBox: boolean,
     handleExpandMember: (id: string) => void, // eslint-disable-line no-unused-vars
     userDetails: UserDetail | undefined,
