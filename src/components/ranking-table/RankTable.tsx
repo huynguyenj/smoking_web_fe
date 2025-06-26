@@ -6,7 +6,7 @@ import { useState } from 'react'
 import type { UserDetail } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
-import type { MemberShipInfo } from '../../model/user/memberShipType'
+import type { MemberShipInfo } from '../../model/user/membershipType'
 
 export interface RankTableProp {
   rank: RankPaginationInfo[],
