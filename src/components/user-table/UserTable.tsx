@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import type { UserDetail, UserPaginationInfo } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { toast } from 'react-toastify'
-import type { MemberShipInfo } from '../../model/user/memberShipType'
+import type { MemberShipInfo } from '../../model/user/membershipType'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
 
 export interface UserTableProps {

@@ -1,4 +1,3 @@
-// types/membershipType.ts (hoặc model/membershipType.ts)
 
 export interface Membership {
   _id: string
