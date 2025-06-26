@@ -77,8 +77,8 @@ export default function AdminDashboard() {
           <BoxDashboard key={index} icon={box.icon} title={box.title} data={box.data} />
         ))} */}
         <BoxDashboard icon={MuiIcon.PersonIcon} title="Users" data={users} />
-        <BoxDashboard icon={MuiIcon.PersonIcon} title="Payments" data={payments} />
-        <BoxDashboard icon={MuiIcon.PersonIcon} title="Revenue" data={revenue.toLocaleString()} />
+        <BoxDashboard icon={MuiIcon.Payments} title="Payments" data={payments} />
+        <BoxDashboard icon={MuiIcon.Revenue} title="Revenue" data={revenue.toLocaleString()} />
       </div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
