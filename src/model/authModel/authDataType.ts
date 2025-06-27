@@ -1,24 +1,21 @@
+import type { Profile } from '../user/userType'
+
 export interface LoginType {
       email?: string,
       password?: string
-}
-export interface ProfileType {
-      address: string,
-      birthdate: Date,
-      age: number
 }
 export interface LoginResponse {
       _id: string,
       full_name: string,
       user_name: string,
       email: string,
-      created_date: Date,
-      update_date: Date,
+      created_date: number,
+      updated_date: number,
       isActive: boolean,
       isDeleted: boolean,
       role: string,
       gender: boolean | null,
-      profile: ProfileType
+      profile: Profile
       accessToken: string
       friends?: string[]
 }

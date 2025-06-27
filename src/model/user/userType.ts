@@ -25,7 +25,7 @@ export type UserInfo = {
       role: string,
       gender: boolean | null,
       profile: Profile,
-      // accessToken: string,
+      accessToken: string,
       friends?: string[],
       membership?: Membership,
       rank?: string,
