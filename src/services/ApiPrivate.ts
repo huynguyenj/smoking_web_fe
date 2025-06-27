@@ -1,5 +1,5 @@
 import type { ApiResponse } from '../model/apiType/apiType'
-import type { Friend, MessageHistoryInfo, SearchUserType, UserInfo } from '../model/user/userType'
+import type { Friend, MessageHistoryInfo, PasswordData, SearchUserType, UpdateProfile, UserCommonTypeInfo, UserInfo } from '../model/user/userType'
 import { apiService } from './ApiServiceConfig'
 import type { CreatePlanPayload, PlanListResponse, Plan } from '../model/user/planType'
 import type { BlogListResponse, Blog } from '../model/user/blogType'
@@ -55,13 +55,17 @@ const privateApiService = {
 
   getPaymentUrl: (data: PaymentRequestPayload): Promise<ApiResponse<PaymentURLResponse>> => apiService.privateApiClient.post('/v1/users/payment', data),
 
-  getRankingList: (page = 1, limit = 5): Promise<RankingResponse> =>
+  getRankingList: (page:number, limit:number, sort: number): Promise<RankingResponse> =>
     apiService.privateApiClient.post('/v1/users/rank', {
       page,
-      limit
+      limit,
+      sort
     }),
-
-  getMemberShipInfo: (membershipId: string): Promise<ApiResponse<MembershipInfo>> => apiService.privateApiClient.get(`/v1/users/membership/detail/${membershipId}`)
+  getMemberShipInfo: (membershipId: string): Promise<ApiResponse<MembershipInfo>> => apiService.privateApiClient.get(`/v1/users/membership/detail/${membershipId}`),
+  updateInformationCommon: (updateInfo: UserCommonTypeInfo): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/info', updateInfo),
+  updateProfile: (updateInfo: UpdateProfile): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/profile', updateInfo),
+  changePassword: (passwordData: PasswordData): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/profile', passwordData),
+  changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar)
 }
 
 
