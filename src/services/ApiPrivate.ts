@@ -7,6 +7,7 @@ import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentRes
 import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
 import type { RankingResponse } from '../model/user/rankingType'
 import type { Membership, MembershipInfo } from '../model/user/membershipType'
+import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -65,7 +66,24 @@ const privateApiService = {
   updateInformationCommon: (updateInfo: UserCommonTypeInfo): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/info', updateInfo),
   updateProfile: (updateInfo: UpdateProfile): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/profile', updateInfo),
   changePassword: (passwordData: PasswordData): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/profile', passwordData),
-  changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar)
+  changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar),
+
+  getCigarettesPagination: (page = 1, limit = 5): Promise<CigarettePaginationResponse> => apiService.privateApiClient.post('/v1/users/cigarettes/pagination', {
+    page,
+    limit
+  }),
+  createCigarette: (
+    payload: CreateCigarettePayload
+  ): Promise<ApiResponse<CigaretteRecord>> =>
+    apiService.privateApiClient.post('/v1/users/cigarette', payload),
+  deleteCigaretteById: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/cigarette/${id}`),
+  updateCigaretteById: (
+    id: string,
+    payload: UpdateCigarettePayload
+  ): Promise<ApiResponse<CigaretteRecord>> =>
+    apiService.privateApiClient.put(`/v1/users/cigarette/${id}`, payload),
+  getCigaretteDetailById: (id: string): Promise<ApiResponse<CigaretteRecord>> => apiService.privateApiClient.get(`/v1/users/cigarette/${id}`)
+
 }
 
 

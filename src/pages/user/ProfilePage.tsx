@@ -82,6 +82,7 @@ const ProfilePage = () => {
         getUserInformation()
       }
     } catch (error) {
+      // eslint-disable-next-line
       console.log(error)
       toast.error('Update fail!')
     } finally {
