@@ -55,7 +55,7 @@ export default function MemberManagementPage() {
               backgroundColor={
                 m.membership_title === 'Premium' ? 'bg-yellow-memberPackage/80' :
                   m.membership_title === 'Standard' ? 'bg-red-fig/80' :
-                    'bg-blue-fig/80' // mặc định cho Normal hoặc các giá trị khác
+                    'bg-blue-fig/80'
               }
               getMemberPackage={getMemberPackage}
               _id={m._id}

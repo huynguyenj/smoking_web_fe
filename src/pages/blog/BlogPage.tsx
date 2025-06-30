@@ -4,6 +4,7 @@ import BlogCard from '../../components/blog/BlogCard'
 import CreateBlogPopup from '../../components/popup/CreateBlog'
 import type { Blog, PageInfo } from '../../model/user/blogType'
 import privateApiService from '../../services/ApiPrivate'
+import LoadingScreenBg from '../../components/loading/LoadingScreenBg'
 
 const postsPerPage = 6
 
@@ -23,7 +24,7 @@ const BlogList = () => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('❌ Lỗi khi tải blogs:', error)
-      toast.error('Không thể tải danh sách blog.')
+      toast.error('Fail to load blogs. Please try again later.')
     } finally {
       setLoading(false)
     }
@@ -53,12 +54,12 @@ const BlogList = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-between items-center max-w-5xl mx-auto px-6 pt-6">
-        <h1 className="text-3xl font-bold">Danh sách blog</h1>
+        <h1 className="text-3xl font-bold">List blogs</h1>
         <button
           onClick={() => setShowCreatePopup(true)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
-          + Tạo blog
+          + Create
         </button>
       </div>
 
@@ -81,7 +82,7 @@ const BlogList = () => {
         <div className="mb-6">
           <input
             type="text"
-            placeholder="Tìm kiếm blog..."
+            placeholder="Search blog..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="border border-gray-300 rounded-md px-4 py-2 w-full sm:w-1/2"
@@ -89,12 +90,10 @@ const BlogList = () => {
         </div>
 
         {loading ? (
-          <div className="text-center text-gray-500 py-10 text-lg animate-pulse">
-            Đang tải danh sách blog...
-          </div>
+          <LoadingScreenBg/>
         ) : filteredBlogs.length === 0 ? (
           <div className="text-center text-gray-400 py-10 text-base">
-            Không tìm thấy blog nào.
+            No blogs found.
           </div>
         ) : (
           <>
@@ -115,17 +114,17 @@ const BlogList = () => {
               <button
                 disabled={pageInfo.page === 1}
                 onClick={() => handlePageChange(pageInfo.page - 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 border rounded disabled:opacity-50 cursor-pointer"
               >
-                Trước
+                Previous
               </button>
-              <span className="px-3 py-1">Trang {pageInfo.page} / {pageInfo.totalPage}</span>
+              <span className="px-3 py-1">Page {pageInfo.page} / {pageInfo.totalPage}</span>
               <button
                 disabled={pageInfo.page === pageInfo.totalPage}
                 onClick={() => handlePageChange(pageInfo.page + 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50"
+                className="px-3 py-1 border rounded disabled:opacity-50 cursor-pointer"
               >
-                Sau
+                Next
               </button>
             </div>
           </>

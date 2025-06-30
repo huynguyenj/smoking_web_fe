@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import privateApiService from '../../services/ApiPrivate'
 import type { RankingItem } from '../../model/user/rankingType'
-
+import Avatar from '../../assets/avatar.jpg'
 const Leaderboard = () => {
   const [allData, setAllData] = useState<RankingItem[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -70,7 +70,7 @@ const Leaderboard = () => {
                 <div className="flex items-center gap-4">
                   <span className="text-xl font-bold w-6 text-right">{user.position}</span>
                   <img
-                    src={`https://i.pravatar.cc/100?u=${user.users._id}`}
+                    src={user.users.image_url ? user.users.image_url : Avatar}
                     alt={user.users.user_name || user.users.email}
                     className="w-10 h-10 rounded-full border-2 border-blue-500"
                   />

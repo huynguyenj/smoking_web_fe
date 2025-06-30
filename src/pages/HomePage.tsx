@@ -8,15 +8,18 @@ import MedicalServicesIcon from '@mui/icons-material/MedicalServices'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
 import FeedIcon from '@mui/icons-material/Feed'
 import Diversity2Icon from '@mui/icons-material/Diversity2'
+import { useNavigate } from 'react-router-dom'
+import { MemberRoute, UserRoute } from '../const/pathList'
 export default function HomePage() {
+  const navigate = useNavigate()
   return (
     <>
       <div className="flex flex-col items-center mb-10">
         <div className="flex w-full h-[70vh] bg-black-fig rounded-3xl justify-center gap-12">
           <div className="w-1/2 h-[80%] bg-white-fig rounded-3xl mt-15 ml-12">
             <div className="w-full h-full flex flex-col items-center">
-              <h1 className="text-[5rem] font-bold text-black-fig mt-20">Smoking Prevent</h1>
-              <p className="text-[1.8rem] font-light text-gray-400 text-center mt-10 mx-30">
+              <h1 className="text-[4rem] font-bold text-black-fig mt-20">Smoking Prevent</h1>
+              <p className="text-[1.5rem] font-light text-gray-400 text-center mt-10 mx-30">
                 We're here to help you quit smoking with trusted advice, helpful tools, and real support—because a healthier, smoke-free life starts with one small step.
               </p>
             </div>
@@ -35,37 +38,37 @@ export default function HomePage() {
           </div>
           <div className='w-1/2 h-[90%] flex flex-col items-center'>
             <div className="w-full h-full flex flex-col items-center">
-              <h1 className="text-[4.4rem] font-bold text-black-fig mx-30">Chat System</h1>
-              <p className="text-[1.8rem] font-semi-bold text-black-fig text-center mt-5 mx-70 text-left">
+              <h1 className="text-[4rem] font-bold text-black-fig mx-30">Chat System</h1>
+              <p className="text-[1.4rem] font-semi-bold text-black-fig text-center mt-5 mx-10">
                 You can chat directly with your coach to receive advices, method to improve yourself
               </p>
             </div>
-            <button className='bg-black-fig px-8 py-3 rounded-2xl text-white-fig hover:bg-white-fig hover:text-black-fig border-2 border-black-fig cursor-pointer mt-10 mr-62 flex items-center gap-2'>Explore<EastIcon /></button>
+            <button onClick={() => navigate(MemberRoute.CHAT_PATH)} className='bg-black-fig px-8 py-3 rounded-2xl text-white-fig hover:bg-white-fig hover:text-black-fig border-2 border-black-fig cursor-pointer mt-10 m-auto flex items-center gap-2'>Explore<EastIcon /></button>
           </div>
         </div>
-        <div className="flex flex-col w-full h-[80vh] bg-black-fig rounded-3xl justify-center items-center gap-12" >
+        <div className="flex flex-col w-full h-[100vh] bg-black-fig rounded-3xl justify-center items-center gap-12" >
           <div>
             <h1 className="text-[3rem] font-bold text-white-fig">Ranking System</h1>
           </div>
           <div>
-            <img src={Background5} alt="" />
+            <img src={Background5} alt="image-rank" />
           </div>
           <div>
-            <h1 className="text-[3rem] font-semi-bold text-white-fig text-center">This is a special feature allow you to get points during smoking cessation process and ranking by your points.</h1>
+            <h1 className="text-[2rem] font-semi-bold text-white-fig text-center">This is a special feature allow you to get points during smoking cessation process and ranking by your points.</h1>
           </div>
           <div>
-            <button className='bg-white-fig px-8 py-3 rounded-2xl text-black-fig hover:bg-black-fig hover:border-white-fig hover:text-white-fig border-2 border-black-fig cursor-pointer flex items-center gap-2'>See more<EastIcon /></button>
+            <button onClick={() => navigate(UserRoute.RANKING_PATH)} className='bg-white-fig px-8 py-3 rounded-2xl text-black-fig hover:bg-black-fig hover:border-white-fig hover:text-white-fig border-2 border-black-fig cursor-pointer flex items-center gap-2'>See more<EastIcon /></button>
           </div>
         </div>
         <div className="h-[90%] mb-13 flex justify-center items-center mt-15">
           <div className='w-1/2 h-[90%] flex flex-col items-center'>
             <div className="w-full h-full flex flex-col items-center">
               <h1 className="text-[4.4rem] font-bold text-black-fig mx-30">Plan feature</h1>
-              <p className="text-[1.8rem] font-semi-bold text-black-fig text-center mt-5 mx-70 text-left">
+              <p className="text-[1.8rem] font-semi-bold text-black-fig text-center mt-5">
                 Allow you to make a plain to help you quit smoking and also have several advices from system
               </p>
             </div>
-            <button className='bg-black-fig px-8 py-3 rounded-2xl text-white-fig hover:bg-white-fig hover:text-black-fig border-2 border-black-fig cursor-pointer mt-10 mr-62 flex items-center gap-2'>Explore<EastIcon /></button>
+            <button onClick={() => navigate(UserRoute.PLAN_PATH)} className='bg-black-fig px-8 py-3 rounded-2xl text-white-fig hover:bg-white-fig hover:text-black-fig border-2 border-black-fig cursor-pointer mt-10 m-auto flex items-center gap-2'>Explore<EastIcon /></button>
           </div>
           <div className="w-1/2 h-[90%] flex justify-center items-center">
             <div className='flex justify-center items-center ml-12'>

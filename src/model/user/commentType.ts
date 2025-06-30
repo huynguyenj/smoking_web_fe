@@ -1,3 +1,8 @@
+type UserInfoComment = {
+  email: string,
+  user_name: string,
+  image_url: string
+}
 export interface Comment {
   _id: string
   content: string
@@ -5,6 +10,7 @@ export interface Comment {
   blog_id: string
   created_date: number
   isDeleted: boolean
+  userInfo?: UserInfoComment
 }
 
 export interface PageInfo {

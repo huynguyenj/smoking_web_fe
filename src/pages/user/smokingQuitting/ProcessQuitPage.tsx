@@ -4,6 +4,7 @@ import type { CigaretteRecord, CigarettePaginationResponse } from '../../../mode
 import CreateCigarettePopup from '../../../components/popup/CreateCigarette'
 import UpdateCigarettePopup from '../../../components/popup/UpdateCigarette'
 import CigaretteCard from '../../../components/cigarette/CigaretteCard'
+import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
 
 export default function CigaretteList() {
   const [cigarettes, setCigarettes] = useState<CigaretteRecord[]>([])
@@ -18,6 +19,7 @@ export default function CigaretteList() {
     try {
       const res: CigarettePaginationResponse = await privateApiService.getCigarettesPagination(page, 5)
       setCigarettes(res.data.listData)
+      setPage(res.data.pageInfo.page)
       setTotalPage(res.data.pageInfo.totalPage)
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -49,22 +51,22 @@ export default function CigaretteList() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Danh sách thông tin thuốc lá</h1>
+        <h1 className="text-2xl font-bold">List cigarettes process</h1>
         <button
-          className="px-4 py-2 bg-green-600 text-white rounded"
+          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition cursor-pointer"
           onClick={() => {
             setSelectedRecord(null) // ✅ tạo mới thì không có selectedRecord
             setShowPopup(true)
           }}
         >
-          ➕ Tạo mới
+          ➕ Create
         </button>
       </div>
 
       {loading ? (
-        <p>Đang tải dữ liệu...</p>
+        <LoadingScreenBg/>
       ) : cigarettes.length === 0 ? (
-        <p>Không có dữ liệu</p>
+        <p>No data</p>
       ) : (
         <ul className="space-y-4">
           {cigarettes.map((item) => (
@@ -85,7 +87,7 @@ export default function CigaretteList() {
           disabled={page <= 1}
           onClick={() => setPage((prev) => prev - 1)}
         >
-          Trang trước
+          Previous
         </button>
         <span className="px-3 py-1">{page} / {totalPage}</span>
         <button
@@ -93,7 +95,7 @@ export default function CigaretteList() {
           disabled={page >= totalPage}
           onClick={() => setPage((prev) => prev + 1)}
         >
-          Trang sau
+          Next
         </button>
       </div>
 

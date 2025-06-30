@@ -1,7 +1,7 @@
 export default function ContactPage() {
   return (
-    <div className="flex items-center justify-center">
-      <div className="bg-[#f8f398] rounded-2xl shadow-lg p-8 max-w-3xl w-full">
+    <div className="flex items-center justify-center my-5">
+      <div className="bg-[#ececec] rounded-2xl shadow-lg p-8 max-w-3xl w-full">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Contact Information</h2>
         <p className="text-gray-600 mb-6">
           We're here to help. Reach out to us through the information below.

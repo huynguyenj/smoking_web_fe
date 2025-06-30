@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import type { Plan, PageInfo } from '../../../model/user/planType'
 import ApiPrivate from '../../../services/ApiPrivate'
 import { toast } from 'react-toastify'
+import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
 const PlanList = () => {
   const navigate = useNavigate()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -68,12 +69,12 @@ const PlanList = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-between items-center max-w-5xl mx-auto mb-8">
-        <h1 className="text-3xl font-bold">Tiến độ các kế hoạch</h1>
+        <h1 className="text-3xl font-bold">Plan process</h1>
         <button
           onClick={handleCreatePlan}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
         >
-          + Tạo kế hoạch
+          + Create
         </button>
       </div>
 
@@ -97,12 +98,10 @@ const PlanList = () => {
 
       <div className="p-6 max-w-5xl mx-auto">
         {loading ? (
-          <div className="text-center text-gray-500 py-10 text-lg animate-pulse">
-            Đang tải danh sách kế hoạch...
-          </div>
+          <LoadingScreenBg/>
         ) : plans.length === 0 ? (
           <div className="text-center text-gray-400 py-10 text-base">
-            Không có kế hoạch nào được tìm thấy.
+              No plans found. Please create a new plan.
           </div>
         ) : (
           <>
@@ -113,7 +112,7 @@ const PlanList = () => {
               >
                 <div className="mb-2">
                   <p className="text-sm text-gray-600">
-                    <span className="font-medium">Trạng thái:</span> {plan.process_stage}
+                    <span className="font-medium">Status:</span> {plan.process_stage}
                   </p>
                   <p className="text-lg font-semibold text-gray-800">
                     {plan.content.length > 55
@@ -135,13 +134,13 @@ const PlanList = () => {
                 </div>
                 <p className="text-xs text-right text-gray-500 mt-1">
                   {plan.process_stage === 'start'
-                    ? 'Bắt đầu (0%)'
+                    ? 'Start (0%)'
                     : plan.process_stage === 'process'
-                      ? 'Đang tiến hành (50%)'
+                      ? 'Process (50%)'
                       : plan.process_stage === 'finish'
-                        ? 'Hoàn thành (100%)'
+                        ? 'Completed (100%)'
                         : plan.process_stage === 'cancel'
-                          ? 'Đã huỷ (0%)'
+                          ? 'Cancel (0%)'
                           : ''}
                 </p>
                 <div className="flex justify-end mt-4 gap-2">
@@ -149,13 +148,13 @@ const PlanList = () => {
                     onClick={() => handleViewDetail(plan._id)}
                     className="text-sm text-blue-600 border border-blue-600 px-3 py-1 rounded hover:bg-blue-50 transition"
                   >
-                      Xem chi tiết
+                      Detail
                   </button>
                   <button
                     onClick={() => handleDeletePlan(plan._id)}
                     className="text-sm text-red-600 border border-red-600 px-3 py-1 rounded hover:bg-red-50 transition"
                   >
-                      Xoá
+                      Delete
                   </button>
                 </div>
 
@@ -168,7 +167,7 @@ const PlanList = () => {
                 onClick={() => handlePageChange(pageInfo.page - 1)}
                 className="px-3 py-1 border rounded disabled:opacity-50"
               >
-                Trước
+                Previous
               </button>
               <span className="px-3 py-1">Trang {pageInfo.page} / {pageInfo.totalPage}</span>
               <button
@@ -176,7 +175,7 @@ const PlanList = () => {
                 onClick={() => handlePageChange(pageInfo.page + 1)}
                 className="px-3 py-1 border rounded disabled:opacity-50"
               >
-                Sau
+                Next
               </button>
             </div>
           </>

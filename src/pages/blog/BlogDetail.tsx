@@ -1,13 +1,16 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import SendIcon from '@mui/icons-material/Send'
 import privateApiService from '../../services/ApiPrivate'
+import Avatar from '../../assets/avatar.jpg'
 import type { Blog } from '../../model/user/blogType'
 import type {
   Comment as BlogComment,
   CreateCommentInput,
   TemporaryComment
 } from '../../model/user/commentType'
+import LoadingScreenBg from '../../components/loading/LoadingScreenBg'
+import { UserRoute } from '../../const/pathList'
 
 const COMMENTS_PER_PAGE = 5
 
@@ -19,17 +22,21 @@ const BlogDetailPage = () => {
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
-
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
   // Lấy bài viết
   useEffect(() => {
     const fetchBlog = async () => {
       if (!id) return
       try {
+        setIsLoading(true)
         const res = await privateApiService.getBlogDetail(id)
         setBlog(res.data)
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Lỗi lấy blog:', err)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchBlog()
@@ -40,6 +47,7 @@ const BlogDetailPage = () => {
     const fetchComments = async () => {
       if (!id) return
       try {
+        setIsLoading(true)
         const res = await privateApiService.getCommentsByBlogId(
           id,
           currentPage,
@@ -54,6 +62,8 @@ const BlogDetailPage = () => {
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Lỗi lấy bình luận:', err)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -92,10 +102,11 @@ const BlogDetailPage = () => {
     if (currentPage < totalPages) setCurrentPage((p) => p + 1)
   }
 
+  if (isLoading) return <LoadingScreenBg/>
   if (!blog) {
     return (
       <div className="p-10 text-red-600 font-semibold">
-        Không tìm thấy bài viết
+        No blog found
       </div>
     )
   }
@@ -103,6 +114,7 @@ const BlogDetailPage = () => {
   return (
     <div className="p-10 max-w-3xl mx-auto bg-white rounded shadow mb-10">
       {/* Hình ảnh */}
+      <button className='px-5 py-2 bg-black-fig text-white-fig rounded-2xl hover:opacity-70 active:opacity-90 cursor-pointer' onClick={() => navigate(UserRoute.BLOGS_PATH)}>Back</button>
       {Array.isArray(blog.image_url) && blog.image_url.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           {blog.image_url.map((url, idx) => (
@@ -126,7 +138,7 @@ const BlogDetailPage = () => {
 
       {/* Bình luận */}
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Bình luận</h2>
+        <h2 className="text-2xl font-semibold mb-4">Comments</h2>
 
         {/* Sắp xếp */}
         <div className="flex justify-end mb-4">
@@ -137,8 +149,8 @@ const BlogDetailPage = () => {
             }
             className="border border-gray-300 rounded px-3 py-2 text-sm"
           >
-            <option value="newest">Mới nhất</option>
-            <option value="oldest">Cũ nhất</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
           </select>
         </div>
 
@@ -148,7 +160,7 @@ const BlogDetailPage = () => {
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Viết bình luận..."
+              placeholder="Comment here..."
               className="w-full border border-gray-300 rounded p-3 pr-12 resize-none min-h-[80px]"
             />
             <button
@@ -163,15 +175,18 @@ const BlogDetailPage = () => {
 
         {/* Danh sách bình luận */}
         {comments.length === 0 ? (
-          <p className="text-gray-500 italic">Chưa có bình luận nào.</p>
+          <p className="text-gray-500 italic">No have any comments</p>
         ) : (
           <>
             <ul className="space-y-4">
               {comments.map((c, idx) =>
                 c && typeof c.content === 'string' ? (
-                  <li key={c._id ?? idx} className="border border-gray-200 p-3 rounded">
-                    <p className="font-semibold text-gray-800">Người dùng ẩn danh</p>
-                    <p className="text-gray-700">{c.content}</p>
+                  <li key={c._id ?? idx} className="border border-gray-200 p-3 rounded flex gap-5 items-center">
+                    <img src={c.userInfo?.image_url ? c.userInfo.image_url : Avatar} alt="profile-image" className='w-10 aspect-square rounded-full' />
+                    <div>
+                      <p className="font-semibold text-gray-800">{c.userInfo?.user_name ? c.userInfo.user_name : 'Anonymous'}</p>
+                      <p className="text-gray-700">{c.content}</p>
+                    </div>
                   </li>
                 ) : null
               )}
@@ -184,17 +199,17 @@ const BlogDetailPage = () => {
                 disabled={currentPage === 1}
                 className="px-4 py-2 border rounded disabled:opacity-50"
               >
-                Trước
+                Previous
               </button>
               <span className="text-sm font-medium mt-2">
-                Trang {currentPage} / {totalPages}
+                Page {currentPage} / {totalPages}
               </span>
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 border rounded disabled:opacity-50"
               >
-                Tiếp
+                Next
               </button>
             </div>
           </>

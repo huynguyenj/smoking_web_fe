@@ -52,7 +52,7 @@ function Navbar() {
       <div className='flex gap-5 items-end'>
         {userInfo ?
           <div className='relative'>
-            <img src={avatar} alt="avatar" className='w-12 aspect-square rounded-full cursor-pointer' onClick={toggle} />
+            <img src={userInfo.image_url ? userInfo.image_url : avatar} alt="avatar" className='w-12 aspect-square rounded-full cursor-pointer' onClick={toggle} />
             {isOpen &&
             <div className='absolute w-50 top-15 right-5 bg-gray-fig p-5 rounded-2xl'>
               <ul className='flex flex-col justify-center items-center '>

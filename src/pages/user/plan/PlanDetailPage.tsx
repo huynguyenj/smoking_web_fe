@@ -4,6 +4,7 @@ import StatusPieChart from '../../../components/chart/StatusPieChart'
 import UpdatePlan from '../../../components/popup/UpdatePlan'
 import ApiPrivate from '../../../services/ApiPrivate'
 import type { Plan } from '../../../model/user/planType'
+import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
 
 const PlanDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -27,43 +28,43 @@ const PlanDetail = () => {
     if (id) fetchPlan()
   }, [id])
 
-  if (loading) return <div className="p-6">Đang tải chi tiết kế hoạch...</div>
-  if (!plan) return <div className="p-6">Không tìm thấy kế hoạch</div>
+  if (loading) return <LoadingScreenBg/>
+  if (!plan) return <div className="p-6">No data has been found</div>
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-100 py-10 px-4">
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-300">
         <div className="bg-black-fig px-8 py-6">
-          <h1 className="text-3xl font-bold text-white tracking-wide">📋 Chi tiết kế hoạch</h1>
-          <p className="text-sm text-blue-100 mt-1">Tổng quan và tiến trình thực hiện kế hoạch</p>
+          <h1 className="text-3xl font-bold text-white tracking-wide">📋 Plan detail</h1>
+          <p className="text-sm text-blue-100 mt-1">Summary and detail process</p>
         </div>
 
         <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 text-gray-800">
             <div>
-              <p className="text-sm text-gray-500 font-medium">👤 Người tạo</p>
+              <p className="text-sm text-gray-500 font-medium">👤Create id</p>
               <p className="text-lg font-semibold text-blue-700 mt-1">{plan.create_by}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">❤️ Tình trạng sức khỏe</p>
+              <p className="text-sm text-gray-500 font-medium">❤️ Health status</p>
               <p className="text-base font-semibold mt-1">{plan.health_status}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">📅 Ngày bắt đầu</p>
+              <p className="text-sm text-gray-500 font-medium">📅 Start date</p>
               <p className="text-base font-medium mt-1">{new Date(plan.start_date).toLocaleDateString()}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">🏁 Ngày hoàn thành dự kiến</p>
+              <p className="text-sm text-gray-500 font-medium">🏁 Expected complete date</p>
               <p className="text-base font-medium mt-1">{new Date(plan.expected_result_date).toLocaleDateString()}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">🗑️ Trạng thái xóa</p>
+              <p className="text-sm text-gray-500 font-medium">🗑️ Status</p>
               <p className={`font-semibold mt-1 ${plan.isDeleted ? 'text-red-600' : 'text-green-600'}`}>
-                {plan.isDeleted ? 'Đã xóa' : 'Chưa xóa'}
+                {plan.isDeleted ? 'Deleted' : 'Active'}
               </p>
             </div>
             <div className="sm:col-span-2">
-              <p className="text-sm text-gray-500 font-medium">📝 Nội dung kế hoạch</p>
+              <p className="text-sm text-gray-500 font-medium">📝 Content</p>
               <div className="bg-gray-50 border border-gray-300 p-4 rounded-md mt-1 text-gray-700 leading-relaxed whitespace-pre-line shadow-sm">
                 {plan.content}
               </div>
@@ -78,7 +79,7 @@ const PlanDetail = () => {
               onClick={() => setIsUpdateOpen(true)}
               className="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium shadow mt-20"
             >
-              ✏️ Cập nhật kế hoạch
+              ✏️ Update
             </button>
           </div>
         </div>

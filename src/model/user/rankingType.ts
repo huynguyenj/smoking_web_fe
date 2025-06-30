@@ -2,6 +2,7 @@ export interface RankingUser {
   _id: string;
   user_name: string;
   email: string;
+  image_url?: string
 }
 
 export interface RankingItem {

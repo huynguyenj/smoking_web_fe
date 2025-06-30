@@ -17,7 +17,7 @@ const MembershipCard = ({
   price,
   features,
   highlight,
-  buttonLabel = 'Chọn gói này',
+  buttonLabel = 'Chose this plan',
   onSelect
 }: MembershipCardProps) => {
   const navigate = useNavigate()
@@ -41,12 +41,14 @@ const MembershipCard = ({
           <li key={i}>{f}</li>
         ))}
       </ul>
-      <button
-        onClick={handleClick}
-        className="mt-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        {buttonLabel}
-      </button>
+      {name.toLocaleLowerCase() === 'free' ? <></> :
+        <button
+          onClick={handleClick}
+          className="mt-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          {buttonLabel}
+        </button>
+      }
     </div>
   )
 }

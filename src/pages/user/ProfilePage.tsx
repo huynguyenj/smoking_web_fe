@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import useOpen from '../../hooks/openState/useOpen'
 import Avatar from '../../assets/avatar.jpg'
-import type { UserCommonTypeInfo, UserProfile } from '../../model/user/userType'
+import type { UserCommonTypeInfo, UserInfo, UserProfile } from '../../model/user/userType'
 import TabContext from '@mui/lab/TabContext'
 import { Box, Tab } from '@mui/material'
 import TabList from '@mui/lab/TabList'
@@ -16,14 +16,16 @@ import Password from '../../components/profile/Password'
 import ClearIcon from '@mui/icons-material/Clear'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
+import { useTokenInfoStorage } from '../../store/authStore'
 const ProfilePage = () => {
   const { toggle, isOpen } = useOpen()
   const [editAvatar, setEditAvatar] = useState<boolean> (false)
-  const [userInfo, setUserInfo] = useState<UserProfile>()
+  const [userInfo, setUserInfo] = useState<UserInfo>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [tabValue, setTabValue] = useState<string>('1')
   const [file, setFile] = useState<File>()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const { setUser } = useTokenInfoStorage()
   const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setTabValue((newValue))
   }
@@ -62,6 +64,7 @@ const ProfilePage = () => {
       setIsLoading(true)
       await privateApiService.updateInformationCommon(data as UserCommonTypeInfo)
       getUserInformation()
+      setUser(userInfo as UserInfo)
       toast.success('Update successfully!')
     } catch (error) {
       toast.error(error as string)
@@ -80,6 +83,7 @@ const ProfilePage = () => {
         toast.success('Update successfully!')
         setFile(undefined)
         getUserInformation()
+        setUser(userInfo as UserInfo)
       }
     } catch (error) {
       // eslint-disable-next-line
