@@ -17,6 +17,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import { useTokenInfoStorage } from '../../store/authStore'
+import AchievementPage from './achievement/AchievementPage'
 const ProfilePage = () => {
   const { toggle, isOpen } = useOpen()
   const [editAvatar, setEditAvatar] = useState<boolean> (false)
@@ -100,6 +101,7 @@ const ProfilePage = () => {
       setFile(file)
     }
   }
+  
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-200 p-6">
       {isLoading ? <LoadingScreenBg/> :
@@ -149,6 +151,7 @@ const ProfilePage = () => {
                   <Tab label="Common" value='1' />
                   <Tab label="Profile" value='2' />
                   <Tab label="Password" value='3' />
+                  <Tab label="Achievement" value='4' />
                 </TabList>
               </Box>
               <TabPanel value='1'>
@@ -214,6 +217,9 @@ const ProfilePage = () => {
                 {userInfo &&
                 <Password/>
                 }
+              </TabPanel>
+              <TabPanel value={'4'}>
+                <AchievementPage active={tabValue == '4'}/>
               </TabPanel>
             </TabContext>
           </div>
