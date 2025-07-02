@@ -106,18 +106,18 @@ function MemberShipBox({ _id, memberShipTitle, profit, backgroundColor, feature,
       </div>
       {/* Form xóa */}
       <Dialog open={openDialog} >
-        <DialogTitle>Xác nhận xóa</DialogTitle>
+        <DialogTitle>Confirm delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Do you want to delete member package {memberShipTitle}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Hủy</Button>
+          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
           <Button onClick={() => {
             handleDelete(_id)
             setOpenDialog(false)
-          }} color="error">Xóa</Button>
+          }} color="error">Delete</Button>
         </DialogActions>
       </Dialog>
 
@@ -150,11 +150,11 @@ function MemberShipBox({ _id, memberShipTitle, profit, backgroundColor, feature,
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenEditDialog(false)}>Hủy</Button>
+          <Button onClick={() => setOpenEditDialog(false)}>Cancel</Button>
           <Button variant="contained" onClick={() => {
             handleUpdate()
             setOpenEditDialog(false)
-          }}>Cập nhật</Button>
+          }}>Update</Button>
         </DialogActions>
       </Dialog>
     </div >

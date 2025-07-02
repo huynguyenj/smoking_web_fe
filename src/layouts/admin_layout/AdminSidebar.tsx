@@ -23,7 +23,7 @@ export default function AdminSidebar() {
           </Link>
         ))}
         <div>
-          <button className='flex items-center gap-3 absolute bottom-10 text-[1.2rem] font-bold cursor-pointer hover:opacity-70 p-5' type='button' onClick={handleLogout}>
+          <button className='flex items-center gap-3 absolute bottom-0 text-[1.2rem] font-bold cursor-pointer hover:opacity-70 p-5' type='button' onClick={handleLogout}>
             <MuiIcon.ExitToAppIcon />Logout
           </button>
         </div>

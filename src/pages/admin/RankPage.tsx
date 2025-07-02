@@ -9,7 +9,7 @@ export default function RankPage() {
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
   const [totalPage, setTotalPage] = useState<number>(0)
-  const [sortOrder] = useState<number>(-1)
+  const [sortOrder, setSortOrder] = useState<number>(-1)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [sortName, setSortName] = useState<string>('star_count')
 
@@ -49,19 +49,35 @@ export default function RankPage() {
             Rank of users based on achievements
           </Typography>
         </div>
-        <FormControl sx={{ marginLeft: 30, marginRight: 10, minWidth: 100 }}>
-          <InputLabel id="sort-label">Sort by</InputLabel>
-          <Select
-            labelId="sort-label"
-            value={sortName}
-            label="Sort by"
-            onChange={(e) => setSortName(String(e.target.value))}
-          >
-            <MenuItem value={'star_count'}>Star</MenuItem>
-            <MenuItem value={'total_achievements'}>Achievement</MenuItem>
-            <MenuItem value={'position'}>Rank</MenuItem>
-          </Select>
-        </FormControl>
+        <div>
+          <FormControl sx={{ marginLeft: 30, marginRight: 5, minWidth: 100 }}>
+            <InputLabel id="sort-label">Sort name</InputLabel>
+            <Select
+              labelId="sort-label"
+              value={sortName}
+              label="Sort by"
+              onChange={(e) => setSortName(String(e.target.value))}
+            >
+              <MenuItem value={'star_count'}>Star</MenuItem>
+              <MenuItem value={'total_achievements'}>Achievement</MenuItem>
+              <MenuItem value={'position'}>Rank</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ marginRight: 10, minWidth: 100 }}>
+            <InputLabel id="sort-label">Sort by</InputLabel>
+            <Select
+              labelId="sort-label"
+              value={sortOrder}
+              label="Sort by"
+              onChange={(e) => setSortOrder(Number(e.target.value))}
+            >
+              <MenuItem value={1}>Increase</MenuItem>
+              <MenuItem value={-1}>Decrease</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
 
       </div>
       <RankTable isLoading={isLoading} onPageChange={handlePageChange} rank={rankData} rowsPerPage={rowsPerPage} totalPage={totalPage} page={page} />

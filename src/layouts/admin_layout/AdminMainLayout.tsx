@@ -7,7 +7,8 @@ const listTitle: string[] = [
   'User-Management',
   'Rating',
   'Member-Management',
-  'Rank-Management'
+  'Rank-Management',
+  'Announcement-Management'
 ]
 export default function AdminMainLayout() {
   const { pathname } = useLocation()

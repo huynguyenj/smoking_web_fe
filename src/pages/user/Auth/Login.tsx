@@ -33,13 +33,12 @@ const LoginPage = () => {
   return (
     <div>
       <div>
-        <div className='w-[100px] h-[100px] mt-10 ml-20'>
+        <div className='w-20 mt-5 ml-5'>
           <Link to={UserRoute.HOME_PATH}><img src={Logo} alt="logo" /></Link>
         </div>
-        <div className='w-[70%] h-[70vh] bg-cover bg-center ml-[15%] border-2 border-black' style={{ backgroundImage: `url(${Background1})` }}>
-          <form onSubmit={handleSubmit} className='flex flex-col pt-16'>
-            <h2 className='text-[3rem] font-bold pt-10 pl-68'>Login</h2>
-
+        <div className='w-[70%] px-10 py-20 bg-cover bg-center m-auto border-2 border-black' style={{ backgroundImage: `url(${Background1})` }}>
+          <form onSubmit={handleSubmit} className='flex flex-col'>
+            <h1 className='text-[2.5rem] w-50 ml-50 font-bold'>Login</h1>
             <input
               type="text"
               placeholder='Email'

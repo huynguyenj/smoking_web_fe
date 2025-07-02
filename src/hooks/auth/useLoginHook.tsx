@@ -23,7 +23,7 @@ export default function useLoginHook() {
       }
     } catch (error) {
       console.log(error)
-      toast.error('Login fail')
+      toast.error(error as string)
     } finally {
       setIsLoading(false)
     }

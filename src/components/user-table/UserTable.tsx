@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import type { UserDetail, UserPaginationInfo } from '../../model/user/userType'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import { toast } from 'react-toastify'
-import type { MemberShipInfo } from '../../model/user/memberShipType'
+import type { MembershipInfo } from '../../model/user/membershipType'
 import UserDetailDialog from '../userInfo-dialog/UserDetailDialog'
 
 export interface UserTableProps {
@@ -25,7 +25,8 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
   const [openDetail, setOpenDetail] = useState(false)
   const [userDetails, setUserDetails] = useState<UserDetail>()
   const [openMemberBox, setOpenMemberBox] = useState<boolean>(false)
-  const [memberShipInfo, setMemeberShipInfo] = useState<MemberShipInfo>()
+  const [memberShipInfo, setMemeberShipInfo] = useState<MembershipInfo>()
+  const [openDelete, setpenDelete] = useState<boolean>(false)
 
   const getUserDetail = async (id: string) => {
     try {
@@ -49,6 +50,16 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
       setMemeberShipInfo(response.data)
     } catch (error) {
       console.log(error)
+    }
+  }
+  const handleDeleteUser = async (id: string | undefined) => {
+    try {
+      await ApiAdminPrivate.deleteUser({ id })
+      toast.success('Delete successfully')
+      fetchUser(page, rowsPerPage, sortOrder)
+    } catch (error) {
+      console.log(error)
+      toast.error('Delete error')
     }
   }
   const handleExpandMember = (id: string) => {
@@ -114,6 +125,7 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
                 {/* <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Update date</b></TableCell> */}
                 <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Email</b></TableCell>
                 <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Role</b></TableCell>
+                <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Delete</b></TableCell>
                 <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Active</b></TableCell>
                 <TableCell sx={{ fontSize: '15px', textAlign: 'center' }}><b>Action</b></TableCell>
               </TableRow>
@@ -137,6 +149,13 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
                       <div
+                        className={`${user.isDeleted ? 'bg-red-fig' : 'bg-green-fig'} p-[10px] rounded-[50px] text-white text-center`}
+                      >
+                        {user.isDeleted ? 'Deleted' : '--'}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div
                         onClick={() => handleOpenConfirm(user)}
                         className={`${user.isActive ? 'bg-green-fig' : 'bg-red-fig'} p-[10px] rounded-[50px] text-white text-center cursor-pointer`}
                       >
@@ -147,7 +166,10 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
                       <IconButton onClick={() => handleOpenDetail(user._id)} color="primary">
                         <Visibility />
                       </IconButton>
-                      <IconButton color="error">
+                      <IconButton onClick={() => {
+                        setpenDelete(true)
+                        setSelectedUser(user)
+                      }} color="error">
                         <Delete />
                       </IconButton>
                     </TableCell>
@@ -167,6 +189,22 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
           <DialogActions>
             <Button onClick={handleCloseConfirm}>Cancel</Button>
             <Button onClick={() => handleConfirmChange(!selectedUser?.isActive)} color="error">Yes</Button>
+          </DialogActions>
+        </Dialog>
+        {/* form xóa */}
+        <Dialog open={openDelete} >
+          <DialogTitle>Confirm delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Do you want to delete user {selectedUser?.user_name}?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setpenDelete(false)}>Hủy</Button>
+            <Button onClick={() => {
+              handleDeleteUser(selectedUser?._id)
+              setpenDelete(false)
+            }} color="error">Xóa</Button>
           </DialogActions>
         </Dialog>
 
