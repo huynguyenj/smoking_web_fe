@@ -62,7 +62,7 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold mb-2">Tạo kế hoạch mới</h2>
+      <h2 className="text-2xl font-semibold mb-2">Create plan</h2>
 
       {message && (
         <p
@@ -73,45 +73,45 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       )}
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Nội dung:</label>
+        <label className="block text-sm font-medium">Content</label>
         <input
           type="text"
           value={plan.content}
           onChange={(e) => handleChange('content', e.target.value)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Nội dung kế hoạch..."
+          placeholder="Plan content..."
         />
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Tình trạng sức khỏe:</label>
+        <label className="block text-sm font-medium">Health status:</label>
         <select
           value={plan.health_status}
           onChange={(e) => handleChange('health_status', e.target.value as HealthStatus)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="good">Tốt</option>
-          <option value="average">Trung bình</option>
-          <option value="bad">Tệ</option>
+          <option value="good">Good</option>
+          <option value="average">Normal</option>
+          <option value="bad">Bad</option>
         </select>
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Giai đoạn:</label>
+        <label className="block text-sm font-medium">Stage:</label>
         <select
           value={plan.process_stage}
           onChange={(e) => handleChange('process_stage', e.target.value as ProcessStage)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="start">Bắt đầu</option>
-          <option value="process">Đang thực hiện</option>
-          <option value="finish">Hoàn thành</option>
-          <option value="cancel">Đã huỷ</option>
+          <option value="start">Start</option>
+          <option value="process">Process</option>
+          <option value="finish">Complete</option>
+          <option value="cancel">Cancel</option>
         </select>
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Ngày bắt đầu:</label>
+        <label className="block text-sm font-medium">Start date:</label>
         <input
           type="date"
           value={new Date(plan.start_date).toISOString().split('T')[0]}
@@ -121,7 +121,7 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Ngày kết thúc:</label>
+        <label className="block text-sm font-medium">Expect end date:</label>
         <input
           type="date"
           value={new Date(plan.expected_result_date).toISOString().split('T')[0]}
@@ -137,7 +137,7 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
         disabled={loading}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition"
       >
-        {loading ? 'Đang tạo...' : 'Tạo kế hoạch'}
+        {loading ? 'Loading...' : 'Create'}
       </button>
     </div>
   )

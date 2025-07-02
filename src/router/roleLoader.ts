@@ -13,7 +13,7 @@ export async function rootAdminLoader() {
 }
 export async function rootMemberLoader() {
   const role = useTokenInfoStorage.getState().userInfo?.role
-  if (role !== 'member') {
+  if (role !== 'member' && role!=='coach') {
     toast.info('You need to be a member to access!')
     return redirect(PublicRoute.ERROR_PATH)
   }
@@ -22,7 +22,7 @@ export async function rootMemberLoader() {
 
 export async function rootUserLoader() {
   const role = useTokenInfoStorage.getState().userInfo?.role
-  if (role !== 'user' && role !== 'member') {
+  if (role !== 'user' && role !== 'member' && role!=='coach') {
     toast.info('You need to login to access!')
     return redirect(PublicRoute.ERROR_PATH)
   }

@@ -13,7 +13,7 @@ import type { FeedbackSend } from '../model/feedback/feedbackType'
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
   getUserInfo: (): Promise<ApiResponse<UserInfo>> => apiService.privateApiClient.get('/v1/users/info'),
-  getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo[]>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
+  getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
   getFriendsList: (): Promise<ApiResponse<Friend[]>> => apiService.privateApiClient.get('/v1/users/friend'),
   addFriend: (friendId: string): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/friend', { friend_id: friendId }),
   searchFriend: (searchTerm?: string): Promise<ApiResponse<SearchUserType[]>> => apiService.privateApiClient.post('/v1/users/info', { search: searchTerm }),
