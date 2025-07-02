@@ -7,11 +7,13 @@ import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentRes
 import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
 import type { RankingResponse } from '../model/user/rankingType'
 import type { Membership, MembershipInfo } from '../model/user/membershipType'
+import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
+import type { FeedbackSend } from '../model/feedback/feedbackType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
   getUserInfo: (): Promise<ApiResponse<UserInfo>> => apiService.privateApiClient.get('/v1/users/info'),
-  getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo[]>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
+  getMessageHistory: (receiverId: string): Promise<ApiResponse<MessageHistoryInfo>> => apiService.privateApiClient.post('/v1/users/message-history', { receiverId: receiverId } ),
   getFriendsList: (): Promise<ApiResponse<Friend[]>> => apiService.privateApiClient.get('/v1/users/friend'),
   addFriend: (friendId: string): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/friend', { friend_id: friendId }),
   searchFriend: (searchTerm?: string): Promise<ApiResponse<SearchUserType[]>> => apiService.privateApiClient.post('/v1/users/info', { search: searchTerm }),
@@ -65,7 +67,26 @@ const privateApiService = {
   updateInformationCommon: (updateInfo: UserCommonTypeInfo): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/info', updateInfo),
   updateProfile: (updateInfo: UpdateProfile): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/profile', updateInfo),
   changePassword: (passwordData: PasswordData): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/profile', passwordData),
-  changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar)
+  changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar),
+
+  getCigarettesPagination: (page = 1, limit = 5): Promise<CigarettePaginationResponse> => apiService.privateApiClient.post('/v1/users/cigarettes/pagination', {
+    page,
+    limit
+  }),
+  createCigarette: (
+    payload: CreateCigarettePayload
+  ): Promise<ApiResponse<CigaretteRecord>> =>
+    apiService.privateApiClient.post('/v1/users/cigarette', payload),
+  deleteCigaretteById: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/cigarette/${id}`),
+  updateCigaretteById: (
+    id: string,
+    payload: UpdateCigarettePayload
+  ): Promise<ApiResponse<CigaretteRecord>> =>
+    apiService.privateApiClient.put(`/v1/users/cigarette/${id}`, payload),
+  getCigaretteDetailById: (id: string): Promise<ApiResponse<CigaretteRecord>> => apiService.privateApiClient.get(`/v1/users/cigarette/${id}`),
+  getRecommendPlan: (id: string): Promise<ApiResponse<Plan>> => apiService.privateApiClient(`/v1/users/plan/recommend/${id}`),
+  getAdviceFromAI: (cigaretteId: string): Promise<ApiResponse<string>> => apiService.privateApiClient.get(`/v1/users/get-advice/${cigaretteId}`),
+  feedback: (feedbackData: FeedbackSend): Promise<ApiResponse<string>> => apiService.privateApiClient.post('/v1/users/feedback', feedbackData)
 }
 
 

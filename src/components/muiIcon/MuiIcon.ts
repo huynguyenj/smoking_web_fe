@@ -10,6 +10,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import PersonIcon from '@mui/icons-material/Person'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import type React from 'react'
+import PaymentsIcon from '@mui/icons-material/Payments'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 
 export const MuiIcon = {
   MenuOpenIcon: MenuOpenIcon,
@@ -21,5 +23,7 @@ export const MuiIcon = {
   DiamondIcon: DiamondIcon,
   ExitToAppIcon: ExitToAppIcon,
   PersonIcon:PersonIcon,
-  NotificationsIcon: NotificationsIcon
+  NotificationsIcon: NotificationsIcon,
+  Payments: PaymentsIcon,
+  Revenue: AttachMoneyIcon
 } satisfies Record<string, React.ElementType<SvgIconProps>>

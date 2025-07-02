@@ -19,6 +19,7 @@ export type Plan = {
 
 // Payload gửi khi tạo mới kế hoạch
 export type CreatePlanPayload = {
+  user_id?: string
   process_stage: ProcessStage
   health_status: HealthStatus
   content: string

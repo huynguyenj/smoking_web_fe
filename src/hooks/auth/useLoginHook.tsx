@@ -13,7 +13,7 @@ export default function useLoginHook() {
     try {
       setIsLoading(true)
       const result = await publicApiService.login({ email, password })
-      addLocal.setLogin(result.data)
+      addLocal.setUser(result.data)
       addLocal.setToken(result.data?.accessToken)
       toast.success('Login successfully!')
       if ( result.data.role === 'admin' ) {

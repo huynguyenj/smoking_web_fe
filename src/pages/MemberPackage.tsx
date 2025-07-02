@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import MembershipCard from '../components/memberpackage/MembershipCard'
 import type { Membership } from '../model/user/membershipType'
 import privateApiService from '../services/ApiPrivate'
+import LoadingScreenBg from '../components/loading/LoadingScreenBg'
 
 function MembershipList() {
   const [memberships, setMemberships] = useState<Membership[]>([])
@@ -35,7 +36,7 @@ function MembershipList() {
       <h1 className="text-3xl font-bold text-center mb-10">Membership Packages</h1>
 
       {loading ? (
-        <p className="text-center">Đang tải...</p>
+        <LoadingScreenBg/>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {memberships.map((pkg) => (

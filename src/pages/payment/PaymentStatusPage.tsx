@@ -1,17 +1,30 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { UserRoute } from '../../const/pathList'
+import { useTokenInfoStorage } from '../../store/authStore'
+import privateApiService from '../../services/ApiPrivate'
 
 export default function PaymentPage() {
   const [searchParams] = useSearchParams()
   const [status, setStatus] = useState<string | null>('')
+  const { setUser } = useTokenInfoStorage()
   const navigate = useNavigate()
   useEffect(() => {
     if (searchParams.get('status')) {
       setStatus(searchParams.get('status'))
     }
   }, [searchParams])
-
+  useEffect(() => {
+    const updateInfoStorage = async () => {
+      try {
+        const response = await privateApiService.getUserInfo()
+        setUser(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    updateInfoStorage()
+  }, [])
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
       {status === 'success' && (

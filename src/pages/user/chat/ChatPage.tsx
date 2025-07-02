@@ -9,17 +9,22 @@ import privateApiService from '../../../services/ApiPrivate'
 import { ArrowBack } from '@mui/icons-material'
 import CachedIcon from '@mui/icons-material/Cached'
 import { UserRoute } from '../../../const/pathList'
+import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
 export default function ChatPage() {
   const [friends, setFriends] = useState<Friend[]>([])
   const [reload, setReload] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   useEffect(() => {
     const getFriendList = async () => {
       try {
+        setLoading(true)
         const result = await privateApiService.getFriendsList()
         setFriends(result.data)
       } catch (error) {
         console.log(error)
         toast.error('Get friends fail!')
+      } finally {
+        setLoading(false)
       }
     }
     getFriendList()
@@ -27,6 +32,7 @@ export default function ChatPage() {
   const handleReload = () => {
     setReload((prevState) => !prevState)
   }
+  if (loading) return <LoadingScreenBg/>
   return (
     <Box sx={{ maxHeight: '100vh' }}>
       <TabFriend listFriend={friends}/>

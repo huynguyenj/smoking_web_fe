@@ -32,13 +32,24 @@ export type UserInfo = {
       image_url?: string
 
 }
-export type MessageHistoryInfo = {
+export type MessageHistory = {
   sender_id: string,
   receiver_id: string,
   content: string,
   message_date: Date
 }
 
+type UserMessageType = {
+  _id: string
+  user_name: string,
+  image_url: string
+}
+
+export type MessageHistoryInfo = {
+  result: MessageHistory[],
+  user_info: UserMessageType,
+  friend_info: UserMessageType
+}
 
 export interface SearchUserType {
    _id: string,

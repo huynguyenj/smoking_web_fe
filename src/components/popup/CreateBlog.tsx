@@ -5,6 +5,7 @@ import privateApiService from '../../services/ApiPrivate'
 import { useTokenInfoStorage } from '../../store/authStore'
 import { createBlogFormData } from '../../model/user/blogType'
 import type { CreateBlogFormInput } from '../../model/user/blogType'
+import { toast } from 'react-toastify'
 
 interface CreateBlogPopupProps {
   onClose: () => void
@@ -26,13 +27,13 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
 
   const handleCreate = async () => {
     if (!title || !content || image.length === 0) {
-      alert('Vui lòng điền đầy đủ thông tin và chọn ảnh.')
+      toast.error('Please fill in all fields and upload at least one image.')
       return
     }
 
     const user_id = useTokenInfoStorage.getState().userInfo?._id
     if (!user_id) {
-      alert('❌ Bạn chưa đăng nhập!')
+      toast.error('User ID not found. Please log in again.')
       return
     }
 
@@ -47,14 +48,13 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
 
       const formData = createBlogFormData(input)
       await privateApiService.createBlog(formData)
-
-      alert('✅ Tạo blog thành công!')
+      toast.success('✅ Create blog successfully!')
       onSuccess()
       onClose()
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('❌ Lỗi tạo blog:', err)
-      alert('Tạo blog thất bại.')
+      toast.error('Create blog failed. Please try again later.')
     } finally {
       setLoading(false)
     }
@@ -66,7 +66,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
 
       <input
         type="text"
-        placeholder="Tiêu đề"
+        placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="w-full border p-2 rounded mb-3"
@@ -77,7 +77,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
         value={content}
         onChange={setContent}
         theme="snow"
-        placeholder="Nhập nội dung blog..."
+        placeholder="Enter blog content here..."
         className="bg-white mb-3"
         modules={{
           toolbar: [
@@ -109,7 +109,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M7.5 10.5L12 6m0 0l4.5 4.5M12 6v12"
             />
           </svg>
-          <span>Tải ảnh lên</span>
+          <span>Upload image</span>
         </label>
 
         <input
@@ -144,7 +144,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
           className="px-4 py-2 text-gray-700 border rounded hover:bg-gray-100"
           disabled={loading}
         >
-          Hủy
+          Cancel
         </button>
         <button
           type="button"
@@ -152,7 +152,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? 'Đang tạo...' : 'Tạo'}
+          {loading ? 'Loading...' : 'Create'}
         </button>
       </div>
     </div>
