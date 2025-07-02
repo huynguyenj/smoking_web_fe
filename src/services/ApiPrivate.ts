@@ -9,6 +9,7 @@ import type { RankingResponse } from '../model/user/rankingType'
 import type { Membership, MembershipInfo } from '../model/user/membershipType'
 import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
 import type { FeedbackSend } from '../model/feedback/feedbackType'
+import type { RankData } from '../model/user/rankType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -86,7 +87,9 @@ const privateApiService = {
   getCigaretteDetailById: (id: string): Promise<ApiResponse<CigaretteRecord>> => apiService.privateApiClient.get(`/v1/users/cigarette/${id}`),
   getRecommendPlan: (id: string): Promise<ApiResponse<Plan>> => apiService.privateApiClient(`/v1/users/plan/recommend/${id}`),
   getAdviceFromAI: (cigaretteId: string): Promise<ApiResponse<string>> => apiService.privateApiClient.get(`/v1/users/get-advice/${cigaretteId}`),
-  feedback: (feedbackData: FeedbackSend): Promise<ApiResponse<string>> => apiService.privateApiClient.post('/v1/users/feedback', feedbackData)
+  feedback: (feedbackData: FeedbackSend): Promise<ApiResponse<string>> => apiService.privateApiClient.post('/v1/users/feedback', feedbackData),
+  getAchievement: ():Promise<ApiResponse<null>> => apiService.privateApiClient.get('/v1/users/achievement'),
+  getUserCurrentRank: (): Promise<ApiResponse<RankData>> => apiService.privateApiClient.get('/v1/users/rank')
 }
 
 
