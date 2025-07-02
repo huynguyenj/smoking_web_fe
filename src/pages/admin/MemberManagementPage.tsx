@@ -96,8 +96,8 @@ export default function MemberManagementPage() {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Hủy</Button>
-          <Button variant="contained" onClick={handleSubmit}>Gửi</Button>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="contained" onClick={handleSubmit}>Create</Button>
         </DialogActions>
       </Dialog>
     </div>

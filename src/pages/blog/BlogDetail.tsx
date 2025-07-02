@@ -11,6 +11,7 @@ import type {
 } from '../../model/user/commentType'
 import LoadingScreenBg from '../../components/loading/LoadingScreenBg'
 import { UserRoute } from '../../const/pathList'
+import { formDate } from '../../utils/formDate'
 
 const COMMENTS_PER_PAGE = 5
 
@@ -141,8 +142,10 @@ const BlogDetailPage = () => {
         <h2 className="text-2xl font-semibold mb-4">Comments</h2>
 
         {/* Sắp xếp */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-end mb-4 items-center gap-3">
+          <label htmlFor="sort">Sort</label>
           <select
+            id='sort'
             value={sortOrder}
             onChange={(e) =>
               setSortOrder(e.target.value === 'oldest' ? 'oldest' : 'newest')
@@ -184,7 +187,10 @@ const BlogDetailPage = () => {
                   <li key={c._id ?? idx} className="border border-gray-200 p-3 rounded flex gap-5 items-center">
                     <img src={c.userInfo?.image_url ? c.userInfo.image_url : Avatar} alt="profile-image" className='w-10 aspect-square rounded-full' />
                     <div>
-                      <p className="font-semibold text-gray-800">{c.userInfo?.user_name ? c.userInfo.user_name : 'Anonymous'}</p>
+                      <div className='flex items-center gap-5'>
+                        <p className="font-semibold text-gray-800">{c.userInfo?.user_name ? c.userInfo.user_name : 'Anonymous'}</p>
+                        <p>{formDate(c.created_date)}</p>
+                      </div>
                       <p className="text-gray-700">{c.content}</p>
                     </div>
                   </li>

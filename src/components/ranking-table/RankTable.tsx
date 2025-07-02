@@ -63,12 +63,12 @@ function RankTable({ rank, rowsPerPage, totalPage, page, onPageChange, isLoading
   }
   return (
     <Box sx={{ paddingLeft: 2, marginTop: -1 }}>
-      <Typography variant="h4" fontWeight="bold" align="center" gutterBottom>
+      {/* <Typography variant="h4" fontWeight="bold" align="center" gutterBottom>
         LEADERBOARD
       </Typography>
       <Typography align="center" gutterBottom>
         Rank of users based on achievements
-      </Typography>
+      </Typography> */}
 
       <TableContainer component={Paper} elevation={3} sx={{
         borderRadius: 3, mt: 4, maxWidth: '100%',
@@ -105,7 +105,7 @@ function RankTable({ rank, rowsPerPage, totalPage, page, onPageChange, isLoading
                     ))}
                   </TableCell>
                   <TableCell sx={{ color: 'white', fontSize: 20, textAlign: 'center', fontWeight: 'bold' }}>
-                    {(index + 1).toString().padStart(3, '0')}
+                    {item.position}
                   </TableCell>
                   <TableCell sx={{ color: 'white', textAlign: 'center' }}>
                     <IconButton onClick={() => handleOpen(item._id)} sx={{ backgroundColor: 'black', borderRadius: 2 }} color="primary">

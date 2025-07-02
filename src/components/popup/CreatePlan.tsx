@@ -84,8 +84,9 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Health status:</label>
+        <label htmlFor='health-status' className="block text-sm font-medium">Health status:</label>
         <select
+          id='health-status'
           value={plan.health_status}
           onChange={(e) => handleChange('health_status', e.target.value as HealthStatus)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -97,8 +98,9 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Stage:</label>
+        <label htmlFor='stage' className="block text-sm font-medium">Stage:</label>
         <select
+          id='stage'
           value={plan.process_stage}
           onChange={(e) => handleChange('process_stage', e.target.value as ProcessStage)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -111,8 +113,9 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Start date:</label>
+        <label htmlFor='start-date' className="block text-sm font-medium">Start date:</label>
         <input
+          id='start-date'
           type="date"
           value={new Date(plan.start_date).toISOString().split('T')[0]}
           onChange={(e) => handleChange('start_date', new Date(e.target.value).getTime())}
@@ -121,8 +124,9 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Expect end date:</label>
+        <label htmlFor='end-date' className="block text-sm font-medium">Expect end date:</label>
         <input
+          id='end-date'
           type="date"
           value={new Date(plan.expected_result_date).toISOString().split('T')[0]}
           onChange={(e) =>
