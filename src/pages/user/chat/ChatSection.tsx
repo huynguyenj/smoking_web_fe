@@ -60,7 +60,7 @@ export default function ChatSection({ friend }: {friend: Friend}) {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages])
+  }, [messageHistory])
 
   const showProfileMessage = (id: string, messageInfo: MessageHistory) => {
     if (id === messages?.user_info._id) {
