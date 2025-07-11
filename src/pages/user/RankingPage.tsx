@@ -46,13 +46,12 @@ const Leaderboard = () => {
           <p className="text-center text-gray-500">Loading...</p>
         ) : (
           <>
-            <div className='bg-black w-40 p-2 rounded-2xl text-white-fig flex items-center justify-center gap-5 m-auto mb-2'>
-              <label htmlFor="sort">Sort: </label>
-              <select id='sort' className='border-white border-2 rounded-2xl px-2 py-1' onChange={(e) => handleChoice(e)} value={sortChoice}>
-                <option value="1" className='bg-black'>Highest</option>
-                <option value="-1" className='bg-black'>Lowest</option>
+            <div className='border-2 border-black-fig w-40 rounded-2xl text-white-fig flex items-center justify-center gap-5 m-auto mb-2'>
+              <label htmlFor="sort"><p className='font-bold text-black'>Sort</p> </label>
+              <select id='sort' className='border-white border-2 rounded-2xl px-2 py-1 text-black' onChange={(e) => handleChoice(e)} value={sortChoice}>
+                <option value="1">Highest</option>
+                <option value="-1">Lowest</option>
               </select>
-
             </div>
             {allData.map((user) => (
               <div
