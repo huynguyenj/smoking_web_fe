@@ -35,6 +35,7 @@ export interface CreateBlogFormInput {
   title: string
   content: string
   image: File[]
+  keep_images?: string[]
 }
 
 // 6. Hàm tạo FormData để gửi toàn bộ blog (bao gồm cả ảnh)
@@ -42,9 +43,15 @@ export function createBlogFormData(input: CreateBlogFormInput): FormData {
   const form = new FormData()
   form.append('title', input.title)
   form.append('content', input.content)
+
   input.image.forEach(file => {
-    form.append('image', file) // Đảm bảo backend chấp nhận tên 'image'
+    form.append('image', file)
   })
+
+  if (input.keep_images) {
+    form.append('keep_images', JSON.stringify(input.keep_images)) // 👈 dùng JSON.stringify
+  }
+
   return form
 }
 

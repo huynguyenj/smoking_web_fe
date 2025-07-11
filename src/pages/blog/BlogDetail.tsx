@@ -12,7 +12,8 @@ import type {
 import LoadingScreenBg from '../../components/loading/LoadingScreenBg'
 import { UserRoute } from '../../const/pathList'
 import { formDate } from '../../utils/formDate'
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ImageGalleryPopup from '../../components/popup/ImageGalleryPopup'
 const COMMENTS_PER_PAGE = 5
 
 const BlogDetailPage = () => {
@@ -24,6 +25,8 @@ const BlogDetailPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showImageModal, setShowImageModal] = useState(false)
+  const [startIndex, setStartIndex] = useState(0)
   const navigate = useNavigate()
   // Lấy bài viết
   useEffect(() => {
@@ -114,20 +117,57 @@ const BlogDetailPage = () => {
 
   return (
     <div className="p-10 max-w-3xl mx-auto bg-white rounded shadow mb-10">
-      {/* Hình ảnh */}
-      <button className='px-5 py-2 bg-black-fig text-white-fig rounded-2xl hover:opacity-70 active:opacity-90 cursor-pointer' onClick={() => navigate(UserRoute.BLOGS_PATH)}>Back</button>
+      <button
+        onClick={() => navigate(UserRoute.BLOGS_PATH)}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+      >
+        <ArrowBackIcon fontSize="small" />
+        <span>Back</span>
+      </button>
       {Array.isArray(blog.image_url) && blog.image_url.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {blog.image_url.map((url, idx) => (
-            <img
+        <div
+          className={`grid gap-4 mb-6 ${
+            blog.image_url.length === 1
+              ? 'grid-cols-1'
+              : blog.image_url.length === 2
+                ? 'grid-cols-1 sm:grid-cols-2'
+                : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
+          }`}
+        >
+          {blog.image_url.slice(0, 3).map((url, idx) => (
+            <div
               key={idx}
-              src={url}
-              alt={`${blog.title} ${idx + 1}`}
-              className="w-full h-60 object-cover rounded"
-            />
+              className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] rounded-xl overflow-hidden shadow-md border border-gray-200 cursor-pointer"
+              onClick={() => {
+                setStartIndex(idx)
+                setShowImageModal(true)
+              }}
+            >
+              <img
+                src={url}
+                alt={`${blog.title} ${idx + 1}`}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Overlay trên ảnh thứ 3 nếu còn ảnh */}
+              {idx === 2 && blog.image_url.length > 3 && (
+                <div className="absolute inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center text-black text-xl font-semibold">
+                    +{blog.image_url.length - 3} more
+                </div>
+              )}
+            </div>
           ))}
         </div>
       )}
+
+      {showImageModal && (
+        <ImageGalleryPopup
+          images={blog.image_url}
+          startIndex={startIndex}
+          onClose={() => setShowImageModal(false)}
+        />
+      )}
+
 
       <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
       <div

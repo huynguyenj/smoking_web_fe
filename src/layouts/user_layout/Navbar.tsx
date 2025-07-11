@@ -25,7 +25,7 @@ function Navbar() {
     }
   }, [])
   return (
-    <div className="fixed top-0 bg-black-fig w-full rounded-4xl px-5 py-3 flex items-center justify-between mt-3">
+    <div className="fixed top-0 bg-black-fig w-full rounded-4xl px-5 py-3 flex items-center justify-between mt-3 z-50">
       <Link to={'/user'}><img src={Logo} alt="logo_img" className='w-15 aspect-square' /></Link>
       <div className='ml-50'>
         <div className='text-white-fig flex gap-10 font-bold'>

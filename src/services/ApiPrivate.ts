@@ -34,6 +34,16 @@ const privateApiService = {
     page,
     limit
   }),
+
+  getMyBlogs: (page = 1, limit = 6): Promise<BlogListResponse> => apiService.privateApiClient.post('/v1/users/blog/private', {
+    page,
+    limit
+  }),
+
+  updateBlog: (id: string, formData: FormData): Promise<ApiResponse<Blog>> => apiService.privateApiClient.put(`/v1/users/blog/private/edit/${id}`, formData),
+
+  deleteBlog: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/blog/private/edit/${id}`),
+
   getBlogDetail: (id: string): Promise<ApiResponse<Blog>> => apiService.privateApiClient.get(`/v1/users/blog/public/${id}`),
 
   createComment: (blogId: string, payload: CreateCommentInput): Promise<ApiResponse<Comment>> =>
