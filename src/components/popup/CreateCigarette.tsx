@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import privateApiService from '../../services/ApiPrivate'
 import NicotineQuizPopup from './NicotineQuiz'
+import { toast } from 'react-toastify'
 
 interface Props {
   onClose: () => void
@@ -28,11 +29,11 @@ export default function CreateCigarettePopup({ onClose, onSuccess }: Props) {
       }
 
       await privateApiService.createCigarette(payload)
+      toast.success('Create successfully!')
       onSuccess()
       onClose()
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Lỗi tạo thuốc lá:', err)
+      toast.error(err as string)
     } finally {
       setLoading(false)
     }

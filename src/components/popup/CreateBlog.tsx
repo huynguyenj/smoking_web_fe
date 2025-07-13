@@ -60,6 +60,9 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
     }
   }
 
+  const handleRemoveExistingImage = (index: number) => {
+    setImages(prev => prev.filter((_, i) => i !== index))
+  }
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-4">Tạo Blog Mới</h2>
@@ -125,12 +128,19 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
         {image.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-3">
             {image.map((file, index) => (
-              <div key={index} className="w-24 h-24 border rounded overflow-hidden">
+              <div key={index} className="relative w-24 h-24 border rounded overflow-hidden">
                 <img
                   src={URL.createObjectURL(file)}
                   alt={`preview-${index}`}
                   className="w-[100px] h-[100px] object-cover"
                 />
+                <button
+                  onClick={() => handleRemoveExistingImage(index)}
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                  title="Remove"
+                >
+                  ×
+                </button>
               </div>
             ))}
           </div>
