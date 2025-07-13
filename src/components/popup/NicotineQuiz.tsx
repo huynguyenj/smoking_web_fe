@@ -7,44 +7,46 @@ interface Props {
 }
 
 const questions = [
-  'Bạn hút điếu đầu tiên sau khi thức dậy trong bao lâu?',
-  'Bạn có hút thuốc khi đang bệnh, phải nằm giường không?',
-  'Điếu thuốc nào khó bỏ nhất trong ngày?',
-  'Trung bình bạn hút bao nhiêu điếu mỗi ngày?',
-  'Bạn hút nhiều hơn vào buổi sáng so với phần còn lại trong ngày?',
-  'Bạn có thấy khó kiềm chế khi ở nơi cấm hút thuốc (bệnh viện, trường...)'
+  'How soon after you wake up do you smoke your first cigarette?',
+  'Do you smoke even when you are sick and bedridden?',
+  'Which cigarette would you hate most to give up?',
+  'On average, how many cigarettes do you smoke per day?',
+  'Do you smoke more frequently in the morning than the rest of the day?',
+  'Do you find it difficult to refrain from smoking in places where it is forbidden (e.g., hospitals, schools, etc.)?'
 ]
+
 
 const choices = [
   [
-    { label: 'Trong 5 phút', value: 3 },
-    { label: '6–30 phút', value: 2 },
-    { label: '31–60 phút', value: 1 },
-    { label: 'Sau 60 phút', value: 0 }
+    { label: 'Within 5 minutes', value: 3 },
+    { label: '6–30 minutes', value: 2 },
+    { label: '31–60 minutes', value: 1 },
+    { label: 'After 60 minutes', value: 0 }
   ],
   [
-    { label: 'Có', value: 1 },
-    { label: 'Không', value: 0 }
+    { label: 'Yes', value: 1 },
+    { label: 'No', value: 0 }
   ],
   [
-    { label: 'Điếu đầu tiên buổi sáng', value: 1 },
-    { label: 'Các điếu khác', value: 0 }
+    { label: 'The first cigarette in the morning', value: 1 },
+    { label: 'Any other cigarette', value: 0 }
   ],
   [
-    { label: 'Trên 30', value: 3 },
+    { label: 'More than 30', value: 3 },
     { label: '21–30', value: 2 },
     { label: '11–20', value: 1 },
-    { label: 'Dưới 10', value: 0 }
+    { label: 'Less than 10', value: 0 }
   ],
   [
-    { label: 'Có', value: 1 },
-    { label: 'Không', value: 0 }
+    { label: 'Yes', value: 1 },
+    { label: 'No', value: 0 }
   ],
   [
-    { label: 'Có', value: 1 },
-    { label: 'Không', value: 0 }
+    { label: 'Yes', value: 1 },
+    { label: 'No', value: 0 }
   ]
 ]
+
 
 export default function NicotineQuizPopup({ onClose, onSubmit }: Props) {
   const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1))
@@ -69,7 +71,7 @@ export default function NicotineQuizPopup({ onClose, onSubmit }: Props) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold mb-4">Bài đánh giá mức độ phụ thuộc nicotine</h2>
+      <h2 className="text-xl font-bold mb-4">Nicotine Quiz</h2>
 
       {questions.map((q, qIdx) => (
         <div key={qIdx} className="mb-6">
@@ -92,7 +94,7 @@ export default function NicotineQuizPopup({ onClose, onSubmit }: Props) {
 
       {submitted && averageScore10 !== null && (
         <div className="mt-6 text-green-600 font-semibold text-center">
-          ✅ Tổng điểm của bạn: {averageScore10} / 10
+          ✅ Your average nicotine score is {averageScore10} / 10
         </div>
       )}
 
@@ -103,14 +105,14 @@ export default function NicotineQuizPopup({ onClose, onSubmit }: Props) {
               onClick={onClose}
               className="px-4 py-2 bg-gray-300 rounded"
             >
-              Hủy
+              Cancel
             </button>
             <button
               onClick={handleSubmit}
               disabled={!canSubmit}
               className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
             >
-              Nộp bài
+              Submit
             </button>
           </>
         ) : (
@@ -118,7 +120,7 @@ export default function NicotineQuizPopup({ onClose, onSubmit }: Props) {
             onClick={onClose}
             className="px-4 py-2 bg-blue-600 text-white rounded"
           >
-            Đóng
+            Close
           </button>
         )}
       </div>

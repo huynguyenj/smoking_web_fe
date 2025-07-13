@@ -65,7 +65,7 @@ const CreateBlog = ({ onClose, onSuccess }: CreateBlogPopupProps) => {
   }
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Tạo Blog Mới</h2>
+      <h2 className="text-2xl font-bold mb-4">New Blog</h2>
 
       <input
         type="text"

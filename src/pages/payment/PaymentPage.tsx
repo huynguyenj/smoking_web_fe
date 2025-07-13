@@ -56,10 +56,10 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-10">Xác nhận gói bạn đã chọn</h1>
+      <h1 className="text-3xl font-bold text-center mb-10">Confirm payment</h1>
 
       {loading ? (
-        <p className="text-center">Đang tải...</p>
+        <p className="text-center">Loading...</p>
       ) : membership ? (
         <div className="max-w-xl mx-auto">
           <MembershipCard
@@ -77,7 +77,7 @@ export default function PaymentPage() {
           />
         </div>
       ) : (
-        <p className="text-center text-red-500">Không tìm thấy gói phù hợp.</p>
+        <p className="text-center text-red-500">No data has been found</p>
       )}
     </div>
   )

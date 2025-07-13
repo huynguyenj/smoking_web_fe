@@ -53,13 +53,13 @@ export default function CigaretteList() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">List cigarettes process</h1>
         <button
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition cursor-pointer"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
           onClick={() => {
-            setSelectedRecord(null) // ✅ tạo mới thì không có selectedRecord
+            setSelectedRecord(null)
             setShowPopup(true)
           }}
         >
-          ➕ Create
+          + Create
         </button>
       </div>
 
