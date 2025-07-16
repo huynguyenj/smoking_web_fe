@@ -14,7 +14,6 @@ export default function AchievementPage({ active }: Props ) {
   const handleGetAchievement = async () => {
     try {
       setIsLoading(true)
-      await privateApiService.getAchievement()
       const response = await privateApiService.getUserCurrentRank()
       setRankInfo(response.data)
     } catch (error) {

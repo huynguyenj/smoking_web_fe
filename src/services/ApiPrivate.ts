@@ -98,7 +98,7 @@ const privateApiService = {
   getRecommendPlan: (id: string): Promise<ApiResponse<Plan>> => apiService.privateApiClient(`/v1/users/plan/recommend/${id}`),
   getAdviceFromAI: (cigaretteId: string): Promise<ApiResponse<string>> => apiService.privateApiClient.get(`/v1/users/get-advice/${cigaretteId}`),
   feedback: (feedbackData: FeedbackSend): Promise<ApiResponse<string>> => apiService.privateApiClient.post('/v1/users/feedback', feedbackData),
-  getAchievement: ():Promise<ApiResponse<null>> => apiService.privateApiClient.get('/v1/users/achievement'),
+  // getAchievement: ():Promise<ApiResponse<null>> => apiService.privateApiClient.get('/v1/users/achievement'),
   getUserCurrentRank: (): Promise<ApiResponse<RankData>> => apiService.privateApiClient.get('/v1/users/rank')
 }
 
