@@ -10,7 +10,7 @@ import type { Membership, MembershipInfo } from '../model/user/membershipType'
 import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
 import type { FeedbackSend } from '../model/feedback/feedbackType'
 import type { RankData } from '../model/user/rankType'
-import type { CreateInitialState, InitialState, InitialStatePaginationData } from '../model/initialTye/initialType'
+import type { CreateInitialState, InitialState, InitialStatePaginationData } from '../model/initialType/initialType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -108,9 +108,9 @@ const privateApiService = {
     page,
     limit
   }),
-  updateInitialStateById: (id: string, payload: CreateInitialState): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`/v1/users/initial-cigarette/edit/${id}`, payload),
+  updateInitialStateById: (id: string, payload: CreateInitialState): Promise<ApiResponse<InitialState>> => apiService.privateApiClient.put(`/v1/users/initial-cigarette/edit/${id}`, payload),
   deleteInitialState: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/initial-cigarette/edit/${id}`),
-  getInitialStateDetailById: (id: string): Promise<ApiResponse<InitialState>> => apiService.privateApiClient.get(`/v1/users/initial-cigarette/${id}`)
+  getInitialStateDetailById: (id: string): Promise<ApiResponse<InitialState>> => apiService.privateApiClient.get(`/v1/users/initial-cigarette/edit/${id}`)
 }
 
 
