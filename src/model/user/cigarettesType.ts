@@ -1,13 +1,11 @@
 export interface CigaretteRecord {
   _id: string;
-  amount: number;
   smoking_frequency_per_day: number;
   money_consumption_per_day: number;
-  nicotine_evaluation: number;
   saving_money: number;
+  plan_id: string;
   create_date: number;
-  update_date: number | null;
-  no_smoking_date: number | null;
+  update_date: number;
   isDeleted: boolean;
   user_id: string;
 }
@@ -31,18 +29,15 @@ export interface CigarettePaginationResponse {
 
 // ✅ Payload gửi khi tạo bản ghi mới
 export interface CreateCigarettePayload {
-  amount: number;
   smoking_frequency_per_day: number;
   money_consumption_per_day: number;
-  nicotine_evaluation: number;
   saving_money: number;
+  plan_id: string;
 }
 
 // ✅ Payload gửi khi cập nhật bản ghi
 export interface UpdateCigarettePayload {
-  amount: number;
   smoking_frequency_per_day: number;
   money_consumption_per_day: number;
-  nicotine_evaluation: number;
   saving_money: number;
 }
