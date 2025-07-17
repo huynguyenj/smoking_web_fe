@@ -1,62 +1,62 @@
-import privateApiService from '../../../services/ApiPrivate'
-import { useEffect, useState } from 'react'
+import privateApiService from "../../../services/ApiPrivate";
+import { useEffect, useState } from "react";
 import type {
   InitialState,
   InitialStatePaginationData,
-  PageInfo
-} from '../../../model/initialType/initialType'
-import InitialCard from '../../../components/initialState/InitialCard'
-import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
-import CreateInitialPopup from '../../../components/popup/CreateInitialPopup'
-import UpdateInitialPopup from '../../../components/popup/UpdateInitialPopup'
-import { toast } from 'react-toastify'
+  PageInfo,
+} from "../../../model/initialType/initialType";
+import InitialCard from "../../../components/initialState/InitialCard";
+import LoadingScreenBg from "../../../components/loading/LoadingScreenBg";
+import CreateInitialPopup from "../../../components/popup/CreateInitialPopup";
+import UpdateInitialPopup from "../../../components/popup/UpdateInitialPopup";
+import { toast } from "react-toastify";
 
 export default function InitialStatePage() {
-  const [initialStates, setInitialStates] = useState<InitialState[]>([])
-  const [loading, setLoading] = useState(true)
+  const [initialStates, setInitialStates] = useState<InitialState[]>([]);
+  const [loading, setLoading] = useState(true);
   const [pageInfo, setPageInfo] = useState<PageInfo>({
     page: 1,
     limit: 5,
-    totalPage: 1
-  })
-  const [showPopup, setShowPopup] = useState(false)
+    totalPage: 1,
+  });
+  const [showPopup, setShowPopup] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<InitialState | null>(
     null
-  )
+  );
 
   const fetchInitialStates = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res: InitialStatePaginationData =
         await privateApiService.getInitialStatePagination(
           pageInfo.page,
           pageInfo.limit
-        )
-      setInitialStates(res.data.listData)
-      setPageInfo(res.data.pageInfo)
+        );
+      setInitialStates(res.data.listData);
+      setPageInfo(res.data.pageInfo);
     } catch (error) {
-      toast.error(error as string)
+      toast.error(error as string);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleDelete = async (id: string) => {
     try {
-      await privateApiService.deleteInitialState(id)
-      fetchInitialStates()
+      await privateApiService.deleteInitialState(id);
+      fetchInitialStates();
     } catch (error) {
-      toast.error(error as string)
+      toast.error(error as string);
     }
-  }
+  };
   const handleUpdate = (item: InitialState) => {
-    setSelectedRecord(item)
-    setShowPopup(true)
-  }
+    setSelectedRecord(item);
+    setShowPopup(true);
+  };
 
   useEffect(() => {
-    fetchInitialStates()
-  }, [pageInfo.page, pageInfo.limit])
+    fetchInitialStates();
+  }, [pageInfo.page, pageInfo.limit]);
 
   const handlePageChange = (newPage: number) => {
     if (
@@ -64,9 +64,9 @@ export default function InitialStatePage() {
       newPage >= 1 &&
       newPage <= pageInfo.totalPage
     ) {
-      setPageInfo((prev) => ({ ...prev, page: newPage }))
+      setPageInfo((prev) => ({ ...prev, page: newPage }));
     }
-  }
+  };
 
   return (
     <div className="px-6 py-8 max-w-4xl mx-auto">
@@ -74,8 +74,8 @@ export default function InitialStatePage() {
         <h1 className="text-3xl font-bold">Initial States</h1>
         <button
           onClick={() => {
-            setSelectedRecord(null)
-            setShowPopup(true)
+            setSelectedRecord(null);
+            setShowPopup(true);
           }}
           className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
         >
@@ -104,7 +104,7 @@ export default function InitialStatePage() {
         <button
           onClick={() => handlePageChange(pageInfo.page - 1)}
           disabled={pageInfo.page <= 1}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-400 text-white rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -114,7 +114,7 @@ export default function InitialStatePage() {
         <button
           onClick={() => handlePageChange(pageInfo.page + 1)}
           disabled={pageInfo.page >= pageInfo.totalPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-400 text-white rounded disabled:opacity-50"
         >
           Next
         </button>
@@ -128,22 +128,22 @@ export default function InitialStatePage() {
               <UpdateInitialPopup
                 initialData={selectedRecord}
                 onClose={() => {
-                  setShowPopup(false)
-                  setSelectedRecord(null)
+                  setShowPopup(false);
+                  setSelectedRecord(null);
                 }}
                 onSuccess={() => {
-                  fetchInitialStates()
-                  setShowPopup(false)
-                  setSelectedRecord(null)
+                  fetchInitialStates();
+                  setShowPopup(false);
+                  setSelectedRecord(null);
                 }}
               />
             ) : (
               <CreateInitialPopup
                 onClose={() => setShowPopup(false)}
                 onSuccess={() => {
-                  setPageInfo((prev) => ({ ...prev, page: 1 }))
-                  fetchInitialStates() // ✅ sửa đúng tên
-                  setShowPopup(false)
+                  setPageInfo((prev) => ({ ...prev, page: 1 }));
+                  fetchInitialStates(); // ✅ sửa đúng tên
+                  setShowPopup(false);
                 }}
               />
             )}
@@ -151,5 +151,5 @@ export default function InitialStatePage() {
         </div>
       )}
     </div>
-  )
+  );
 }
