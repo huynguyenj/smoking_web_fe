@@ -30,7 +30,7 @@ export type CreatePlanPayload = {
   health_status: HealthStatus
   content: string
   start_date: number,
-  initial_cigarette_id: string | null
+  initial_cigarette_id?: string | null
 }
 
 // Thông tin phân trang
