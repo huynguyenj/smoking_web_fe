@@ -5,7 +5,7 @@ import privateApiService from '../../services/ApiPrivate'
 import type { CreatePlanPayload, HealthStatus } from '../../model/user/planType'
 import { toast } from 'react-toastify'
 import LoadingScreenBg from '../loading/LoadingScreenBg'
-import type { InitialState } from '../../model/initialTye/initialType'
+import type { InitialState } from '../../model/initialType/initialType'
 type Props = {
   userId?: string,
   toggle: () => void

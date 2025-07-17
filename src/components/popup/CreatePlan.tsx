@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { CreatePlanPayload, HealthStatus } from '../../model/user/planType'
 import ApiPrivate from '../../services/ApiPrivate'
 import { useTokenInfoStorage } from '../../store/authStore'
-import type { InitialState } from '../../model/initialTye/initialType'
+import type { InitialState } from '../../model/initialType/initialType'
 
 type Props = {
   onSuccessCreate?: () => void
