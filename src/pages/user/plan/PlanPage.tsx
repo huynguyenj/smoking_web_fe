@@ -6,6 +6,7 @@ import type { Plan, PageInfo } from '../../../model/user/planType'
 import ApiPrivate from '../../../services/ApiPrivate'
 import { toast } from 'react-toastify'
 import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
+import { formDate } from '../../../utils/formDate'
 const PlanList = () => {
   const navigate = useNavigate()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -22,7 +23,7 @@ const PlanList = () => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Lỗi khi tải danh sách kế hoạch:', error)
-      toast.error('❌ Không thể tải danh sách kế hoạch. Vui lòng thử lại sau.')
+      toast.error(error as string)
     } finally {
       setLoading(false)
     }
@@ -52,17 +53,17 @@ const PlanList = () => {
   }
 
   const handleDeletePlan = async (id: string) => {
-    const confirm = window.confirm('Bạn có chắc chắn muốn xoá kế hoạch này?')
+    const confirm = window.confirm('Do you want to delete this plan ?')
     if (!confirm) return
 
     try {
       await ApiPrivate.deletePlanById(id)
-      toast.success('🗑️ Xoá kế hoạch thành công!')
+      toast.success('🗑️ Delete successfully!')
       fetchPlans(pageInfo.page, pageInfo.limit)
     } catch (err) {
     // eslint-disable-next-line no-console
       console.error('Lỗi khi xoá kế hoạch:', err)
-      toast.error('❌ Xoá kế hoạch thất bại. Vui lòng thử lại.')
+      toast.error(err as string)
     }
   }
 
@@ -111,38 +112,10 @@ const PlanList = () => {
                 className="bg-white p-4 rounded-lg shadow hover:shadow-md mb-5 transition"
               >
                 <div className="mb-2">
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Status:</span> {plan.process_stage}
-                  </p>
-                  <p className="text-lg font-semibold text-gray-800">
-                    {plan.content.length > 55
-                      ? plan.content.slice(0, 55) + '...'
-                      : plan.content}
-                  </p>
+                  <p className='text-2xl'>Title: {plan.content}</p>
+                  <p>Start time: {formDate(plan.start_date)}</p>
+                  <p>Total stage: {plan.process_stage.length}</p>
                 </div>
-
-                <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                  <div
-                    className={`
-                      h-3 transition-all
-                      ${plan.process_stage === 'start' ? 'bg-gray-400' : ''}
-                      ${plan.process_stage === 'process' ? 'bg-blue-500 w-1/2' : ''}
-                      ${plan.process_stage === 'finish' ? 'bg-green-500 w-full' : ''}
-                      ${plan.process_stage === 'cancel' ? 'bg-red-500 w-full' : ''}
-                    `}
-                  ></div>
-                </div>
-                <p className="text-xs text-right text-gray-500 mt-1">
-                  {plan.process_stage === 'start'
-                    ? 'Start (0%)'
-                    : plan.process_stage === 'process'
-                      ? 'Process (50%)'
-                      : plan.process_stage === 'finish'
-                        ? 'Completed (100%)'
-                        : plan.process_stage === 'cancel'
-                          ? 'Cancel (0%)'
-                          : ''}
-                </p>
                 <div className="flex justify-end mt-4 gap-2">
                   <button
                     onClick={() => handleViewDetail(plan._id)}

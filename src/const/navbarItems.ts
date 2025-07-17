@@ -20,7 +20,8 @@ export const NavItems:NavbarType[] = [
   { name: 'Home', path:UserRoute.HOME_PATH, role: ['user', 'member', 'coach'] },
   { name: 'Blogs', path:UserRoute.BLOGS_PATH, role: ['user', 'member', 'coach'] },
   { name: 'Contact', path:UserRoute.CONTACT_PATH, role: ['user', 'member', 'coach'] },
-  { name: 'Member', path:UserRoute.MEMBER_PACKAGE_PATH, role: ['user', 'member', 'coach'] }
+  { name: 'Member', path:UserRoute.MEMBER_PACKAGE_PATH, role: ['user', 'member', 'coach'] },
+  { name: 'State of cigarette', path: UserRoute.INITIAl_STATE, role: ['user', 'member', 'coach'] }
 ]
 export const SubItems:NavbarType[] = [
   { name: 'Ranking', path:UserRoute.RANKING_PATH, role: ['user', 'member', 'coach'] },

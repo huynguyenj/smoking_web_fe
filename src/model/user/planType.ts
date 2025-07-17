@@ -1,5 +1,11 @@
 // Giai đoạn thực hiện kế hoạch
-export type ProcessStage = 'start' | 'process' | 'finish' | 'cancel'
+type SpecificInStage = {
+  start_time: number,
+  end_time: number,
+  expected_result: number,
+  isCompleted: false
+}
+export type ProcessStage = SpecificInStage[]
 
 // Tình trạng sức khỏe
 export type HealthStatus = 'good' | 'average' | 'bad'
@@ -14,7 +20,8 @@ export type Plan = {
   start_date: number
   expected_result_date: number
   create_by: string
-  isDeleted: boolean
+  isDeleted: boolean,
+  initial_cigarette_id?: string
 }
 
 // Payload gửi khi tạo mới kế hoạch

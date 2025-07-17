@@ -64,7 +64,7 @@ const PlanDetail = () => {
               </p>
             </div>
             <div className="sm:col-span-2">
-              <p className="text-sm text-gray-500 font-medium">📝 Content</p>
+              <p className="text-sm text-gray-500 font-medium">📝 Title</p>
               <div className="bg-gray-50 border border-gray-300 p-4 rounded-md mt-1 text-gray-700 leading-relaxed whitespace-pre-line shadow-sm">
                 {plan.content}
               </div>
