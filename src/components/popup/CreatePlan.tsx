@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import type { CreatePlanPayload, HealthStatus, ProcessStage } from '../../model/user/planType'
+import { useEffect, useState } from 'react'
+import type { CreatePlanPayload, HealthStatus } from '../../model/user/planType'
 import ApiPrivate from '../../services/ApiPrivate'
 import { useTokenInfoStorage } from '../../store/authStore'
+import type { InitialState } from '../../model/initialTye/initialType'
 
 type Props = {
   onSuccessCreate?: () => void
@@ -9,13 +10,12 @@ type Props = {
 
 export default function CreatePlan({ onSuccessCreate }: Props) {
   const [plan, setPlan] = useState<CreatePlanPayload>({
-    process_stage: 'start',
     health_status: 'bad',
     content: '',
     start_date: Date.now(),
-    expected_result_date: Date.now()
+    initial_cigarette_id: null
   })
-
+  const [initialState, setInitialState] = useState<InitialState[]>([])
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -46,19 +46,30 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
         user_id
       }
       await ApiPrivate.createPlan(fullPayload)
-      setMessage('✅ Tạo kế hoạch thành công!')
+      setMessage('✅ Create successfully!')
 
       // ✅ Gọi callback để đóng popup & reload list
       if (onSuccessCreate) onSuccessCreate()
     } catch (error: unknown) {
       const errMsg =
-      error instanceof Error ? error.message : '❌ Có lỗi không xác định'
+      error instanceof Error ? error.message : '❌ Error not define!'
       setMessage(`❌ ${errMsg}`)
     } finally {
       setLoading(false)
     }
   }
 
+  useEffect(() => {
+    const getListInitialState = async () => {
+      try {
+        const response = await ApiPrivate.getAllInitialState()
+        setInitialState(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getListInitialState()
+  }, [])
 
   return (
     <div className="space-y-4">
@@ -73,13 +84,13 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
       )}
 
       <div className="space-y-1">
-        <label className="block text-sm font-medium">Content</label>
+        <label className="block text-sm font-medium">Title</label>
         <input
           type="text"
           value={plan.content}
           onChange={(e) => handleChange('content', e.target.value)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Plan content..."
+          placeholder="Plan title..."
         />
       </div>
 
@@ -96,22 +107,19 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
           <option value="bad">Bad</option>
         </select>
       </div>
-
       <div className="space-y-1">
-        <label htmlFor='stage' className="block text-sm font-medium">Stage:</label>
+        <label htmlFor='cigarette-status' className="block text-sm font-medium">Cigarette state:</label>
         <select
-          id='stage'
-          value={plan.process_stage}
-          onChange={(e) => handleChange('process_stage', e.target.value as ProcessStage)}
+          id='cigarette-status'
+          // value={plan.initial_cigarette_id}
+          onChange={(e) => handleChange('initial_cigarette_id', e.target.value as string)}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="start">Start</option>
-          <option value="process">Process</option>
-          <option value="finish">Complete</option>
-          <option value="cancel">Cancel</option>
+          {initialState.map((item) => (
+            <option value={item._id}>Initial nicotine: {item.nicotine_evaluation}</option>
+          ))}
         </select>
       </div>
-
       <div className="space-y-1">
         <label htmlFor='start-date' className="block text-sm font-medium">Start date:</label>
         <input
@@ -122,20 +130,6 @@ export default function CreatePlan({ onSuccessCreate }: Props) {
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-
-      <div className="space-y-1">
-        <label htmlFor='end-date' className="block text-sm font-medium">Expect end date:</label>
-        <input
-          id='end-date'
-          type="date"
-          value={new Date(plan.expected_result_date).toISOString().split('T')[0]}
-          onChange={(e) =>
-            handleChange('expected_result_date', new Date(e.target.value).getTime())
-          }
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
       <button
         onClick={handleSubmit}
         disabled={loading}

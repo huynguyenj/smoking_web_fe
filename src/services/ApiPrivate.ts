@@ -108,6 +108,7 @@ const privateApiService = {
     page,
     limit
   }),
+  getAllInitialState: (): Promise<ApiResponse<InitialState[]>> => apiService.privateApiClient.get('/v1/users/initial-cigarette'),
   updateInitialStateById: (id: string, payload: CreateInitialState): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`/v1/users/initial-cigarette/edit/${id}`, payload),
   deleteInitialState: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/initial-cigarette/edit/${id}`),
   getInitialStateDetailById: (id: string): Promise<ApiResponse<InitialState>> => apiService.privateApiClient.get(`/v1/users/initial-cigarette/${id}`)
