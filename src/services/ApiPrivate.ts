@@ -1,7 +1,7 @@
 import type { ApiResponse } from '../model/apiType/apiType'
 import type { Friend, MessageHistoryInfo, PasswordData, SearchUserType, UpdateProfile, UserCommonTypeInfo, UserInfo } from '../model/user/userType'
 import { apiService } from './ApiServiceConfig'
-import type { CreatePlanPayload, PlanListResponse, Plan } from '../model/user/planType'
+import type { CreatePlanPayload, PlanListResponse, Plan, SpecificInStage } from '../model/user/planType'
 import type { BlogListResponse, Blog } from '../model/user/blogType'
 import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentResponse } from '../model/user/commentType'
 import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
@@ -10,6 +10,7 @@ import type { Membership, MembershipInfo } from '../model/user/membershipType'
 import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
 import type { FeedbackSend } from '../model/feedback/feedbackType'
 import type { RankData } from '../model/user/rankType'
+import type { CreateInitialState, InitialState, InitialStatePaginationData } from '../model/initialTye/initialType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -23,6 +24,8 @@ const privateApiService = {
     page,
     limit
   }),
+  checkStagePlan: (planId: string, data: SpecificInStage): Promise<ApiResponse<null>> => apiService.privateApiClient.post(`/v1/users/plan/edit/${planId}`, data),
+  getAllPlanOfUser: (): Promise<ApiResponse<Plan[]>> => apiService.privateApiClient.get('/v1/users/plan'),
   getPlanDetail: (id: string): Promise<ApiResponse<Plan>> => apiService.privateApiClient.get(`/v1/users/plan/edit/${id}`),
   deletePlanById: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/plan/edit/${id}`),
   updatePlanById: (id: string, payload: CreatePlanPayload) => apiService.privateApiClient.put(`/v1/users/plan/edit/${id}`, payload),
@@ -79,7 +82,7 @@ const privateApiService = {
   updateProfile: (updateInfo: UpdateProfile): Promise<ApiResponse<null>> => apiService.privateApiClient.put('/v1/users/profile', updateInfo),
   changePassword: (passwordData: PasswordData): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/profile', passwordData),
   changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar),
-
+  getAllCigarettesOfUser: (): Promise<ApiResponse<CigaretteRecord[]>> => apiService.privateApiClient.get('v1/users/cigarette'),
   getCigarettesPagination: (page = 1, limit = 5): Promise<CigarettePaginationResponse> => apiService.privateApiClient.post('/v1/users/cigarettes/pagination', {
     page,
     limit
@@ -99,7 +102,15 @@ const privateApiService = {
   getAdviceFromAI: (cigaretteId: string): Promise<ApiResponse<string>> => apiService.privateApiClient.get(`/v1/users/get-advice/${cigaretteId}`),
   feedback: (feedbackData: FeedbackSend): Promise<ApiResponse<string>> => apiService.privateApiClient.post('/v1/users/feedback', feedbackData),
   // getAchievement: ():Promise<ApiResponse<null>> => apiService.privateApiClient.get('/v1/users/achievement'),
-  getUserCurrentRank: (): Promise<ApiResponse<RankData>> => apiService.privateApiClient.get('/v1/users/rank')
+  getUserCurrentRank: (): Promise<ApiResponse<RankData>> => apiService.privateApiClient.get('/v1/users/rank'),
+  createInitialState: (payload: CreateInitialState): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/initial-cigarette', payload),
+  getInitialStatePagination: (page = 1, limit = 5): Promise<InitialStatePaginationData> => apiService.privateApiClient.post('/v1/users/initial-cigarette/pagination', {
+    page,
+    limit
+  }),
+  updateInitialStateById: (id: string, payload: CreateInitialState): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`/v1/users/initial-cigarette/edit/${id}`, payload),
+  deleteInitialState: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/initial-cigarette/edit/${id}`),
+  getInitialStateDetailById: (id: string): Promise<ApiResponse<InitialState>> => apiService.privateApiClient.get(`/v1/users/initial-cigarette/${id}`)
 }
 
 
