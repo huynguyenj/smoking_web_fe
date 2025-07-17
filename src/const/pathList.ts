@@ -3,6 +3,8 @@ export const UserRoute = {
   USER_DASHBOARD_PATH: '/user/user-dashboard',
   BLOGS_PATH: '/user/blogs',
   BLOG_DETAIL_PATH: '/user/blog-detail/:id',
+  INITIAl_STATE: '/user/state',
+  INITIAl_STATE_DETAIL: '/user/state/:id',
   PLAN_PATH: '/user/plan',
   PLAN_DETAIL_PATH: '/user/plan-detail/:id',
   SMOKING_PROCESS_PAGE_PATH: '/user/smoking-quitting-process',
