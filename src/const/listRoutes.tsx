@@ -27,6 +27,9 @@ const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const RankPage = lazy(() => import('../pages/admin/RankPage'))
 const AnnouncementPage = lazy(() => import('../pages/admin/AnnouncementPage'))
 const FeedbackPage = lazy(() => import('../pages/user/FeedbackPage'))
+const InitialState = lazy(() => import('../pages/user/inititalState/InitialState'))
+const InitialStateDetail = lazy(() => import('../pages/user/inititalState/InitialStateDetail'))
+
 export const listAdminRoute: RouteType[] = [
   { path: 'dashboard', element:<AdminDashboard/> },
   { path: 'rating', element:<RatingManagementPage/> },
@@ -47,7 +50,8 @@ export const listUserRoute: RouteType[] = [
   { path: 'ranking', element:<RankingPage/> },
   { path: 'profile', element:<ProfilePage/> },
   { path: 'member-package', element: <MemberPackage/> },
-  // { path: 'home', element: <HomePage/> },
+  { path: 'state', element: <InitialState/> },
+  { path: 'state/:id', element: <InitialStateDetail/> },
   { path: 'feedback', element: <FeedbackPage/> }
 ]
 
