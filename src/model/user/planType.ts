@@ -1,5 +1,5 @@
 // Giai đoạn thực hiện kế hoạch
-type SpecificInStage = {
+export type SpecificInStage = {
   start_time: number,
   end_time: number,
   expected_result: number,
