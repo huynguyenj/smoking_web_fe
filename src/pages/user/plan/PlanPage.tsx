@@ -109,12 +109,14 @@ const PlanList = () => {
             {plans.map((plan) => (
               <div
                 key={plan._id}
-                className="bg-white p-4 rounded-lg shadow hover:shadow-md mb-5 transition"
+                className="bg-white p-5 rounded-2xl shadow-[0px_0px_15px_rgba(0,0,0,0.2)] hover:shadow-md mb-5 transition"
               >
                 <div className="mb-2">
-                  <p className='text-2xl'>Title: {plan.content}</p>
-                  <p>Start time: {formDate(plan.start_date)}</p>
-                  <p>Total stage: {plan.process_stage.length}</p>
+                  <p className='text-2xl'>❤️‍🩹{plan.content}</p>
+                  <div className='flex gap-10 items-center mt-5'>
+                    <p className='text-[#ddeedf] bg-[#42b883] w-fit px-20 py-1 rounded-2xl font-bold'>Start time: {formDate(plan.start_date)}</p>
+                    <p className=''>Total stages: {plan.process_stage.length}</p>
+                  </div>
                 </div>
                 <div className="flex justify-end mt-4 gap-2">
                   <button

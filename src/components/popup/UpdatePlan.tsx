@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Plan, HealthStatus, ProcessStage, CreatePlanPayload } from '../../model/user/planType'
+import type { Plan, HealthStatus, CreatePlanPayload } from '../../model/user/planType'
 import ApiPrivate from '../../services/ApiPrivate'
 
 interface Props {
@@ -24,23 +24,19 @@ export default function UpdatePlan({ plan, onSuccessUpdate }: Props) {
     setMessage('')
 
     try {
-      const { content, health_status, process_stage, start_date, expected_result_date } = updatedPlan
+      const { content, health_status, start_date } = updatedPlan
 
       const payload: CreatePlanPayload = {
         content,
         health_status,
-        process_stage,
-        start_date,
-        expected_result_date
+        start_date
       }
 
       await ApiPrivate.updatePlanById(updatedPlan._id, payload)
-      setMessage('✅ Cập nhật kế hoạch thành công!')
+      setMessage('Update successfully!')
       if (onSuccessUpdate) onSuccessUpdate()
-    } catch (error: unknown) {
-      const errMsg =
-        error instanceof Error ? error.message : '❌ Có lỗi không xác định'
-      setMessage(`❌ ${errMsg}`)
+    } catch (error) {
+      setMessage(error as string)
     } finally {
       setLoading(false)
     }
@@ -83,21 +79,6 @@ export default function UpdatePlan({ plan, onSuccessUpdate }: Props) {
       </div>
 
       <div className="space-y-1">
-        <label htmlFor='process-stage' className="block text-sm font-medium">Process:</label>
-        <select
-          id='process-stage'
-          value={updatedPlan.process_stage}
-          onChange={(e) => handleChange('process_stage', e.target.value as ProcessStage)}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="start">Start</option>
-          <option value="process">Process</option>
-          <option value="finish">Complete</option>
-          <option value="cancel">Cancel</option>
-        </select>
-      </div>
-
-      <div className="space-y-1">
         <label htmlFor='start-date' className="block text-sm font-medium">Start date:</label>
         <input
           id='start-date'
@@ -107,18 +88,6 @@ export default function UpdatePlan({ plan, onSuccessUpdate }: Props) {
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-
-      <div className="space-y-1">
-        <label htmlFor='expected-date' className="block text-sm font-medium">Expected date:</label>
-        <input
-          id='expected-date'
-          type="date"
-          value={new Date(updatedPlan.expected_result_date).toISOString().split('T')[0]}
-          onChange={(e) => handleChange('expected_result_date', new Date(e.target.value).getTime())}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
       <button
         onClick={handleSubmit}
         disabled={loading}
