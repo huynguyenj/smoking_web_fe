@@ -8,7 +8,8 @@ const listTitle: string[] = [
   'Rating',
   'Member-Management',
   'Rank-Management',
-  'Announcement-Management'
+  'Announcement-Management',
+  'Coach-Management'
 ]
 export default function AdminMainLayout() {
   const { pathname } = useLocation()
@@ -19,7 +20,6 @@ export default function AdminMainLayout() {
     const titleForCurrenRoute = listTitle.find((title) => title.toLowerCase() === currentPath )
     setTitle(titleForCurrenRoute)
   }, [pathname])
-
   return (
     <div className='flex'>
       <aside className='w-[20%]'>

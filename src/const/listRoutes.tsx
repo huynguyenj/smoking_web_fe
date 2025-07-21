@@ -29,14 +29,15 @@ const AnnouncementPage = lazy(() => import('../pages/admin/AnnouncementPage'))
 const FeedbackPage = lazy(() => import('../pages/user/FeedbackPage'))
 const InitialState = lazy(() => import('../pages/user/inititalState/InitialState'))
 const InitialStateDetail = lazy(() => import('../pages/user/inititalState/InitialStateDetail'))
-
+const CoachManagementPage = lazy(() => import('../pages/admin/CoachManagementPage'))
 export const listAdminRoute: RouteType[] = [
   { path: 'dashboard', element:<AdminDashboard/> },
   { path: 'rating', element:<RatingManagementPage/> },
   { path: 'user-management', element:<UserManagementPage/> },
   { path: 'member-management', element:<MemberManagementPage/> },
   { path: 'rank-management', element: <RankPage/> },
-  { path: 'announcement-management', element: <AnnouncementPage/> }
+  { path: 'announcement-management', element: <AnnouncementPage/> },
+  { path: 'coach-management', element: <CoachManagementPage/> }
 ]
 
 export const listUserRoute: RouteType[] = [
