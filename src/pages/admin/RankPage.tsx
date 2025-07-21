@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import RankTable from '../../components/ranking-table/RankTable'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import type { RankPaginationInfo } from '../../model/rank/rankType'
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { toast } from 'react-toastify'
 
 export default function RankPage() {
   const [rankData, setRankData] = useState<RankPaginationInfo[]>([])
@@ -12,6 +13,7 @@ export default function RankPage() {
   const [sortOrder, setSortOrder] = useState<number>(-1)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [sortName, setSortName] = useState<string>('star_count')
+  const [arrange, setArrange] = useState<string>('star_count')
 
   const fetchRankData = async (pageNumber: number, limit: number, sort: number, sortName: string) => {
     setIsLoading(true)
@@ -31,31 +33,47 @@ export default function RankPage() {
     }
   }
 
+  const configRank = async () => {
+    setIsLoading(true)
+    try {
+      await ApiAdminPrivate.arrangeRank({ option_sort: arrange })
+      await fetchRankData(page, rowsPerPage, sortOrder, sortName)
+      toast.success('Arrange success')
+    } catch (error) {
+      toast.error(error as string)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchRankData(page, rowsPerPage, sortOrder, sortName)
   }, [page, rowsPerPage, sortOrder, sortName])
+
   const handlePageChange = (newPage: number, newRowsPerPage: number) => {
     setPage(newPage)
     setRowsPerPage(newRowsPerPage)
   }
+
   return (
-    <div>
-      <div className='flex mt-[-1px] justify-end'>
-        <div>
-          <Typography variant="h4" fontWeight="bold" align="center" gutterBottom>
+    <div className="p-6">
+      <div className="flex flex-col lg:flex-row justify-between items-center mt-[-50px] gap-4">
+        <div className="text-end">
+          <Typography variant="h4" fontWeight="bold" gutterBottom>
             LEADERBOARD
           </Typography>
-          <Typography align="center" gutterBottom>
+          <Typography gutterBottom>
             Rank of users based on achievements
           </Typography>
         </div>
-        <div>
-          <FormControl sx={{ marginLeft: 30, marginRight: 5, minWidth: 100 }}>
+
+        <div className="flex flex-wrap gap-4 items-center justify-center">
+          <FormControl className="min-w-[120px]">
             <InputLabel id="sort-label">Sort name</InputLabel>
             <Select
               labelId="sort-label"
               value={sortName}
-              label="Sort by"
+              label="Sort name"
               onChange={(e) => setSortName(String(e.target.value))}
             >
               <MenuItem value={'star_count'}>Star</MenuItem>
@@ -64,10 +82,10 @@ export default function RankPage() {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ marginRight: 10, minWidth: 100 }}>
-            <InputLabel id="sort-label">Sort by</InputLabel>
+          <FormControl className="min-w-[120px]">
+            <InputLabel id="sort-order-label">Sort by</InputLabel>
             <Select
-              labelId="sort-label"
+              labelId="sort-order-label"
               value={sortOrder}
               label="Sort by"
               onChange={(e) => setSortOrder(Number(e.target.value))}
@@ -76,11 +94,33 @@ export default function RankPage() {
               <MenuItem value={-1}>Decrease</MenuItem>
             </Select>
           </FormControl>
+
+          <div className="flex items-center gap-2">
+            <FormControl className="min-w-[120px]">
+              <InputLabel id="arrange-label">Config rank</InputLabel>
+              <Select
+                labelId="arrange-label"
+                value={arrange}
+                label="Config rank"
+                onChange={(e) => setArrange(String(e.target.value))}
+              >
+                <MenuItem value={'star_count'}>Star</MenuItem>
+                <MenuItem value={'total_achievements'}>Achievements</MenuItem>
+              </Select>
+            </FormControl>
+            <Button variant="outlined" onClick={configRank}>Change</Button>
+          </div>
         </div>
-
-
       </div>
-      <RankTable isLoading={isLoading} onPageChange={handlePageChange} rank={rankData} rowsPerPage={rowsPerPage} totalPage={totalPage} page={page} />
+
+      <RankTable
+        isLoading={isLoading}
+        onPageChange={handlePageChange}
+        rank={rankData}
+        rowsPerPage={rowsPerPage}
+        totalPage={totalPage}
+        page={page}
+      />
     </div>
   )
 }

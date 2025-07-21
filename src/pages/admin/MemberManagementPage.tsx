@@ -3,6 +3,7 @@ import MemberShipBox from '../../components/memberShip-box/MemberShipBox'
 import ApiAdminPrivate from '../../services/ApiAdminPrivate'
 import type { MembershipInfo } from '../../model/user/membershipType'
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
+import { toast } from 'react-toastify'
 
 export default function MemberManagementPage() {
   const [memberPackages, setMemberPackages] = useState<MembershipInfo[]>([])
@@ -31,8 +32,8 @@ export default function MemberManagementPage() {
   const handleSubmit = async () => {
     const featuresArray = featureInput
       .split(',')
-      .map(f => f.trim()) // loại khoảng trắng
-      .filter(f => f !== '') // loại chuỗi rỗng
+      .map(f => f.trim())
+      .filter(f => f !== '')
     try {
       await ApiAdminPrivate.createMemberPackage({ membership_title, price, feature: featuresArray })
       setOpen(false)

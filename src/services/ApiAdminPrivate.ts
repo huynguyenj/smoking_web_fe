@@ -30,7 +30,8 @@ const ApiAdminPrivate = {
   createAnnouncement: ({ title, content } : { title: string, content: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/announcement', { title, content }),
   updateAnnouncement: ({ id, title, content } : { id: string | undefined, title: string, content: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`v1/admin/announcement/edit/${id}`, { title, content }),
   getRevenueChart: ({ year } : { year: number | null }): Promise<ApiResponse<RevenueChartInfo[]>> => apiService.privateApiClient.post('v1/admin/revenue', { year }),
-  deleteUser: ({ id } : { id: string | undefined }): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/user/detail/${id}`)
+  deleteUser: ({ id } : { id: string | undefined }): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/user/detail/${id}`),
+  arrangeRank: ({ option_sort } : { option_sort: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/rank/arrange-position', { option_sort })
 }
 
 export default ApiAdminPrivate
