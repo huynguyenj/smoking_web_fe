@@ -6,7 +6,7 @@ const LoadingScreenBg = () => {
         <p className="text-white text-lg font-semibold">Loading...</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default LoadingScreenBg
