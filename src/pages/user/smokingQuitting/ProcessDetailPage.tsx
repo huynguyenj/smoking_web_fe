@@ -4,11 +4,9 @@ import privateApiService from '../../../services/ApiPrivate'
 import type { CigaretteRecord } from '../../../model/user/cigarettesType'
 
 // MUI Icons
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import SavingsIcon from '@mui/icons-material/Savings'
-import ScoreIcon from '@mui/icons-material/Score'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -39,14 +37,15 @@ export default function CigaretteDetailPage() {
     fetchDetail()
   }, [id])
 
-  if (loading) return <LoadingScreenBg/>
-  if (!record) return <p className="text-center text-red-600 py-10">No data has been found</p>
+  if (loading) return <LoadingScreenBg />
+  if (!record)
+    return (
+      <p className="text-center text-red-600 py-10">No data has been found</p>
+    )
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-
-        {/* ✅ Header màu trong thẻ */}
         <div className="bg-black text-white px-6 py-4">
           <h1 className="text-2xl font-bold text-center">📄Detail</h1>
         </div>
@@ -55,60 +54,51 @@ export default function CigaretteDetailPage() {
         <div className="p-6 space-y-6">
           {/* Thông tin hút thuốc */}
           <div className="bg-blue-50 rounded-lg p-4">
-            <h2 className="text-xl font-semibold text-blue-700 mb-3">🚬 Cigarette information</h2>
+            <h2 className="text-xl font-semibold text-blue-700 mb-3">
+              🚬 Cigarette information
+            </h2>
             <div className="space-y-2">
               <p className="flex items-center gap-2">
-                <LocalFireDepartmentIcon className="text-red-600" />
-                <strong>Amount:</strong> {record.amount} cigarettes
-              </p>
-              <p className="flex items-center gap-2">
                 <AccessTimeIcon className="text-gray-600" />
-                <strong>Amount/1 day:</strong> {record.smoking_frequency_per_day} times
+                <strong>Smoking frequency per day:</strong>{' '}
+                {record.smoking_frequency_per_day} times
               </p>
               <p className="flex items-center gap-2">
                 <AttachMoneyIcon className="text-green-600" />
-                <strong>Money/1 day:</strong> {record.money_consumption_per_day.toLocaleString()} VND
+                <strong>Money consumption per day:</strong>{' '}
+                {record.money_consumption_per_day.toLocaleString()} VND
               </p>
               <p className="flex items-center gap-2">
                 <SavingsIcon className="text-green-700" />
-                <strong>Saving money:</strong> {record.saving_money.toLocaleString()} VND
+                <strong>Saving money:</strong>{' '}
+                {record.saving_money.toLocaleString()} VND
               </p>
             </div>
           </div>
 
-          {/* Đánh giá nicotine */}
-          <div className="bg-purple-50 rounded-lg p-4">
-            <h2 className="text-xl font-semibold text-purple-700 mb-3">🧪 Nicotine evaluation</h2>
-            <p className="text-purple-800 font-bold text-lg flex items-center gap-2">
-              <ScoreIcon className="text-purple-600" />
-              Score: {record.nicotine_evaluation}/10
-            </p>
-          </div>
-
-          {/* Thời gian */}
           <div className="bg-green-50 rounded-lg p-4">
-            <h2 className="text-xl font-semibold text-green-700 mb-3">📅 Time</h2>
+            <h2 className="text-xl font-semibold text-green-700 mb-3">
+              📅 Time
+            </h2>
             <p className="flex items-center gap-2">
               <CalendarMonthIcon className="text-green-600" />
-              <strong>Created date:</strong> {new Date(record.create_date).toLocaleString()}
-            </p>
-            <p className="flex items-center gap-2">
-              <CalendarMonthIcon className="text-green-600" />
-              <strong>Date without smoke:</strong>{' '}
-              {record.no_smoking_date
-                ? new Date(record.no_smoking_date).toLocaleString()
-                : 'No date'}
+              <strong>Created date:</strong>{' '}
+              {new Date(record.create_date).toLocaleString()}
             </p>
           </div>
 
           {/* Trạng thái */}
           <div className="bg-red-50 rounded-lg p-4">
-            <h2 className="text-xl font-semibold text-red-700 mb-3">📌 Status</h2>
+            <h2 className="text-xl font-semibold text-red-700 mb-3">
+              📌 Status
+            </h2>
             <p className="flex items-center gap-2 text-lg">
               {record.isDeleted ? (
                 <>
                   <DeleteIcon className="text-red-600" />
-                  <span className="text-red-600 font-medium">❌ Is deleted</span>
+                  <span className="text-red-600 font-medium">
+                    ❌ Is deleted
+                  </span>
                 </>
               ) : (
                 <>

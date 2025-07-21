@@ -13,7 +13,6 @@ export default function CigaretteList() {
   const [totalPage, setTotalPage] = useState(1)
   const [showPopup, setShowPopup] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState<CigaretteRecord | null>(null) // ✅ phân biệt update
-
   const fetchCigarettes = async () => {
     setLoading(true)
     try {

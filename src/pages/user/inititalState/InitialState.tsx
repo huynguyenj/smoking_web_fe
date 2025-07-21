@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type {
   InitialState,
   InitialStatePaginationData,
-  PageInfo
+  PageInfo,
 } from '../../../model/initialType/initialType'
 import InitialCard from '../../../components/initialState/InitialCard'
 import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
@@ -104,7 +104,7 @@ export default function InitialStatePage() {
         <button
           onClick={() => handlePageChange(pageInfo.page - 1)}
           disabled={pageInfo.page <= 1}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-400 text-white rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -114,7 +114,7 @@ export default function InitialStatePage() {
         <button
           onClick={() => handlePageChange(pageInfo.page + 1)}
           disabled={pageInfo.page >= pageInfo.totalPage}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-gray-400 text-white rounded disabled:opacity-50"
         >
           Next
         </button>
