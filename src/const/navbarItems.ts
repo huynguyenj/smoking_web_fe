@@ -3,6 +3,7 @@ import type React from 'react'
 import { MuiIcon } from '../components/muiIcon/MuiIcon'
 import StarsIcon from '@mui/icons-material/Stars'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount'
 import { AdminRoute, UserRoute } from './pathList'
 type NavbarType = {
   name: string,
@@ -36,5 +37,6 @@ export const sideBarItems:SidebarType[] = [
   { name: 'Rating-Feedback', icon:MuiIcon.GradeStartIcon, path:AdminRoute.RANTING_PATH },
   { name: 'Member Package', icon:MuiIcon.DiamondIcon, path:AdminRoute.MEMBER_MANAGEMENT_PATH },
   { name: 'Rank Management', icon:StarsIcon, path:AdminRoute.RANK_MANAGEMENT_PATH },
-  { name: 'Announcement Management', icon:NotificationsIcon, path:AdminRoute.ANNOUNCEMENT_MANAGEMENT_PATH }
+  { name: 'Announcement Management', icon:NotificationsIcon, path:AdminRoute.ANNOUNCEMENT_MANAGEMENT_PATH },
+  { name: 'Coach Management', icon: SwitchAccountIcon, path: AdminRoute.COACH_MANAGEMENT_PATH }
 ]
