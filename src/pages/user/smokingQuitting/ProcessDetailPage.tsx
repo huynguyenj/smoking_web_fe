@@ -12,6 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { toast } from 'react-toastify'
 import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
+import { formDate } from '../../../utils/formDate'
+import { formatCurrencyVND } from '../../../utils/formatCurrency'
 
 export default function CigaretteDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -66,12 +68,12 @@ export default function CigaretteDetailPage() {
               <p className="flex items-center gap-2">
                 <AttachMoneyIcon className="text-green-600" />
                 <strong>Money consumption per day:</strong>{' '}
-                {record.money_consumption_per_day.toLocaleString()} VND
+                {formatCurrencyVND(record.money_consumption_per_day)}
               </p>
               <p className="flex items-center gap-2">
                 <SavingsIcon className="text-green-700" />
                 <strong>Saving money:</strong>{' '}
-                {record.saving_money.toLocaleString()} VND
+                {formatCurrencyVND(record.saving_money)}
               </p>
             </div>
           </div>
@@ -83,7 +85,7 @@ export default function CigaretteDetailPage() {
             <p className="flex items-center gap-2">
               <CalendarMonthIcon className="text-green-600" />
               <strong>Created date:</strong>{' '}
-              {new Date(record.create_date).toLocaleString()}
+              {formDate(record.create_date)}
             </p>
           </div>
 

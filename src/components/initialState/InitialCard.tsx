@@ -1,8 +1,10 @@
-import React from "react";
-import LoadingScreenBg from "../loading/LoadingScreenBg";
-import { useNavigate } from "react-router-dom";
-import type { InitialState } from "../../model/initialType/initialType";
-import { UserRoute } from "../../const/pathList";
+import React from 'react'
+import LoadingScreenBg from '../loading/LoadingScreenBg'
+import { useNavigate } from 'react-router-dom'
+import type { InitialState } from '../../model/initialType/initialType'
+import { UserRoute } from '../../const/pathList'
+import { formDate } from '../../utils/formDate'
+import { formatCurrencyVND } from '../../utils/formatCurrency'
 
 interface Props {
   item: InitialState;
@@ -13,15 +15,15 @@ interface Props {
 }
 
 export default function InitialCard({ item, onDelete, onUpdate }: Props) {
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const handleViewDetail = () => {
-    setIsLoading(true);
-    navigate(UserRoute.INITIAl_STATE_DETAIL.replace(":id", item._id));
+    setIsLoading(true)
+    navigate(UserRoute.INITIAl_STATE_DETAIL.replace(':id', item._id))
   };
 
-  if (isLoading) return <LoadingScreenBg />;
+  if (isLoading) return <LoadingScreenBg />
 
   return (
     <li className="p-5 bg-white border rounded-lg shadow-sm hover:shadow-md transition">
@@ -33,15 +35,15 @@ export default function InitialCard({ item, onDelete, onUpdate }: Props) {
           <strong>📅 Amount/day:</strong> {item.smoking_frequency_per_day}
         </p>
         <p>
-          <strong>💸 Money/cigarette:</strong>{" "}
-          {item.money_each_cigarette.toLocaleString()} VND
+          <strong>💸 Money/cigarette:</strong>{' '}
+          {formatCurrencyVND(item.money_each_cigarette)}
         </p>
         <p>
           <strong>🧪 Nicotine eval:</strong> {item.nicotine_evaluation}/10
         </p>
         <p className="sm:col-span-2">
-          <strong>⏰ Created at:</strong>{" "}
-          {new Date(item.create_date).toLocaleString()}
+          <strong>⏰ Created at:</strong>{' '}
+          {formDate(item.create_date)}
         </p>
       </div>
 
@@ -66,5 +68,5 @@ export default function InitialCard({ item, onDelete, onUpdate }: Props) {
         </button>
       </div>
     </li>
-  );
+  )
 }

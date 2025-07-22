@@ -31,8 +31,8 @@ export default function MemberManagementPage() {
   const handleSubmit = async () => {
     const featuresArray = featureInput
       .split(',')
-      .map(f => f.trim()) // loại khoảng trắng
-      .filter(f => f !== '') // loại chuỗi rỗng
+      .map(f => f.trim())
+      .filter(f => f !== '')
     try {
       await ApiAdminPrivate.createMemberPackage({ membership_title, price, feature: featuresArray })
       setOpen(false)
