@@ -1,12 +1,12 @@
-import { Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, InputBase } from '@mui/material'
+import { Box, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import type React from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { debounce } from 'lodash'
 import CloseIcon from '@mui/icons-material/Close'
-// import useDebounce from '../../../hooks/debounce/useDebounce'
 import type { SearchUserType } from '../../../model/user/userType'
 import privateApiService from '../../../services/ApiPrivate'
+import Avatar from '../../../assets/avatar.jpg'
 import { toast } from 'react-toastify'
 export default function SearchFriends() {
   const [inputValue, setInputValue] = useState('')
@@ -59,7 +59,13 @@ export default function SearchFriends() {
           <CloseIcon sx={{ color:'white' }}/>{''}</button>
         {friends.length > 0 ? <Box>{friends.map((friend) => (
           <div key={friend._id} className='flex gap-5 w-[100%] justify-between mb-5'>
-            <button className='p-5 bg-blue-mid-light-fig w-full rounded-2xl cursor-pointer text-[1.2rem]' onClick={() => handleOpenDialog(friend)}>{friend.user_name}</button>
+            <button className='p-5 w-full rounded-2xl cursor-pointer text-[1.2rem] flex items-center justify-between border-1' onClick={() => handleOpenDialog(friend)}>
+              <img className='w-10 h-10 rounded-full' src={friend.image_url ? friend.image_url : Avatar} alt='avatar'/>
+              <p>
+                {friend.user_name}
+              </p>
+              <Chip label={friend.role} style={{ backgroundColor: friend.role === 'coach' ? '#00bbf0' : '', color: friend.role === 'coach'? 'white': 'black', fontWeight:'500' }} variant={friend.role === 'coach' ? 'filled' : 'outlined'} />
+            </button>
           </div>
         ))}</Box>
           : 'Not found' }

@@ -12,6 +12,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import privateApiService from '../../../services/ApiPrivate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { UserRoute } from '../../../const/pathList'
+import ChartProcessPlan from './ChartProcessPlan'
 const PlanDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [plan, setPlan] = useState<Plan | null>(null)
@@ -81,11 +82,11 @@ const PlanDetail = () => {
             </div>
             <div>
               <p className="text-sm text-gray-500 font-medium">📅 Start date</p>
-              <p className="text-base font-medium mt-1">{new Date(plan.start_date).toLocaleDateString()}</p>
+              <p className="text-base font-medium mt-1">{formDate(plan.start_date)}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500 font-medium">🏁 Expected complete date</p>
-              <p className="text-base font-medium mt-1">{new Date(plan.expected_result_date).toLocaleDateString()}</p>
+              <p className="text-base font-medium mt-1">{formDate(plan.expected_result_date)}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500 font-medium">🗑️ Status</p>
@@ -120,7 +121,7 @@ const PlanDetail = () => {
       </div>
       {isStageOpen &&
       <CustomModal>
-        <div className="relative z-10 bg-white rounded-xl shadow-lg p-6 w-full max-w-xl">
+        <div className="relative z-10 bg-white rounded-xl shadow-lg p-6 w-300 overflow-y-auto">
           <button
             onClick={() => setIsStageOpen(false)}
             className="absolute top-1 right-2 text-gray-500 hover:text-red-600 text-[1.2rem] cursor-pointer"
@@ -133,7 +134,7 @@ const PlanDetail = () => {
             <ArrowRightAltIcon/>
             <p className='bg-[#e46161]  px-5 py-2 rounded-2xl text-white font-bold'>End time: {formDate(stagePlan?.end_time as number)}</p>
           </div>
-          <div className='mt-5 flex justify-between'>
+          <div className='mt-5 flex justify-between mb-15'>
             <div>
               <p className='text-[1.1rem] font-bold'>Expected result</p>
               <p className=''>Need to reduce {stagePlan?.expected_result} cigarettes in a week </p>
@@ -151,6 +152,9 @@ const PlanDetail = () => {
               </div>
             }
           </div>
+          {stagePlan && 
+          <ChartProcessPlan planId={plan._id} stageData={stagePlan}/>
+          }
         </div>
       </CustomModal>
       }

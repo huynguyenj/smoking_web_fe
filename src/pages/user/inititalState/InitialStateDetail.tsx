@@ -1,43 +1,45 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import privateApiService from "../../../services/ApiPrivate";
-import type { InitialState } from "../../../model/initialType/initialType";
-import LoadingScreenBg from "../../../components/loading/LoadingScreenBg";
-import axios from "axios";
+import { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import privateApiService from '../../../services/ApiPrivate'
+import type { InitialState } from '../../../model/initialType/initialType'
+import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
+import axios from 'axios'
+import { formatCurrencyVND } from '../../../utils/formatCurrency'
+import { formDate } from '../../../utils/formDate'
 
 export default function InitialStateDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [data, setData] = useState<InitialState | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [data, setData] = useState<InitialState | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchDetail = async () => {
-    if (!id) return;
-    setLoading(true);
+    if (!id) return
+    setLoading(true)
     try {
-      const res = await privateApiService.getInitialStateDetailById(id);
-      setData(res.data);
+      const res = await privateApiService.getInitialStateDetailById(id)
+      setData(res.data)
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(
-          err.response?.data?.message || err.message || "Failed to fetch data."
-        );
+          err.response?.data?.message || err.message || 'Failed to fetch data.'
+        )
       } else if (err instanceof Error) {
-        setError(err.message);
+        setError(err.message)
       } else {
-        setError("Unknown error occurred.");
+        setError('Unknown error occurred.')
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchDetail();
-  }, [id]);
+    fetchDetail()
+  }, [id])
 
-  if (loading) return <LoadingScreenBg />;
+  if (loading) return <LoadingScreenBg />
 
   if (error)
     return (
@@ -50,9 +52,9 @@ export default function InitialStateDetail() {
           ← Back
         </button>
       </div>
-    );
+    )
 
-  if (!data) return null;
+  if (!data) return null
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 bg-white rounded-lg shadow-md">
@@ -95,7 +97,7 @@ export default function InitialStateDetail() {
           <div>
             <p className="text-sm text-gray-500">Money per cigarette</p>
             <p className="font-semibold text-lg">
-              {data.money_each_cigarette.toLocaleString()} VND
+              {formatCurrencyVND(data.money_each_cigarette)}
             </p>
           </div>
         </div>
@@ -115,11 +117,11 @@ export default function InitialStateDetail() {
           <div>
             <p className="text-sm text-gray-500">Created date</p>
             <p className="font-semibold text-lg">
-              {new Date(data.create_date).toLocaleString()}
+              {formDate(data.create_date)}
             </p>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

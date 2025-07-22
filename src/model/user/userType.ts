@@ -55,13 +55,17 @@ export interface SearchUserType {
    _id: string,
    full_name: string,
    user_name: string,
-   profile: Profile
+   profile: Profile,
+   role: string,
+   image_url?: string
 }
 
 export type Friend = {
   _id: string,
   full_name: string,
-  user_name: string
+  user_name: string,
+  role: string,
+  image_url: string
 }
 
 export interface UserPaginationInfo {

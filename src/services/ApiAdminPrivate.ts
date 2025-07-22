@@ -7,6 +7,8 @@ import type { MembershipInfo } from '../model/user/membershipType'
 import type { RankPaginationInfo } from '../model/rank/rankType'
 import type { AnnoucementPaginationInfo } from '../model/announcement/announcementType'
 import type { RevenueChartInfo } from '../model/revenueChart/revenueType'
+import type { CoachPagination } from '../model/coach/coachType'
+import type { Salary } from '../model/salary/salaryType'
 
 const ApiAdminPrivate = {
   getTotalUsers: (): Promise<ApiResponse<number>> => apiService.privateApiClient.get('v1/admin/user'),
@@ -30,7 +32,14 @@ const ApiAdminPrivate = {
   createAnnouncement: ({ title, content } : { title: string, content: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/announcement', { title, content }),
   updateAnnouncement: ({ id, title, content } : { id: string | undefined, title: string, content: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`v1/admin/announcement/edit/${id}`, { title, content }),
   getRevenueChart: ({ year } : { year: number | null }): Promise<ApiResponse<RevenueChartInfo[]>> => apiService.privateApiClient.post('v1/admin/revenue', { year }),
-  deleteUser: ({ id } : { id: string | undefined }): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/user/detail/${id}`)
+  deleteUser: ({ id } : { id: string | undefined }): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/user/detail/${id}`),
+  arrangeRank: ({ option_sort } : { option_sort: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/rank/arrange-position', { option_sort }),
+  getCoachList: ({ page, limit, sort }: { page: number, limit: number, sort: number }): Promise<ApiResponse<Pagination<CoachPagination>>> => apiService.privateApiClient.post('v1/admin/coach/pagination', { page, limit, sort }),
+  getSalaryDetail: ({ id } : { id: string}): Promise<ApiResponse<Salary>> => apiService.privateApiClient.get(`v1/admin/salary/${id}`),
+  updateSalary: ({ id, data }: { id: string, data: FormData}): Promise<ApiResponse<null>> => apiService.privateApiClient.put(`v1/admin/salary/${id}`, data),
+  deleteSalary: ({ id }: { id: string}): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`v1/admin/salary/${id}`),
+  createSalary: ({ id, data }: { id: string, data: FormData}): Promise<ApiResponse<null>> => apiService.privateApiClient.post(`v1/admin/salary/${id}`, data),
+  createCoachAcc: ({ email, password, full_name, user_name, role }: { email: string, password: string, full_name: string, role: string, user_name: string }): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/admin/user/account', { email, password, full_name, user_name, role })
 }
 
 export default ApiAdminPrivate

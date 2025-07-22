@@ -8,6 +8,8 @@ import privateApiService from '../../services/ApiPrivate'
 import { toast } from 'react-toastify'
 import CustomModal from '../modal/CustomModal'
 import useOpen from '../../hooks/openState/useOpen'
+import { formatCurrencyVND } from '../../utils/formatCurrency'
+import { formDate } from '../../utils/formDate'
 
 interface Props {
   item: CigaretteRecord;
@@ -67,14 +69,14 @@ export default function CigaretteCard({ item, onDelete, onUpdate }: Props) {
       </p>
       <p>
         <strong>Money consumption per day:</strong>{' '}
-        {item.money_consumption_per_day.toLocaleString()} VND
+        {formatCurrencyVND(item.money_consumption_per_day)}
       </p>
       <p>
-        <strong>Money saving:</strong> {item.saving_money.toLocaleString()} VND
+        <strong>Money saving:</strong> {formatCurrencyVND(item.saving_money)}
       </p>
       <p>
         <strong>Created date:</strong>{' '}
-        {new Date(item.create_date).toLocaleString()}
+        {formDate(item.create_date)}
       </p>
       <div className="mt-2 flex justify-end gap-2">
         <button

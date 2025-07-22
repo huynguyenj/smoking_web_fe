@@ -11,6 +11,7 @@ import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteReco
 import type { FeedbackSend } from '../model/feedback/feedbackType'
 import type { RankData } from '../model/user/rankType'
 import type { CreateInitialState, InitialState, InitialStatePaginationData } from '../model/initialType/initialType'
+import type { PlanChartData } from '../model/api-chart/planChartType'
 
 const privateApiService = {
   logout: (): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/logout'),
@@ -29,6 +30,7 @@ const privateApiService = {
   getPlanDetail: (id: string): Promise<ApiResponse<Plan>> => apiService.privateApiClient.get(`/v1/users/plan/edit/${id}`),
   deletePlanById: (id: string): Promise<ApiResponse<null>> => apiService.privateApiClient.delete(`/v1/users/plan/edit/${id}`),
   updatePlanById: (id: string, payload: CreatePlanPayload) => apiService.privateApiClient.put(`/v1/users/plan/edit/${id}`, payload),
+  getPlanProcessChartData: (planId: string, data: SpecificInStage): Promise<ApiResponse<PlanChartData>> => apiService.privateApiClient.post(`/v1/users/plan/data/${planId}`, data),
   getMemberships: (): Promise<ApiResponse<Membership[]>> => apiService.privateApiClient.get('/v1/users/membership'),
 
   createBlog: (formData: FormData) => apiService.privateApiClient.post('/v1/users/blog', formData),

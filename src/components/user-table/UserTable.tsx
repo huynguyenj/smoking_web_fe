@@ -179,6 +179,8 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
             </TableBody>
           </Table>
         </TableContainer>
+
+        {/* Change status */}
         <Dialog open={openConfirm} onClose={handleCloseConfirm}>
           <DialogTitle>Confirm</DialogTitle>
           <DialogContent>
@@ -208,6 +210,7 @@ function UserTable({ isLoading, users, page, totalPage, sortOrder, rowsPerPage, 
           </DialogActions>
         </Dialog>
 
+        {/* User detail */}
         <UserDetailDialog
           openDetail={openDetail}
           setOpenDetail={() => setOpenDetail(false)}
