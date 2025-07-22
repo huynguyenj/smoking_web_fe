@@ -26,7 +26,8 @@ export const AdminRoute = {
   USER_MANAGEMENT_PATH: '/admin/user-management',
   MEMBER_MANAGEMENT_PATH: '/admin/member-management',
   RANK_MANAGEMENT_PATH: '/admin/rank-management',
-  ANNOUNCEMENT_MANAGEMENT_PATH: '/admin/announcement-management'
+  ANNOUNCEMENT_MANAGEMENT_PATH: '/admin/announcement-management',
+  COACH_MANAGEMENT_PATH: '/admin/coach-management'
 }
 
 
