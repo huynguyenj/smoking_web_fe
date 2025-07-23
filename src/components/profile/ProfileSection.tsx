@@ -55,7 +55,7 @@ export default function ProfileSection({ profile, getInfo }: Props) {
           <div className="flex mb-4 justify-between">
             <h3 className="text-2xl font-semibold text-gray-800 mb-3">Profile Info</h3>
             <button className=' text-white font-bold hover:opacity-70 active:opacity-80 cursor-pointer' onClick={toggle}>
-              {isOpen? <div className='bg-red-400 p-3 rounded-full '><CloseIcon/>{''}</div> :  <div className='bg-blue-400 p-3 rounded-full'><EditIcon/></div> }
+              {isOpen? <div className='bg-red-400 p-3 rounded-full '><CloseIcon/>{''}</div> : <div className='bg-blue-400 p-3 rounded-full'><EditIcon/></div> }
             </button>
           </div>
           <div className="border-t pt-6">

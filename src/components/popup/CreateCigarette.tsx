@@ -23,9 +23,8 @@ export default function CreateCigarettePopup({ onClose, onSuccess }: Props) {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const res = await privateApiService.getAllPlans()
-        // Tuỳ cấu trúc, chọn đúng chỗ chứa array
-        setPlans(res.data?.listData || []) // hoặc res.data.data, hoặc res.data trực tiếp
+        const res = await privateApiService.getAllPlanOfUser()
+        setPlans(res.data)
       } catch (err) {
         toast.error(err as string)
       }
