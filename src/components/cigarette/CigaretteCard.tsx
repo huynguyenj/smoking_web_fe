@@ -62,7 +62,7 @@ export default function CigaretteCard({ item, onDelete, onUpdate }: Props) {
   if (isLoading) return <LoadingScreenBg />
 
   return (
-    <li className="p-4 border rounded shadow">
+    <div className="bg-white p-5 rounded-2xl shadow-[0px_0px_15px_rgba(0,0,0,0.2)]  mb-5 transition">
       <p>
         <strong>Smoking frequency per day:</strong>{' '}
         {item.smoking_frequency_per_day}
@@ -121,6 +121,6 @@ export default function CigaretteCard({ item, onDelete, onUpdate }: Props) {
         :
         <></>
       }
-    </li>
+    </div>
   )
 }

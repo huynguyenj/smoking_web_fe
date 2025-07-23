@@ -26,7 +26,7 @@ export default function InitialCard({ item, onDelete, onUpdate }: Props) {
   if (isLoading) return <LoadingScreenBg />
 
   return (
-    <li className="p-5 bg-white border rounded-lg shadow-sm hover:shadow-md transition">
+    <div className="bg-white p-5 rounded-2xl shadow-[0px_0px_15px_rgba(0,0,0,0.2)]  mb-5 transition">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-800">
         <p>
           <strong>🚬 Smoke Amount:</strong> {item.amount_cigarettes}
@@ -67,6 +67,6 @@ export default function InitialCard({ item, onDelete, onUpdate }: Props) {
           🗑 Delete
         </button>
       </div>
-    </li>
+    </div>
   )
 }
