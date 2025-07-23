@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react'
 import type {
   InitialState,
-  CreateInitialState,
-} from "../../model/initialType/initialType";
-import privateApiService from "../../services/ApiPrivate";
-import NicotineQuizPopup from "./NicotineQuiz";
-import { toast } from "react-toastify";
+  CreateInitialState
+} from '../../model/initialType/initialType'
+import privateApiService from '../../services/ApiPrivate'
+import NicotineQuizPopup from './NicotineQuiz'
+import { toast } from 'react-toastify'
 
 interface Props {
   initialData: InitialState;
@@ -16,37 +16,37 @@ interface Props {
 export default function UpdateCigarettePopup({
   initialData,
   onClose,
-  onSuccess,
+  onSuccess
 }: Props) {
-  const [amount, setAmount] = useState(initialData.amount_cigarettes);
+  const [amount, setAmount] = useState(initialData.amount_cigarettes)
   const [frequency, setFrequency] = useState(
     initialData.smoking_frequency_per_day
-  );
-  const [money, setMoney] = useState(initialData.money_each_cigarette);
-  const [nicotine, setNicotine] = useState(initialData.nicotine_evaluation);
-  const [loading, setLoading] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
+  )
+  const [money, setMoney] = useState(initialData.money_each_cigarette)
+  const [nicotine, setNicotine] = useState(initialData.nicotine_evaluation)
+  const [loading, setLoading] = useState(false)
+  const [showQuiz, setShowQuiz] = useState(false)
 
   const handleUpdate = async () => {
     const payload: CreateInitialState = {
       amount_cigarettes: amount,
       smoking_frequency_per_day: frequency,
       money_each_cigarette: money,
-      nicotine_evaluation: nicotine,
-    };
+      nicotine_evaluation: nicotine
+    }
 
     try {
-      setLoading(true);
-      await privateApiService.updateInitialStateById(initialData._id, payload);
-      toast.success("Update successfully!");
-      onSuccess();
-      onClose();
+      setLoading(true)
+      await privateApiService.updateInitialStateById(initialData._id, payload)
+      toast.success('Update successfully!')
+      onSuccess()
+      onClose()
     } catch (err) {
-      toast.error(err as string);
+      toast.error(err as string)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -55,8 +55,8 @@ export default function UpdateCigarettePopup({
 
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            handleUpdate();
+            e.preventDefault()
+            handleUpdate()
           }}
           className="space-y-4"
         >
@@ -139,7 +139,7 @@ export default function UpdateCigarettePopup({
               className="px-4 py-2 bg-blue-500 text-white rounded"
               disabled={loading || nicotine === null}
             >
-              {loading ? "Loading..." : "Update"}
+              {loading ? 'Loading...' : 'Update'}
             </button>
           </div>
         </form>
@@ -153,13 +153,13 @@ export default function UpdateCigarettePopup({
             <NicotineQuizPopup
               onClose={() => setShowQuiz(false)}
               onSubmit={(score) => {
-                setNicotine(score);
-                setShowQuiz(false);
+                setNicotine(score)
+                setShowQuiz(false)
               }}
             />
           </div>
         </div>
       )}
     </>
-  );
+  )
 }
