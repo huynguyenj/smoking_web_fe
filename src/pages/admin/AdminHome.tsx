@@ -9,6 +9,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import RevenueChart from '../../components/chart/RevenueChart'
 import type { RevenueChartInfo } from '../../model/revenueChart/revenueType'
+import { formatCurrencyVND } from '../../utils/formatCurrency'
 
 export default function AdminDashboard() {
   const [users, setUsers] = useState<number>(0)
@@ -130,7 +131,7 @@ export default function AdminDashboard() {
         ))} */}
         <BoxDashboard icon={MuiIcon.PersonIcon} title="Users" data={users} />
         <BoxDashboard icon={MuiIcon.Payments} title="Payments" data={payments} />
-        <BoxDashboard icon={MuiIcon.Revenue} title="Revenue" data={revenue.toLocaleString()} />
+        <BoxDashboard icon={MuiIcon.Revenue} title="Revenue" data={formatCurrencyVND(revenue)} />
       </div>
       <div className='flex gap-10'>
         <div>
