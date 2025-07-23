@@ -49,3 +49,11 @@ export type PlanListResponse = {
     pageInfo: PageInfo
   }
 }
+
+export type PlanFilter = {
+  initial_cigarette_id?: string,
+  date?: {
+    start_time?: number,
+    end_time?: number
+  }
+}

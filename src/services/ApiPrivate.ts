@@ -1,16 +1,16 @@
 import type { ApiResponse } from '../model/apiType/apiType'
 import type { Friend, MessageHistoryInfo, PasswordData, SearchUserType, UpdateProfile, UserCommonTypeInfo, UserInfo } from '../model/user/userType'
 import { apiService } from './ApiServiceConfig'
-import type { CreatePlanPayload, PlanListResponse, Plan, SpecificInStage } from '../model/user/planType'
+import type { CreatePlanPayload, PlanListResponse, Plan, SpecificInStage, PlanFilter } from '../model/user/planType'
 import type { BlogListResponse, Blog } from '../model/user/blogType'
 import type { Comment, CreateCommentInput, CommentListResponse, DeleteCommentResponse } from '../model/user/commentType'
 import type { PaymentURLResponse, PaymentRequestPayload } from '../model/user/paymentType'
 import type { RankingResponse } from '../model/user/rankingType'
 import type { Membership, MembershipInfo } from '../model/user/membershipType'
-import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload } from '../model/user/cigarettesType'
+import type { CigarettePaginationResponse, CreateCigarettePayload, CigaretteRecord, UpdateCigarettePayload, ProcessFilter } from '../model/user/cigarettesType'
 import type { FeedbackSend } from '../model/feedback/feedbackType'
 import type { RankData } from '../model/user/rankType'
-import type { CreateInitialState, InitialState, InitialStatePaginationData } from '../model/initialType/initialType'
+import type { CreateInitialState, FilterInitial, InitialState, InitialStatePaginationData } from '../model/initialType/initialType'
 import type { PlanChartData } from '../model/api-chart/planChartType'
 
 const privateApiService = {
@@ -21,9 +21,11 @@ const privateApiService = {
   addFriend: (friendId: string): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/friend', { friend_id: friendId }),
   searchFriend: (searchTerm?: string): Promise<ApiResponse<SearchUserType[]>> => apiService.privateApiClient.post('/v1/users/info', { search: searchTerm }),
   createPlan: (payload: CreatePlanPayload): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/plan', payload),
-  getAllPlans: (page = 1, limit = 5): Promise<PlanListResponse> => apiService.privateApiClient.post('/v1/users/plan/pagination', {
+  getAllPlans: (page = 1, limit = 5, sort: number, filter?: PlanFilter): Promise<PlanListResponse> => apiService.privateApiClient.post('/v1/users/plan/pagination', {
     page,
-    limit
+    limit,
+    sort,
+    filter
   }),
   checkStagePlan: (planId: string, data: SpecificInStage): Promise<ApiResponse<null>> => apiService.privateApiClient.post(`/v1/users/plan/edit/${planId}`, data),
   getAllPlanOfUser: (): Promise<ApiResponse<Plan[]>> => apiService.privateApiClient.get('/v1/users/plan'),
@@ -85,9 +87,11 @@ const privateApiService = {
   changePassword: (passwordData: PasswordData): Promise<ApiResponse<null>> => apiService.privateApiClient.post('v1/users/profile', passwordData),
   changeAvatar: (avatar: FormData ): Promise<ApiResponse<null>> => apiService.privateApiClient.put('v1/users/profile/avatar', avatar),
   getAllCigarettesOfUser: (): Promise<ApiResponse<CigaretteRecord[]>> => apiService.privateApiClient.get('v1/users/cigarette'),
-  getCigarettesPagination: (page = 1, limit = 5): Promise<CigarettePaginationResponse> => apiService.privateApiClient.post('/v1/users/cigarettes/pagination', {
+  getCigarettesPagination: (page = 1, limit = 5, sort: number, filter?: ProcessFilter): Promise<CigarettePaginationResponse> => apiService.privateApiClient.post('/v1/users/cigarettes/pagination', {
     page,
-    limit
+    limit,
+    sort,
+    filter
   }),
   createCigarette: (
     payload: CreateCigarettePayload
@@ -106,9 +110,11 @@ const privateApiService = {
   // getAchievement: ():Promise<ApiResponse<null>> => apiService.privateApiClient.get('/v1/users/achievement'),
   getUserCurrentRank: (): Promise<ApiResponse<RankData>> => apiService.privateApiClient.get('/v1/users/rank'),
   createInitialState: (payload: CreateInitialState): Promise<ApiResponse<null>> => apiService.privateApiClient.post('/v1/users/initial-cigarette', payload),
-  getInitialStatePagination: (page = 1, limit = 5): Promise<InitialStatePaginationData> => apiService.privateApiClient.post('/v1/users/initial-cigarette/pagination', {
+  getInitialStatePagination: (page = 1, limit = 5, sort: number, filter?: FilterInitial): Promise<InitialStatePaginationData> => apiService.privateApiClient.post('/v1/users/initial-cigarette/pagination', {
     page,
-    limit
+    limit,
+    sort,
+    filter
   }),
   getAllInitialState: (): Promise<ApiResponse<InitialState[]>> => apiService.privateApiClient.get('/v1/users/initial-cigarette'),
   getAllInitialStateForCoach: (userId: string): Promise<ApiResponse<InitialState[]>> => apiService.privateApiClient.get(`/v1/users/initial-cigarette/coach/${userId}`),

@@ -1,9 +1,10 @@
 import privateApiService from '../../../services/ApiPrivate'
-import { useEffect, useState } from 'react'
-import type {
-  InitialState,
-  InitialStatePaginationData,
-  PageInfo,
+import React, { useEffect, useState } from 'react'
+import {
+  type FilterInitial,
+  type InitialState,
+  type InitialStatePaginationData,
+  type PageInfo
 } from '../../../model/initialType/initialType'
 import InitialCard from '../../../components/initialState/InitialCard'
 import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
@@ -14,6 +15,8 @@ import { toast } from 'react-toastify'
 export default function InitialStatePage() {
   const [initialStates, setInitialStates] = useState<InitialState[]>([])
   const [loading, setLoading] = useState(true)
+  const [sort, setSort] = useState(-1)
+  const [filterByDate, setFilterByDate] = useState<FilterInitial>()
   const [pageInfo, setPageInfo] = useState<PageInfo>({
     page: 1,
     limit: 5,
@@ -30,7 +33,9 @@ export default function InitialStatePage() {
       const res: InitialStatePaginationData =
         await privateApiService.getInitialStatePagination(
           pageInfo.page,
-          pageInfo.limit
+          pageInfo.limit,
+          sort,
+          filterByDate
         )
       setInitialStates(res.data.listData)
       setPageInfo(res.data.pageInfo)
@@ -56,7 +61,7 @@ export default function InitialStatePage() {
 
   useEffect(() => {
     fetchInitialStates()
-  }, [pageInfo.page, pageInfo.limit])
+  }, [pageInfo.page, pageInfo.limit, sort, filterByDate])
 
   const handlePageChange = (newPage: number) => {
     if (
@@ -67,20 +72,46 @@ export default function InitialStatePage() {
       setPageInfo((prev) => ({ ...prev, page: newPage }))
     }
   }
-
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (value) {
+      setSort(Number(value))
+    }
+  }
+  const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value) {
+      const timestamp = new Date(value).getTime()
+      const newFilter = { date: { start_time: timestamp } }
+      setFilterByDate(newFilter)
+    }
+  }
   return (
     <div className="px-6 py-8 max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Initial States</h1>
-        <button
-          onClick={() => {
-            setSelectedRecord(null)
-            setShowPopup(true)
-          }}
-          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
-        >
-          + Create Initial State
-        </button>
+        <div className='flex gap-5 items-center'>
+          <button
+            onClick={() => {
+              setSelectedRecord(null)
+              setShowPopup(true)
+            }}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
+          >
+            + Create Initial State
+          </button>
+          <div className='flex gap-2 items-center'>
+            <label htmlFor="sort">Sort by date</label>
+            <select className='bg-gray-300 rounded-2xl p-2' value={sort} name="" id="sort" onChange={handleSort}>
+              <option value={-1}>Newest</option>
+              <option value={1}>Oldest</option>
+            </select>
+          </div>
+          <div className='flex gap-2 items-center'>
+            <label htmlFor="date">Filter by date</label>
+            <input className='bg-amber-200 rounded-2xl p-2' id='date' type="date" onChange={handleFilter}/>
+          </div>
+        </div>
       </div>
 
       {loading ? (

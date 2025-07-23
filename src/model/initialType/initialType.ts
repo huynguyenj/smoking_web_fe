@@ -31,3 +31,9 @@ export interface InitialStatePaginationData {
     message: string
     data: InitialStateResponse;
 }
+
+export interface FilterInitial {
+    date: {
+      start_time?: number
+    }
+  }

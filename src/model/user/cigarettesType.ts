@@ -41,3 +41,11 @@ export interface UpdateCigarettePayload {
   money_consumption_per_day: number;
   saving_money: number;
 }
+
+export type ProcessFilter = {
+  planId?: string,
+  date?: {
+    start_time?: number,
+    end_time?: number
+  }
+}

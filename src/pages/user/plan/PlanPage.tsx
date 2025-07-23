@@ -1,23 +1,28 @@
 import { useNavigate } from 'react-router-dom'
 import { UserRoute } from '../../../const/pathList'
 import CreatePlan from '../../../components/popup/CreatePlan'
-import { useState, useEffect } from 'react'
-import type { Plan, PageInfo } from '../../../model/user/planType'
+import React, { useState, useEffect } from 'react'
+import { type Plan, type PageInfo, type PlanFilter } from '../../../model/user/planType'
 import ApiPrivate from '../../../services/ApiPrivate'
 import { toast } from 'react-toastify'
 import LoadingScreenBg from '../../../components/loading/LoadingScreenBg'
 import { formDate } from '../../../utils/formDate'
+import PlanFilterPopup from './PlanFilterPopup'
+import type { InitialState } from '../../../model/initialType/initialType'
 const PlanList = () => {
   const navigate = useNavigate()
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [plans, setPlans] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
+  const [sort, setSort] = useState(-1)
+  const [filter, setFilter] = useState<PlanFilter>()
   const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 1, limit: 5, totalPage: 1 })
-
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const [initialCigarettes, setInitialCigarettes] = useState<InitialState[]>()
   const fetchPlans = async (page: number = 1, limit: number = 5) => {
     setLoading(true)
     try {
-      const res = await ApiPrivate.getAllPlans(page, limit)
+      const res = await ApiPrivate.getAllPlans(page, limit, sort, filter)
       setPlans(res.data.listData)
       setPageInfo(res.data.pageInfo)
     } catch (error) {
@@ -30,8 +35,17 @@ const PlanList = () => {
   }
 
   useEffect(() => {
+    const fetchAllInitialCigarettes = async () => {
+      try {
+        const response = await ApiPrivate.getAllInitialState()
+        setInitialCigarettes(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchAllInitialCigarettes()
     fetchPlans(pageInfo.page, pageInfo.limit)
-  }, [pageInfo.page, pageInfo.limit])
+  }, [pageInfo.page, pageInfo.limit, sort, filter])
 
   const handleViewDetail = (id: string) => {
     navigate(UserRoute.PLAN_DETAIL_PATH.replace(':id', id))
@@ -66,17 +80,62 @@ const PlanList = () => {
       toast.error(err as string)
     }
   }
-
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (value) {
+      setSort(Number(value))
+    }
+  }
   return (
     <div className="min-h-screen">
-      <div className="flex justify-between items-center max-w-5xl mx-auto mb-8">
-        <h1 className="text-3xl font-bold">Plan process</h1>
-        <button
-          onClick={handleCreatePlan}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
+      <h1 className="text-3xl font-bold text-center mb-5">Plan process</h1>
+      <div className="flex justify-center items-center max-w-6xl mx-auto ">
+        <div className='relative flex gap-5 items-center'>
+          <button
+            onClick={handleCreatePlan}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >
           + Create
-        </button>
+          </button>
+          <div className='flex gap-2 items-center'>
+            <label htmlFor="sort">Sort by date</label>
+            <select className='bg-gray-300 rounded-2xl p-2' value={sort} name="" id="sort" onChange={handleSort}>
+              <option value={-1}>Newest</option>
+              <option value={1}>Oldest</option>
+            </select>
+          </div>
+          <div className='flex items-center gap-2'>
+            <button className='px-3 py-2 hover:opacity-70 cursor-pointer bg-amber-200 rounded-2xl' onClick={() => setIsFilterOpen(true)}>Filter</button>
+            {filter &&
+            <div className='flex gap-5'>
+              <div>
+                {filter?.initial_cigarette_id &&
+                <div className='bg-gray-200 w-55 px-3 rounded-2xl py-2 flex justify-between text-[0.8rem]'>
+                  <p>
+                    Initial state nicotine: {initialCigarettes?.find(item => item._id === filter.initial_cigarette_id)?.nicotine_evaluation}
+                  </p>
+                  <button className='bg-red-400 rounded-2xl w-5 aspect-square text-white hover:opacity-70 cursor-pointer' onClick={() => setFilter(prev => ({ ...prev, initial_cigarette_id: undefined }))}>x</button>
+                </div>}
+              </div>
+              {filter?.date &&
+                <div className='bg-gray-200 text-[0.8rem] rounded-2xl w-70 px-5 py-2 flex items-center justify-between'>
+                  {filter.date.start_time && filter.date.end_time &&
+                    <p>
+                      Time: {formDate(filter.date.start_time)} ➡️ {formDate(filter.date.end_time)}
+                    </p>
+                  }
+                  <button className='bg-red-400 rounded-2xl w-5 aspect-square text-white hover:opacity-70 cursor-pointer' onClick={() => setFilter(prev => ({ ...prev, date: undefined }))}>x</button>
+                </div>
+              }
+            </div>
+            }
+          </div>
+          {isFilterOpen &&
+            <div className='absolute -right-75 top-15'>
+              <PlanFilterPopup setIsOpen={setIsFilterOpen} setFilter={setFilter}/>
+            </div>
+          }
+        </div>
       </div>
 
       {isPopupOpen && (
@@ -109,7 +168,7 @@ const PlanList = () => {
             {plans.map((plan) => (
               <div
                 key={plan._id}
-                className="bg-white p-5 rounded-2xl shadow-[0px_0px_15px_rgba(0,0,0,0.2)] hover:shadow-md mb-5 transition"
+                className="bg-white p-5 rounded-2xl shadow-[0px_0px_15px_rgba(0,0,0,0.2)]  mb-5 transition"
               >
                 <div className="mb-2">
                   <p className='text-2xl'>❤️‍🩹{plan.content}</p>
